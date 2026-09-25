@@ -40,10 +40,10 @@ raj_stats <- list(
 )
 
 # UP year files
-up_2005 <- read_parquet(up_path("up_gp_sarpanch_2005_fixed_with_transliteration.parquet"))
-up_2010 <- read_parquet(up_path("up_gp_sarpanch_2010_fixed_with_transliteration.parquet"))
-up_2015 <- read_parquet(up_path("up_gp_sarpanch_2015_fixed_with_transliteration.parquet"))
-up_2021 <- read_parquet(up_path("up_gp_sarpanch_2021_fixed_with_transliteration.parquet"))
+up_2005 <- read_parquet(up_path("gp/gp_head_winner_records_2005.parquet"))
+up_2010 <- read_parquet(up_path("gp/gp_head_winner_records_2010.parquet"))
+up_2015 <- read_parquet(up_path("gp/gp_head_winner_records_2015.parquet"))
+up_2021 <- read_parquet(up_path("gp/gp_head_candidates_2021.parquet"))
 
 up_2021_winners <- up_2021[up_2021$result == "विजेता", ]
 

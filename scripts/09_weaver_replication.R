@@ -12,7 +12,7 @@ source(here("scripts/00_config.R"))
 source(here("scripts/00_utils.R"))
 
 # Load Weaver data
-jw <- read_parquet(up_path("weaver_20250317_wide.parquet")) %>%
+jw <- read_parquet(up_path("weaver/weaver_20250317_wide.parquet")) %>%
   mutate(
     across(where(is.labelled), as.numeric),
     census_block = interaction(anchor_pc11_district_id, anchor_pc11_cdblock_id, drop = TRUE)

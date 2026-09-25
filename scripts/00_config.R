@@ -1,5 +1,5 @@
 # 00_config.R
-# Central configuration for quota_raj project
+# Central configuration for the quota_representation project
 # Variable dictionaries, helper functions, and shared settings
 # Note: File paths use here() directly in scripts, except data this repo does
 # not own -- those are pinned in data/manifest.yaml and resolved by
@@ -127,7 +127,7 @@ FIG_HEIGHT <- 4.5
 ## including on the cache hit. A mismatch stops the run; it never silently hands
 ## back different data.
 ##
-## The point is not disk space. quota, quota_raj, local_elections and others all
+## The point is not disk space. quota_spending, quota_representation, local_elections and others all
 ## read the same UP sarpanch files, and until now each kept its own copy with
 ## nothing to notice when they drifted apart.
 
@@ -191,7 +191,7 @@ sibling_path <- function(file, source = "local_elections_up") {
 }
 
 ## Convenience wrappers so call sites read as what they are.
-up_path <- function(f) sibling_path(file.path("data/fin", f))
+up_path <- function(f) sibling_path(file.path("data/release", f))
 ref_path <- function(f) sibling_path(file.path("data/external/weaver", f))
 
 ## Reference datasets: public downloads shared by several repos, held once in the
