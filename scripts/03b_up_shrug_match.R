@@ -6,7 +6,7 @@ library(arrow)
 library(here)
 source(here("scripts/00_config.R"))
 
-bridge <- read_parquet(up_path("up_gp_lgd_bridge.parquet"))
+bridge <- read_parquet(up_path("panels/gp_lgd_bridge.parquet"))
 stopifnot(!anyNA(bridge[c("panel", "anchor_key")]), !anyDuplicated(bridge[c("panel", "anchor_key")]))
 
 message("\n=== LOADING SHRUG COVARIATES ===")

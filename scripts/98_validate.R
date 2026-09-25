@@ -66,7 +66,7 @@ test_that("sex linkage is unique within an election and invariant to source orde
 })
 
 test_that("UP geographic bridge attaches by source identity and survives reordering", {
-  bridge <- read_parquet(up_path("up_gp_lgd_bridge.parquet"))
+  bridge <- read_parquet(up_path("panels/gp_lgd_bridge.parquet"))
   expect_equal(anyDuplicated(bridge[c("panel", "anchor_key")]), 0L)
   panels <- c("05_10" = "2005_2010", "10_15" = "2010_2015",
     "15_21" = "2015_2021", "05_21" = "2005_2010_2015_2021")

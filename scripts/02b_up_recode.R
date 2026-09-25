@@ -57,7 +57,7 @@ panels <- list(
 )
 for (name in names(panels)) {
   years <- panels[[name]]
-  file <- paste0("up_gp_panel_", paste(years, collapse = "_"), ".parquet")
+  file <- paste0("panels/gp_panel_", paste(years, collapse = "_"), ".parquet")
   panel <- recode_up_panel(read_parquet(up_path(file)), years)
   if (name == "05_21") {
     panel <- panel |> mutate(
