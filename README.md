@@ -56,3 +56,7 @@ The Weaver appendix uses the supplied source panel, with its final wave labeled 
 `pre-corrections-20260912` preserves the manuscript and code before these revisions; it is not a certification that every earlier exhibit reproduces. Current scripts overwrite the current derived outputs. Git and release tags preserve earlier versions. The `v1.0` release uses the revised linkage and inference, reports cumulative contrasts explicitly, and treats the phone findings as evidence consistent with proxy governance. The phone audit does not establish who governs or explain the electoral effects.
 
 UP geographic assignments now come from `up_gp_lgd_bridge.parquet` at the UP commit pinned in `data/manifest.yaml`. The historical bridge explicitly uses the 2005–2010 linked universe with known reservation in both waves; expanding that reference universe is a separate linkage choice. `03b` joins by the source anchor (`key_2010`, or `key_2015` for 2015–2021) and retains this study’s SHRUG aggregation. The upstream bridge preserves geographic identities and includes Unicode-safe distances and two documented native-name identity reviews; these diagnostic changes leave the study populations and distance-based LGD selections unchanged. Local UP geographic producers and duplicate directories have been removed.
+
+<!-- adjacent:start -->
+
+<!-- adjacent:end -->
