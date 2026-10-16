@@ -51,6 +51,12 @@ Script `08a` uses the completed interview records. The archived sampler `08b` is
 
 The Weaver appendix uses the supplied source panel, with its final wave labeled 2021 in the exhibits (coded 2020 in the source). Its models use complete 2011 Census district–block identifiers; the original election-specific 2015 block fields are blank throughout the matched short-run sample.
 
+## Bihar extension
+
+`scripts/02c_bihar_panels.R` and `scripts/10_bihar.R` add Bihar Mukhiya (gram panchayat head) seats with the same estimand: among seats open in an election, does a women's quota in the previous election change the chance that a woman wins? Seat links between elections come from `local_elections_bihar` (`data/linkage/`), pinned in `data/manifest.yaml`. No GP identifier survives between Bihar elections, so those links pair GP names within the same block, with Devanagari names romanized by indicate and assigned one-to-one by preclink. Among 2016–2021 links made on names alone, ward counts agree for 97.3% of GPs, against 23.9% for random pairs in the block. The 2011–2016 link has no ward counts, so it rests on name similarity alone.
+
+Women's quotas were not reassigned between 2016 and 2021: 98% of linked GPs keep their 2016 status, and only 13 GPs reserved in 2016 are open in 2021. Effects are therefore estimated only for 2011 to 2016, when 71% of women's seats became open; 2016–2021 appears only in the transition and rotation tables. The 2011 quota comes from 23 district winner reports. The primary sample uses only labels that state women's reservation. The inclusive sensitivity reads a bare category label as not reserved for women, where the same district's report prints women's labels. Bihar has two usable elections, so the cumulative-history models are not estimated. SHRUG covariate balance is not estimated either, because no Bihar GP–SHRUG crosswalk exists.
+
 ## Versions
 
 `pre-corrections-20260912` preserves the manuscript and code before these revisions; it is not a certification that every earlier exhibit reproduces. Current scripts overwrite the current derived outputs. Git and release tags preserve earlier versions. The `v1.0` release uses the revised linkage and inference, reports cumulative contrasts explicitly, and treats the phone findings as evidence consistent with proxy governance. The phone audit does not establish who governs or explain the electoral effects.

@@ -237,3 +237,47 @@ test_that("survey links attach by candidate identity and survive row reordering"
   expect_equal(forward, reversed)
   expect_equal(nrow(forward), 35L)
 })
+
+test_that("Bihar panels follow one-to-one upstream seat links", {
+  links <- list(
+    `11_16` = read_parquet(bihar_path("data/linkage/mukhiya_2011_2016.parquet")),
+    `16_21` = read_parquet(bihar_path("data/linkage/mukhiya_2016_2021.parquet"))
+  )
+  for (panel in names(links)) {
+    p <- read_parquet(here("data/bh", paste0("bh_", panel, ".parquet")))
+    link_ids <- with(links[[panel]], paste(district_code, block_code, unit_code, sep = "_"))
+    expect_false(anyDuplicated(p$gp_id) > 0)
+    expect_true(all(p$gp_id %in% link_ids))
+    expect_lte(nrow(p), nrow(links[[panel]]))
+    later <- paste0("treat_20", strsplit(panel, "_")[[1]][2])
+    expect_true(all(p[[later]] %in% 0:1))
+    # An unstated 2011 women's label stays missing; only the inclusive recode fills it.
+    if (panel == "11_16") {
+      expect_true(all(p$treat_2011 %in% c(0L, 1L, NA)))
+      expect_true(all(p$treat_2011_inclusive %in% 0:1))
+      expect_true(all(is.na(p$treat_2011) | p$treat_2011 == p$treat_2011_inclusive))
+    } else {
+      expect_true(all(p$treat_2016 %in% 0:1))
+    }
+  }
+})
+
+bihar <- read_csv(here("tabs/bihar_inference.csv"), show_col_types = FALSE)
+test_that("Bihar short-term estimate reproduces after independent within-block OLS", {
+  d <- read_parquet(here("data/bh/bh_11_16.parquet")) |>
+    filter(!is.na(treat_2011), treat_2016 == 0) |>
+    drop_na(female_winner_2016, dist_block_2016)
+  within_x <- d$treat_2011 - ave(d$treat_2011, d$dist_block_2016)
+  within_y <- d$female_winner_2016 - ave(d$female_winner_2016, d$dist_block_2016)
+  independent <- lm(within_y ~ within_x - 1)
+  covariance <- sandwich::vcovCL(independent, cluster = d$dist_block_2016, type = "HC0")
+  # fixest's nonnested SSC counts the slope and one nested FE reference.
+  covariance <- covariance * (nrow(d) - 1) / (nrow(d) - 2)
+  row <- bihar |> filter(period == "2011-2016", sample == "full", fixed_effects, variance == "cluster")
+  expect_equal(row$estimate, unname(coef(independent)), tolerance = 1e-9)
+  expect_equal(row$standard_error, sqrt(drop(covariance)), tolerance = 1e-8)
+  expect_equal(row$n, nrow(d))
+  boot <- bihar |> filter(fixed_effects, variance == "cluster")
+  expect_true(all(boot$bootstrap_B == 9999))
+  expect_true(all(is.finite(boot$bootstrap_low) & is.finite(boot$bootstrap_high)))
+})
