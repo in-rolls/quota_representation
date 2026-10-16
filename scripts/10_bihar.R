@@ -121,19 +121,23 @@ with_sample <- function(panel, data, sample) {
   panel
 }
 
+# Effects are estimated for 2011-2016 only. Quotas carried over from 2016 to 2021,
+# leaving 13 GPs with a 2016 quota on an open 2021 seat; that period is described
+# above and not estimated.
+estimated <- "2011-2016"
 samples <- list()
 support <- list()
 for (name in names(panels)) {
   p <- panels[[name]]
   open <- p$data[p$data[[p$current]] == 0 & !is.na(p$data[[paste0("female_winner_", p$year)]]), ]
-  samples[[paste(name, "full")]] <- with_sample(p, open, "full")
+  if (name %in% estimated) samples[[paste(name, "full")]] <- with_sample(p, open, "full")
   e <- eligible_districts(p$data, p$prior, p$current, paste0("district_", p$year))
   restricted <- open[open[[paste0("district_", p$year)]] %in% e$selected, ]
   support[[name]] <- data.frame(
     period = name, districts = e$districts, tested = e$tested,
     retained = length(e$selected), open_n = nrow(open), restricted_n = nrow(restricted)
   )
-  if (nrow(restricted) > 0 && length(unique(restricted[[p$prior]])) == 2) {
+  if (name %in% estimated && nrow(restricted) > 0 && length(unique(restricted[[p$prior]])) == 2) {
     samples[[paste(name, "restricted")]] <- with_sample(p, restricted, "restricted")
   }
 }
@@ -207,7 +211,7 @@ aer_etable(models,
   keep = "%treat_",
   headers = list(sub(" (No FE|FE)$", "", names(models)), sub(".* ", "", sub(" No FE$", " NoFE", names(models)))),
   notes = paste(
-    "Outcome: woman elected Mukhiya in the later election, among seats not reserved for women in that election.",
+    "Outcome: woman elected Mukhiya in the later election, among seats not reserved for women in that election. Effects are estimated for 2011-2016 only; quotas carried over from 2016 to 2021.",
     "Restricted samples keep districts whose descriptive independence test for consecutive quotas has p > 0.05; non-rejection does not establish random assignment.",
     "Inclusive reads bare 2011 category labels as not reserved for women. Standard errors clustered by district-block."
   )
@@ -217,7 +221,7 @@ aer_etable(models,
 # Placebo: does the later quota predict a woman's earlier win on open seats? (as in 05d)
 # =============================================================================
 
-placebo <- lapply(panels, function(p) {
+placebo <- lapply(panels[estimated], function(p) {
   prior_year <- sub("treat_", "", p$prior)
   d <- p$data[p$data[[p$prior]] == 0 & !is.na(p$data[[paste0("female_winner_", prior_year)]]), ]
   block <- paste0("dist_block_", p$year)
@@ -227,7 +231,7 @@ placebo <- lapply(panels, function(p) {
 })
 aer_etable(placebo,
   file = here("tabs/bihar_placebo.tex"),
-  dict = c(DICT_BH, "treat_2021" = "$\\text{Quota}_{2021}$"), headers = list(names(panels)),
+  dict = DICT_BH, headers = list(estimated),
   notes = "Outcome: woman elected in the earlier election, among seats open in that election, on the later quota. Standard errors clustered by district-block."
 )
 
