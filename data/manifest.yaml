@@ -43,7 +43,7 @@ upstream:
       data/source/sarpanch/sarpanch_2020_clean.csv: 0f13bc76ea6d5203a55bb42d858fc832852136f18afd0cc7baf6fd66422f0449
   local_elections_bihar:
     repo: in-rolls/local_elections_bihar
-    ref: dc73e776ecff960481feb40d4a0fa57283ea4f0e
+    ref: bb9cc9c14316dd7a98c331ee988a650132c05c96
     raw: https://raw.githubusercontent.com/in-rolls/local_elections_bihar
     sibling: ../local_elections_bihar
     files:
@@ -52,7 +52,7 @@ upstream:
       data/2016/winners.parquet: 1f1712f0a91370cb3db6a4b891d419a60cd81a4a7dbc00c57ea04e4fc14aeb13
       data/2021/current_reservations.parquet: a432377012f1d55f5862f44fe3f9f8a4b391b1b215fc44c5d5d626f96dc71073
       data/2021/winners.parquet: 32c40abc700179c19c8ff0c36ce860c34640e22a3be534f51fb77f78031b3c10
-      data/linkage/mukhiya_2011_2016.parquet: 3a9f783dec25594f28d5dd480bfa9d6539d72d378558768aa10d0b928c5192a2
+      data/linkage/mukhiya_2011_2016.parquet: 1418380db13ff5c8baba151f08ef97fef565252345f2ade50b628d6857b569d8
       data/linkage/mukhiya_2016_2021.parquet: c53cf34d82629bf4012046f5bdf59421e2845a28d900ed71ff6863e8c16d9985
   local_elections_up:
     repo: in-rolls/local_elections_up
