@@ -236,6 +236,8 @@ raj_path <- function(file) sibling_path(file, source = "local_elections_rajastha
 
 raj_product_path <- function(file) raj_path(file.path("data/fin/elections", file))
 
+bihar_path <- function(file) sibling_path(file, source = "local_elections_bihar")
+
 election_panel_path <- function(state, file) {
   if (state == "raj") raj_product_path(file) else here::here("data", state, file)
 }
