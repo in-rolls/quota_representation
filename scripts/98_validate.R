@@ -309,18 +309,29 @@ test_that("City panels keep one ward map and women win the women's seats", {
 
 cities <- read_csv(here("tabs/cities_inference.csv"), show_col_types = FALSE)
 test_that("City estimates equal the raw difference in open-ward women's win rates", {
-  for (city in c("Delhi", "Mumbai")) {
-    p <- read_parquet(here("data/cities", if (city == "Delhi") "del_07_12.parquet" else "mum_07_12.parquet")) |>
-      filter(treat_2012 == 0)
-    row <- filter(cities, city == !!city)
-    treated <- p$treat_2007 == 1
-    expect_equal(row$estimate, mean(p$female_winner_2012[treated]) - mean(p$female_winner_2012[!treated]),
-      tolerance = 1e-12
-    )
-    expect_equal(c(row$left_women, row$right_women), c(
-      sum(p$female_winner_2012[treated]), sum(p$female_winner_2012[!treated])
-    ))
+  councils <- list(
+    `Delhi 2007-2012` = c("del_07_12", 2007, 2012), `Mumbai 2007-2012` = c("mum_07_12", 2007, 2012),
+    `Kolkata 2010-2015` = c("kol_10_15", 2010, 2015)
+  )
+  for (council in names(councils)) {
+    spec <- councils[[council]]
+    p <- read_parquet(here("data/cities", paste0(spec[1], ".parquet")))
+    p <- p[p[[paste0("treat_", spec[3])]] == 0 & !is.na(p[[paste0("female_winner_", spec[3])]]), ]
+    won <- p[[paste0("female_winner_", spec[3])]]
+    treated <- p[[paste0("treat_", spec[2])]] == 1
+    row <- filter(cities, city == council, sample == "main")
+    expect_equal(row$estimate, mean(won[treated]) - mean(won[!treated]), tolerance = 1e-12)
+    expect_equal(c(row$left_women, row$right_women), c(sum(won[treated]), sum(won[!treated])))
   }
+})
+
+test_that("Kolkata keeps one ward map and codes women's-seat winners female", {
+  kol <- read_parquet(here("data/cities/kol_10_15.parquet"))
+  expect_equal(nrow(kol), 141L)
+  # same boundaries: electorates by ward number track each other closely
+  expect_gt(cor(kol$electors_2010, kol$electors_2015), 0.9)
+  expect_true(all(kol$female_winner_2010[kol$treat_2010 == 1] == 1))
+  expect_true(all(kol$sex_basis_2015 %in% c("women_seat", "name_score", "name_marker", "name_reviewed")))
 })
 
 bihar <- read_csv(here("tabs/bihar_inference.csv"), show_col_types = FALSE)

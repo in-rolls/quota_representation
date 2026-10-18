@@ -26,12 +26,24 @@
 # 37 wards open in both years were chosen by the rotation, not by a draw. The
 # 2002 categories, which probably decided that choice, are not held.
 #
-# Output: data/cities/del_07_12.parquet, data/cities/mum_07_12.parquet
+# Kolkata (KMC, 2010-2015, wards 1-141). Lok Dhaba's candidate files, as
+# republished by OpenCity, give every candidate's votes and each ward's category
+# but no sex. Ward electorates correlate at 0.96 across the two elections by ward
+# number (0.55 with the neighbouring number), so the map held; wards 142-144 were
+# added in 2015. Winner sex is local_elections' kolkata_winner_sex: female on a
+# women's seat by law, otherwise coded from the first name, with names used for
+# either sex left uncertain (NA here, bounded in 12_cities). 2010 women's seats
+# are reserved again in 2015 at 40%, against 30% for the rest, so Kolkata does
+# not rotate strictly.
+#
+# Output: data/cities/del_07_12.parquet, data/cities/mum_07_12.parquet,
+#   data/cities/kol_10_15.parquet
 
 library(arrow)
 library(dplyr)
 library(here)
 library(readr)
+library(stringr)
 library(tidyr)
 
 source(here("scripts/00_config.R"))
@@ -95,10 +107,44 @@ mum_07_12 <- council("2011", 2007) |>
   mutate(ward_id = paste0("mum_", ward), case = paste0(treat_2007, treat_2012))
 stopifnot(nrow(mum_07_12) == 227, sum(mum_07_12$treat_2007) == 76, !anyNA(mum_07_12$treat_2012))
 
+kmc <- function(y) {
+  candidates <- read_csv(
+    pooled_path(paste0("data/opencity/kolkata_kmc_", y, "_candidates.csv")),
+    col_types = cols(.default = col_character())
+  )
+  wards <- candidates |>
+    group_by(ward = as.integer(Ward_No)) |>
+    summarise(
+      category = first(Ward_Reservation), candidates = sum(Candidate_Name != "NOTA"),
+      electors = as.numeric(first(Total_Electors)), .groups = "drop"
+    )
+  sex <- read_csv(
+    pooled_path("data/opencity/kolkata_winner_sex.csv"),
+    col_types = cols(.default = col_character())
+  ) |>
+    filter(year == as.character(y)) |>
+    transmute(ward = as.integer(ward_no), winner, winner_sex = winner_sex_from_name, sex_basis = basis)
+  inner_join(wards, sex, by = "ward", relationship = "one-to-one") |>
+    mutate(
+      treat = as.integer(str_detect(category, "Women")),
+      dalit = as.integer(str_detect(category, "Scheduled Caste")),
+      female_winner = case_when(winner_sex == "female" ~ 1, winner_sex == "male" ~ 0)
+    ) |>
+    rename_with(~ paste0(.x, "_", y), -ward)
+}
+kol_10_15 <- inner_join(kmc(2010), kmc(2015), by = "ward", relationship = "one-to-one") |>
+  mutate(ward_id = paste0("kol_", ward), case = paste0(treat_2010, treat_2015))
+stopifnot(
+  nrow(kol_10_15) == 141, sum(kol_10_15$treat_2010) == 47,
+  all(kol_10_15$female_winner_2015[kol_10_15$treat_2015 == 1] == 1)
+)
+
 dir.create(here("data/cities"), showWarnings = FALSE)
 write_parquet(del_07_12, here("data/cities/del_07_12.parquet"))
 write_parquet(mum_07_12, here("data/cities/mum_07_12.parquet"))
+write_parquet(kol_10_15, here("data/cities/kol_10_15.parquet"))
 message(
   "City panels: Delhi ", nrow(del_07_12), " wards (", sum(del_07_12$treat_2012 == 0), " open in 2012); Mumbai ",
-  nrow(mum_07_12), " wards (", sum(mum_07_12$treat_2012 == 0), " open in 2012)"
+  nrow(mum_07_12), " wards (", sum(mum_07_12$treat_2012 == 0), " open in 2012); Kolkata ",
+  nrow(kol_10_15), " wards (", sum(kol_10_15$treat_2015 == 0), " open in 2015)"
 )
