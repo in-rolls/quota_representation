@@ -291,6 +291,31 @@ test_that("Haryana short-term estimate reproduces after independent within-block
   expect_equal(row$n, nrow(d))
 })
 
+test_that("Uttarakhand panels link one seat to one seat and the name model reads women's seats", {
+  for (panel in c("08_14", "14_19")) {
+    p <- read_parquet(here(paste0("data/uk/uk_", panel, ".parquet")))
+    years <- c(`08_14` = "2014", `14_19` = "2019")[[panel]]
+    expect_false(anyDuplicated(p$gp_id) > 0)
+    f <- p[[paste0("female_winner_", years)]]
+    expect_true(all(f[!is.na(f)] >= 0 & f[!is.na(f)] <= 1))
+    expect_gt(mean(f[p[[paste0("treat_", years)]] == 1], na.rm = TRUE), 0.9)
+  }
+})
+
+uttarakhand <- read_csv(here("tabs/uttarakhand_inference.csv"), show_col_types = FALSE)
+test_that("Uttarakhand estimates reproduce: raw difference and independent within-block OLS", {
+  d <- read_parquet(here("data/uk/uk_08_14.parquet")) |>
+    filter(treat_2014 == 0) |>
+    drop_na(female_winner_2014)
+  raw <- mean(d$female_winner_2014[d$treat_2008 == 1]) - mean(d$female_winner_2014[d$treat_2008 == 0])
+  rows <- uttarakhand |> filter(period == "2008-2014", variance == "cluster")
+  expect_equal(rows$estimate[rows$specification == "No FE"], raw, tolerance = 1e-9)
+  within_x <- d$treat_2008 - ave(d$treat_2008, d$dist_block_2014)
+  within_y <- d$female_winner_2014 - ave(d$female_winner_2014, d$dist_block_2014)
+  expect_equal(rows$estimate[rows$specification == "Block FE"], unname(coef(lm(within_y ~ within_x - 1))), tolerance = 1e-9)
+  expect_true(all(rows$n == nrow(d)))
+})
+
 test_that("City panels keep one ward map and women win the women's seats", {
   del <- read_parquet(here("data/cities/del_07_12.parquet"))
   mum <- read_parquet(here("data/cities/mum_07_12.parquet"))
@@ -331,7 +356,9 @@ test_that("Kolkata keeps one ward map and codes women's-seat winners female", {
   # same boundaries: electorates by ward number track each other closely
   expect_gt(cor(kol$electors_2010, kol$electors_2015), 0.9)
   expect_true(all(kol$female_winner_2010[kol$treat_2010 == 1] == 1))
-  expect_true(all(kol$sex_basis_2015 %in% c("women_seat", "name_score", "name_marker", "name_reviewed")))
+  open <- kol$treat_2015 == 0
+  expect_true(all(kol$female_from_name_2015[open] %in% c(0, 1, NA)))
+  expect_true(all(nzchar(kol$sex_method_2015)))
 })
 
 bihar <- read_csv(here("tabs/bihar_inference.csv"), show_col_types = FALSE)

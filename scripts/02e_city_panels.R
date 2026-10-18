@@ -30,9 +30,10 @@
 # republished by OpenCity, give every candidate's votes and each ward's category
 # but no sex. Ward electorates correlate at 0.96 across the two elections by ward
 # number (0.55 with the neighbouring number), so the map held; wards 142-144 were
-# added in 2015. Winner sex is local_elections' kolkata_winner_sex: female on a
-# women's seat by law, otherwise coded from the first name, with names used for
-# either sex left uncertain (NA here, bounded in 12_cities). 2010 women's seats
+# added in 2015. Winner sex: a women's-seat winner is a woman by law; any other
+# winner takes local_elections' kolkata_winner_sex probability, coded from the
+# name alone (1 or 0, blank for names used for either sex: NA here, bounded in
+# 12_cities). 2010 women's seats
 # are reserved again in 2015 at 40%, against 30% for the rest, so Kolkata does
 # not rotate strictly.
 #
@@ -123,12 +124,16 @@ kmc <- function(y) {
     col_types = cols(.default = col_character())
   ) |>
     filter(year == as.character(y)) |>
-    transmute(ward = as.integer(ward_no), winner, winner_sex = winner_sex_from_name, sex_basis = basis)
+    transmute(
+      ward = as.integer(ward_no), winner,
+      female_from_name = as.numeric(winner_female_probability_from_name),
+      sex_method = winner_female_probability_method
+    )
   inner_join(wards, sex, by = "ward", relationship = "one-to-one") |>
     mutate(
       treat = as.integer(str_detect(category, "Women")),
       dalit = as.integer(str_detect(category, "Scheduled Caste")),
-      female_winner = case_when(winner_sex == "female" ~ 1, winner_sex == "male" ~ 0)
+      female_winner = if_else(treat == 1, 1, female_from_name)
     ) |>
     rename_with(~ paste0(.x, "_", y), -ward)
 }

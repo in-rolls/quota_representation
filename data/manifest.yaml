@@ -13,20 +13,21 @@ cache_dir: ~/data
 upstream:
   local_elections:
     repo: in-rolls/local_elections
-    ref: 6e8ae2a762edd42c486bb4513e39a5aee00a8514
+    ref: 508ede3a6be42292062b51ffa554704cab788a52
     raw: https://raw.githubusercontent.com/in-rolls/local_elections
     sibling: ../local_elections
     files:
       data/master/master_bihar.parquet: bc0f613630c4b532f03b19f8a1150a31dc426c51f5f93a048671572b3bbd37aa
       data/master/master_haryana.parquet: 36fd48afcc71bb77269761ed40ed73229a094fa2e3e9d1a81283a733e184ba8a
-      data/master/master_extras.parquet: dce9b128893074a872c427b24efe91042d49a92d25de091209d26831aebe673b
-      data/master/supplemental_seat_links.parquet: de9d1c74a0cb285f9d1ebe37646e73a601a6edaf7961231ddfa35993ebc60548
+      data/master/master_extras.parquet: b8e49e1c83e3fd62feb641562003ff0d7cc923f512a02e2a31027d748aec7823
+      data/master/supplemental_seat_links.parquet: 36c3f837002de060f8d262e1170c9285f427f687c2c29f29d0c63761fb0594e1
       data/delhi/qualification_audit/sources/goyal_mapping.tab: 1e2056da3318c7a052c12caf46dd304e9f4900fcbfbd4d075d66651d18a9fd40
       data/maharashtra/mumbai/dataverse_IO9SLQ/mumbai_full.tab: 84e22d9a14809a17a8ce0af5c4e65d0c27250bebc9b6261a813607ead9e17dbb
       data/maharashtra/ulb_ward_2012.csv: 2a3efe26109358564cc0697d972749b8261add3f39bf8c5f70e4b2db518b4816
       data/opencity/kolkata_kmc_2010_candidates.csv: f5d7560894a548f190181e5f3f8a06c990f73a0276ed6ee66b5eb40c688a68ad
       data/opencity/kolkata_kmc_2015_candidates.csv: aeccd83343c50a7d615dba6ee24795d74a19647ac2933f84ea2997b67f796491
-      data/opencity/kolkata_winner_sex.csv: 2599033f6f638b948db443ff543b9a0a63a0c31e90816cc9058c6c20cf0566e8
+      data/opencity/kolkata_winner_sex.csv: f7c499caf25860d73792220b0258896d349bda52d42b465ceab99966f265d483
+      data/master/master_uttarakhand.parquet: d7e92c0e1cf9d46dde98ac6a927166a9ed70da37f0e303935842395e7b3814e9
   local_elections_rajasthan:
     repo: in-rolls/local_elections_rajasthan
     ref: 8773067fefe9c0ff549d0c9d12688018f19a156a
