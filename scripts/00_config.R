@@ -237,6 +237,9 @@ raj_path <- function(file) sibling_path(file, source = "local_elections_rajastha
 raj_product_path <- function(file) raj_path(file.path("data/fin/elections", file))
 
 bihar_path <- function(file) sibling_path(file, source = "local_elections_bihar")
+## The pooled corpus: state repositories' seats in one schema, with recorded and
+## name-inferred winner sex in separate columns and the states' seat links.
+pooled_path <- function(file) sibling_path(file, source = "local_elections")
 
 election_panel_path <- function(state, file) {
   if (state == "raj") raj_product_path(file) else here::here("data", state, file)

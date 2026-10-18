@@ -238,17 +238,17 @@ test_that("survey links attach by candidate identity and survive row reordering"
   expect_equal(nrow(forward), 35L)
 })
 
-test_that("Bihar panels follow one-to-one upstream seat links", {
-  links <- list(
-    `11_16` = read_parquet(bihar_path("data/linkage/mukhiya_2011_2016.parquet")),
-    `16_21` = read_parquet(bihar_path("data/linkage/mukhiya_2016_2021.parquet"))
-  )
-  for (panel in names(links)) {
+source(here("scripts/00_pooled.R"))
+test_that("Bihar panels follow one-to-one pooled seat links", {
+  links <- pooled_links("Bihar")
+  ends <- list(`11_16` = c(2011, 2016, "row_id_2011"), `16_21` = c(2016, 2021, "gp_id"))
+  for (panel in names(ends)) {
+    e <- ends[[panel]]
+    l <- filter(links, from_year == as.integer(e[1]), to_year == as.integer(e[2]))
     p <- read_parquet(here("data/bh", paste0("bh_", panel, ".parquet")))
-    link_ids <- with(links[[panel]], paste(district_code, block_code, unit_code, sep = "_"))
     expect_false(anyDuplicated(p$gp_id) > 0)
-    expect_true(all(p$gp_id %in% link_ids))
-    expect_lte(nrow(p), nrow(links[[panel]]))
+    expect_true(all(p[[e[3]]] %in% l$from_row_id))
+    expect_lte(nrow(p), nrow(l))
     later <- paste0("treat_20", strsplit(panel, "_")[[1]][2])
     expect_true(all(p[[later]] %in% 0:1))
     # An unstated 2011 women's label stays missing; only the inclusive recode fills it.
@@ -260,6 +260,35 @@ test_that("Bihar panels follow one-to-one upstream seat links", {
       expect_true(all(p$treat_2016 %in% 0:1))
     }
   }
+})
+
+test_that("Haryana panels drop conflicting 2010 blocks and keep the inferred outcome a probability", {
+  p <- read_parquet(here("data/hr/hr_10_16.parquet"))
+  expect_false(anyDuplicated(p$gp_id) > 0)
+  expect_false(any(p$conflict_2010))
+  expect_true(all(p$treat_2010 %in% 0:1) && all(p$treat_2016 %in% 0:1))
+  f <- p$female_winner_2016[!is.na(p$female_winner_2016)]
+  expect_true(all(f >= 0 & f <= 1))
+  # Women's seats should be won by women: the name model must say so on average.
+  expect_gt(mean(p$female_winner_2016[p$treat_2016 == 1], na.rm = TRUE), 0.85)
+  links <- filter(pooled_links("Haryana"), from_year == 2010, to_year == 2016)
+  expect_true(all(p$gp_id %in% links$to_row_id))
+})
+
+haryana <- read_csv(here("tabs/haryana_inference.csv"), show_col_types = FALSE)
+test_that("Haryana short-term estimate reproduces after independent within-block OLS", {
+  d <- read_parquet(here("data/hr/hr_10_16.parquet")) |>
+    filter(treat_2016 == 0) |>
+    drop_na(female_winner_2016, dist_block_2016)
+  within_x <- d$treat_2010 - ave(d$treat_2010, d$dist_block_2016)
+  within_y <- d$female_winner_2016 - ave(d$female_winner_2016, d$dist_block_2016)
+  independent <- lm(within_y ~ within_x - 1)
+  covariance <- sandwich::vcovCL(independent, cluster = d$dist_block_2016, type = "HC0")
+  covariance <- covariance * (nrow(d) - 1) / (nrow(d) - 2)
+  row <- haryana |> filter(period == "2010-2016", sample == "full", fixed_effects, variance == "cluster")
+  expect_equal(row$estimate, unname(coef(independent)), tolerance = 1e-9)
+  expect_equal(row$standard_error, sqrt(drop(covariance)), tolerance = 1e-8)
+  expect_equal(row$n, nrow(d))
 })
 
 bihar <- read_csv(here("tabs/bihar_inference.csv"), show_col_types = FALSE)

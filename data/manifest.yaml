@@ -11,6 +11,16 @@
 cache_dir: ~/data
 
 upstream:
+  local_elections:
+    repo: in-rolls/local_elections
+    ref: a6e3ad0d45639fe2c46206c051112d08709d3b7c
+    raw: https://raw.githubusercontent.com/in-rolls/local_elections
+    sibling: ../local_elections
+    files:
+      data/master/master_bihar.parquet: bc0f613630c4b532f03b19f8a1150a31dc426c51f5f93a048671572b3bbd37aa
+      data/master/master_haryana.parquet: d236d468431823a90df573d3c97bbe8d0272d7116c515ad2b81c58ddcf51da35
+      data/master/master_extras.parquet: 985f19e127ffaa72a56e4ecf793a736117c5ab9ba61656e357fcf42d85cd1e1f
+      data/master/supplemental_seat_links.parquet: e6d0c20759f5b377aae39754b83bd3194286083f64e50676d025c5f2348c91fb
   local_elections_rajasthan:
     repo: in-rolls/local_elections_rajasthan
     ref: 8773067fefe9c0ff549d0c9d12688018f19a156a
