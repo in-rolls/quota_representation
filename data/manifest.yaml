@@ -21,6 +21,9 @@ upstream:
       data/master/master_haryana.parquet: d236d468431823a90df573d3c97bbe8d0272d7116c515ad2b81c58ddcf51da35
       data/master/master_extras.parquet: 985f19e127ffaa72a56e4ecf793a736117c5ab9ba61656e357fcf42d85cd1e1f
       data/master/supplemental_seat_links.parquet: e6d0c20759f5b377aae39754b83bd3194286083f64e50676d025c5f2348c91fb
+      data/delhi/qualification_audit/sources/goyal_mapping.tab: 1e2056da3318c7a052c12caf46dd304e9f4900fcbfbd4d075d66651d18a9fd40
+      data/maharashtra/mumbai/dataverse_IO9SLQ/mumbai_full.tab: 84e22d9a14809a17a8ce0af5c4e65d0c27250bebc9b6261a813607ead9e17dbb
+      data/maharashtra/ulb_ward_2012.csv: 2a3efe26109358564cc0697d972749b8261add3f39bf8c5f70e4b2db518b4816
   local_elections_rajasthan:
     repo: in-rolls/local_elections_rajasthan
     ref: 8773067fefe9c0ff549d0c9d12688018f19a156a

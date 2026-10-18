@@ -65,6 +65,15 @@ Women's quotas were not reassigned between 2016 and 2021: 98% of linked GPs keep
 
 Seven 2010 blocks print far fewer women's seats than the statutory third while the commission's own reservation table and the winners' names disagree; their 411 linked GPs are dropped (pooled flag `reservation_source_conflict`). Haryana rotates women's seats: 95% of 2010 women's seats are open in 2016, so the within-district independence restriction retains no district and the comparison rests on the rotation, as in Rajasthan and UP. Effects are estimated for 2010–2016 only. Under the 2020 amendment only women contest women's offices and only persons other than women contest the rest, so no woman can win an open 2022 seat; 2016–2022 appears only in the transition and rotation tables.
 
+## Delhi and Mumbai councils
+
+`scripts/02e_city_panels.R` and `scripts/12_cities.R` apply the same estimand to two municipal councils, 2007–2012: does a women's quota in 2007 raise the chance that a woman wins the ward when it is open in 2012? Both cities kept one ward map for 2007 and 2012 and redrew it for 2017, so this is the only pair in which a ward number names the same place twice. The inputs are pinned files in `local_elections`, not the pooled master, which holds rural seats only.
+
+- **Delhi** (272 wards; 134 open in 2012). Categories, assembly constituencies and winner gender come from Goyal's replication deposit. Its 2007 categories match the commission's 2007 order, including five wards another file leaves blank. The 2007 order gave every third non-SC ward in a fixed list to women; the 2012 seats were drawn afresh (52% of 2007 women's wards reserved again, against 50% of the rest).
+- **Mumbai** (227 wards; 112 open in 2012). The 2007 women's seats and both councils' winner sex come from the Karekurve-Ramachandra and Lee deposit (Dataverse IO9SLQ); the 2012 categories come from `ulb_ward_2012`. Mumbai rotates: 75 of 76 wards reserved in 2007 are open in 2012. The 37 wards open in both years were therefore chosen by the rotation rule, probably on the 2002 categories, which are not held. If those wards were reserved in 2002, the Mumbai contrast compares a quota one term ago with a quota two terms ago, and understates the effect of having had one.
+
+Women rarely win open council seats in either city (6 of 134 in Delhi, 7 of 112 in Mumbai), so the estimates are imprecise and Fisher's exact test is reported beside them. Delhi has no constituency fixed effects: only one of its 68 constituencies holds both a woman winner and open wards that differ in their 2007 quota.
+
 ## Versions
 
 `pre-corrections-20260912` preserves the manuscript and code before these revisions; it is not a certification that every earlier exhibit reproduces. Current scripts overwrite the current derived outputs. Git and release tags preserve earlier versions. The `v1.0` release uses the revised linkage and inference, reports cumulative contrasts explicitly, and treats the phone findings as evidence consistent with proxy governance. The phone audit does not establish who governs or explain the electoral effects.

@@ -291,6 +291,38 @@ test_that("Haryana short-term estimate reproduces after independent within-block
   expect_equal(row$n, nrow(d))
 })
 
+test_that("City panels keep one ward map and women win the women's seats", {
+  del <- read_parquet(here("data/cities/del_07_12.parquet"))
+  mum <- read_parquet(here("data/cities/mum_07_12.parquet"))
+  expect_equal(c(nrow(del), nrow(mum)), c(272L, 227L))
+  expect_false(anyDuplicated(c(del$ward_id, mum$ward_id)) > 0)
+  # Wards reserved for women in 2012 must have elected women. Mumbai has one
+  # exception in the deposit's coding.
+  expect_equal(mean(del$female_winner_2012[del$treat_2012 == 1]), 1)
+  expect_gte(sum(mum$female_winner_2012[mum$treat_2012 == 1], na.rm = TRUE), sum(mum$treat_2012) - 1)
+  # The five wards another Delhi file leaves blank, read from the commission's
+  # 2007 reservation order (local_elections data/delhi/reservation_order_*_2007.pdf).
+  order_2007 <- c("3" = "W", "5" = "SC", "7" = "W", "9" = "SC", "47" = "W")
+  expect_equal(del$category_2007[match(names(order_2007), del$ward)], unname(order_2007))
+  expect_equal(c(sum(del$treat_2007), sum(mum$treat_2007)), c(92L, 76L))
+})
+
+cities <- read_csv(here("tabs/cities_inference.csv"), show_col_types = FALSE)
+test_that("City estimates equal the raw difference in open-ward women's win rates", {
+  for (city in c("Delhi", "Mumbai")) {
+    p <- read_parquet(here("data/cities", if (city == "Delhi") "del_07_12.parquet" else "mum_07_12.parquet")) |>
+      filter(treat_2012 == 0)
+    row <- filter(cities, city == !!city)
+    treated <- p$treat_2007 == 1
+    expect_equal(row$estimate, mean(p$female_winner_2012[treated]) - mean(p$female_winner_2012[!treated]),
+      tolerance = 1e-12
+    )
+    expect_equal(c(row$left_women, row$right_women), c(
+      sum(p$female_winner_2012[treated]), sum(p$female_winner_2012[!treated])
+    ))
+  }
+})
+
 bihar <- read_csv(here("tabs/bihar_inference.csv"), show_col_types = FALSE)
 test_that("Bihar short-term estimate reproduces after independent within-block OLS", {
   d <- read_parquet(here("data/bh/bh_11_16.parquet")) |>
