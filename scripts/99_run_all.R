@@ -2,7 +2,7 @@ library(here)
 options(warn = 1)
 
 scripts <- c(
-  "02b_up_recode.R", "02c_bihar_panels.R", "02d_haryana_panels.R", "02e_city_panels.R", "02f_uttarakhand_panels.R", "02g_tamil_nadu_panels.R",
+  "02b_up_recode.R", "02c_bihar_panels.R", "02d_haryana_panels.R", "02e_city_panels.R", "02f_uttarakhand_panels.R", "02g_tamil_nadu_panels.R", "02h_jharkhand_panels.R",
   "01g_audit_crosswalk_provenance.R",
   "03a_raj_shrug_match.R", "03b_up_shrug_match.R",
   "08a_phone_survey_tables.R", "04a_descriptive_tables.R", "04c_transition_matrices.R",
@@ -11,7 +11,7 @@ scripts <- c(
   "05c_short_term_treatment_rotation.R", "05d_short_term_placebo.R",
   "05e_short_term_covariates.R", "05f_short_term_het_effects.R",
   "06a_long_term_main.R", "06b_long_term_treatment_rotation.R",
-  "06c_long_term_random_rotation.R", "09a_model_validation.R", "10_bihar.R", "11_haryana.R", "12_cities.R", "13_uttarakhand.R", "14_tamil_nadu.R",
+  "06c_long_term_random_rotation.R", "09a_model_validation.R", "10_bihar.R", "11_haryana.R", "12_cities.R", "13_uttarakhand.R", "14_tamil_nadu.R", "15_jharkhand.R",
   "04f_power_analysis.R", "07a_raj_contesting_candidates.R",
   "07b_candidate_quality.R",
   "09_weaver_replication.R", "97_manuscript_numbers.R", "98_validate.R"

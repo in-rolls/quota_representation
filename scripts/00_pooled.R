@@ -18,7 +18,7 @@ pooled_heads <- function(state_slug, extras = character()) {
   heads <- open_dataset(pooled_path(paste0("data/master/master_", state_slug, ".parquet"))) |>
     filter(tier == "gp_head") |>
     select(
-      row_id, year, district, block, gram_panchayat, caste_reservation,
+      row_id, year, district, block, gp_no, gram_panchayat, caste_reservation,
       woman_reserved, reservation_raw, winner, quality_flags
     ) |>
     collect() |>

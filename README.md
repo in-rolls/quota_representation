@@ -84,6 +84,14 @@ The outcome is the winner's recorded sex, printed on the State Election Commissi
 
 Rotation is close to strict: 98% of 2011 women's seats are open in the later round, and 75% of 2011 open seats become women's seats. On the 6,108 seats open in the later round, a 2011 women's quota goes with 1.1–1.5 points more women winning (14.3% against 13.1%). Wild-bootstrap p-values are 0.26 with union fixed effects and 0.15 with union and caste-transition fixed effects. The placebo fails: among seats open in 2011, those reserved later had elected 2 points fewer women in 2011 (p < 0.01). As in Uttarakhand 2008–2014, the seats left open twice differ beforehand.
 
+## Jharkhand extension
+
+`scripts/02h_jharkhand_panels.R` and `scripts/15_jharkhand.R` add Jharkhand mukhiya seats, 2015 to 2022, read from the pooled `local_elections` release. Seat links come from `local_elections_jharkhand`: Form 23 results OCRed on-device, GP names matched one-to-one inside a hand-coded block crosswalk. 3,831 seats link.
+
+Form 23 prints the seat's reservation, not the winner's sex. The outcome is the pooled `winner_female_probability_from_name`, from the same model as Uttarakhand's. The model is weaker on Scheduled Tribe seats: winners of ST women's seats, who must be women, average 0.88, against 0.98 on other women's seats. Santal, Munda, Oraon and Christian given names are rare in the UP and Bihar training labels. Every model is therefore run three ways: all seats, non-ST seats only, and ST seats rescaled by that recall.
+
+Rotation is near total: 92% of 2015 open seats became women's seats in 2022. So among 1,772 seats open in 2022, only 143 also had no quota in 2015 (18 among seats ST in both years), and those 143 are the whole comparison group. On seats open in 2022, a 2015 quota goes with 5–7 points more women winning with block fixed effects. The raw gap is 22.0% against 11.4%. Wild-bootstrap p-values are 0.10–0.26, and the estimates hold across the three treatments of ST seats. The placebo passes: 0.009 for all seats and 0.04 for non-ST seats.
+
 ## Municipal councils
 
 `scripts/02e_city_panels.R` and `scripts/12_cities.R` apply the same estimand to municipal councils: does a women's quota in one election raise the chance that a woman wins the ward when it is open in the next? A council enters only for a pair of elections on one ward map. The inputs are pinned files in `local_elections`, not the pooled master, which holds rural seats only.
