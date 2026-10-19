@@ -73,6 +73,17 @@ Seven 2010 blocks print far fewer women's seats than the statutory third while t
 
 Uttarakhand rotates women's seats within caste categories, which also rotate: 87% of 2008 women's seats are open in 2014, and 82% of 2008 open seats are reserved. The open seats without a prior quota (462 in 2014, 446 in 2019) are the rotation's exceptions, and most of them changed caste category in between. Each model is therefore also estimated within (earlier category, later category) cells as well as blocks. On seats open in the later election, a prior quota goes with a lower expected share of women winning: about 3 points in 2014 (8.4% against 11.8%) and 4–5 points in 2019 (14.7% against 19.0%). The placebo fails for 2008–2014. Among seats open in 2008, those reserved in 2014 had elected 4 points fewer women in 2008, the size of the main estimate, so the 2008–2014 contrast may reflect which seats the rotation left open rather than the quota. The 2014–2019 placebo is 0.005.
 
+## Tamil Nadu extension
+
+`scripts/02g_tamil_nadu_panels.R` and `scripts/14_tamil_nadu.R` add Tamil Nadu village panchayat presidents with the same estimand, from 2011 to the next ordinary election: 2019 in 27 districts, 2021 in the nine districts carved out after 2011. Both read the pooled `local_elections` release. Seat links come from `local_elections_tamil_nadu`. Seats are matched one-to-one by folded Tamil name inside a hand-coded union crosswalk; unions, not districts, are the blocking unit, because six districts were split. 12,234 seats link. Linked pairs share a candidate name across the two elections 10.8% of the time, against 0.12% for random pairs in the same unions.
+
+The outcome is the winner's recorded sex, printed on the State Election Commission's result sheets, so no name inference is involved. Two things differ from the other states:
+
+- **The quota grew.** Women's reservation was one third of seats in 2011 and one half from 2019.
+- **Eight years separate the elections,** because the 2016 election was cancelled.
+
+Rotation is close to strict: 98% of 2011 women's seats are open in the later round, and 75% of 2011 open seats become women's seats. On the 6,108 seats open in the later round, a 2011 women's quota goes with 1.1–1.5 points more women winning (14.3% against 13.1%). Wild-bootstrap p-values are 0.26 with union fixed effects and 0.15 with union and caste-transition fixed effects. The placebo fails: among seats open in 2011, those reserved later had elected 2 points fewer women in 2011 (p < 0.01). As in Uttarakhand 2008–2014, the seats left open twice differ beforehand.
+
 ## Municipal councils
 
 `scripts/02e_city_panels.R` and `scripts/12_cities.R` apply the same estimand to municipal councils: does a women's quota in one election raise the chance that a woman wins the ward when it is open in the next? A council enters only for a pair of elections on one ward map. The inputs are pinned files in `local_elections`, not the pooled master, which holds rural seats only.
