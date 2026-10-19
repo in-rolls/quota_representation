@@ -316,6 +316,30 @@ test_that("Uttarakhand estimates reproduce: raw difference and independent withi
   expect_true(all(rows$n == nrow(d)))
 })
 
+test_that("Tamil Nadu panel links one seat to one seat and women win the women's seats", {
+  p <- read_parquet(here("data/tn/tn_11_later.parquet"))
+  expect_false(anyDuplicated(p$gp_id) > 0)
+  expect_false(anyDuplicated(p$row_id_2011) > 0)
+  # recorded sex: every 2011 women's seat went to a woman; the later round has a
+  # few seats recorded as won by a man
+  expect_equal(mean(p$female_winner_2011[p$treat_2011 == 1], na.rm = TRUE), 1)
+  expect_gt(mean(p$female_winner_later[p$treat_later == 1], na.rm = TRUE), 0.99)
+})
+
+tamil_nadu <- read_csv(here("tabs/tamil_nadu_inference.csv"), show_col_types = FALSE)
+test_that("Tamil Nadu estimates reproduce: raw difference and independent within-union OLS", {
+  d <- read_parquet(here("data/tn/tn_11_later.parquet")) |>
+    filter(treat_later == 0) |>
+    drop_na(female_winner_later)
+  raw <- mean(d$female_winner_later[d$treat_2011 == 1]) - mean(d$female_winner_later[d$treat_2011 == 0])
+  rows <- tamil_nadu |> filter(variance == "cluster")
+  expect_equal(rows$estimate[rows$specification == "No FE"], raw, tolerance = 1e-9)
+  within_x <- d$treat_2011 - ave(d$treat_2011, d$dist_block_later)
+  within_y <- d$female_winner_later - ave(d$female_winner_later, d$dist_block_later)
+  expect_equal(rows$estimate[rows$specification == "Block FE"], unname(coef(lm(within_y ~ within_x - 1))), tolerance = 1e-9)
+  expect_true(all(rows$n == nrow(d)))
+})
+
 test_that("City panels keep one ward map and women win the women's seats", {
   del <- read_parquet(here("data/cities/del_07_12.parquet"))
   mum <- read_parquet(here("data/cities/mum_07_12.parquet"))
