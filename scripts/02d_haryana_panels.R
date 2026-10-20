@@ -3,7 +3,7 @@
 # 2016-2022 (described only)
 #
 # Where inference happens. Haryana's notifications record no winner sex, so the
-# outcome is the pooled `winner_female_probability_from_name`: a probability that
+# outcome is the pooled `winner_woman_probability`: a probability that
 # the winner is a woman, made upstream in local_elections_haryana from the printed
 # name (naampy's first-name score plus fixed name markers, recalibrated on 2022
 # winners, whose sex the 2020 amendment fixes). Averaged over seats it estimates a
@@ -29,10 +29,10 @@ library(stringr)
 source(here("scripts/00_config.R"))
 source(here("scripts/00_pooled.R"))
 
-heads <- pooled_heads("haryana", extras = "winner_female_probability_from_name") |>
+heads <- pooled_heads("haryana", extras = "winner_woman_probability") |>
   mutate(
-    female_winner = as.numeric(winner_female_probability_from_name),
-    dalit = as.integer(caste_reservation %in% "SC"),
+    female_winner = as.numeric(winner_woman_probability),
+    dalit = as.integer(reserved_caste %in% "SC"),
     conflict = str_detect(coalesce(quality_flags, ""), "reservation_source_conflict")
   )
 
@@ -42,7 +42,7 @@ by_year <- function(y) {
     transmute(
       row_id,
       district = district, block = block,
-      treat = woman_reserved, dalit, female_winner, conflict
+      treat = reserved_woman, dalit, female_winner, conflict
     ) |>
     rename_with(~ paste0(.x, "_", y), -row_id) |>
     rename(!!paste0("row_id_", y) := row_id)

@@ -3,7 +3,7 @@
 # 2008-2014 and 2014-2019
 #
 # Outcome. The results portal records no winner sex, so the outcome is the pooled
-# `winner_female_probability_from_name`, made upstream in
+# `winner_woman_probability`, made upstream in
 # local_elections_uttarakhand: a character model on the Devanagari name plus
 # naampy on its indicate romanization and fixed name markers, fit on recorded
 # candidate sex in Uttar Pradesh and Bihar. Averaged over seats it estimates a
@@ -32,17 +32,17 @@ library(stringr)
 source(here("scripts/00_config.R"))
 source(here("scripts/00_pooled.R"))
 
-heads <- pooled_heads("uttarakhand", extras = "winner_female_probability_from_name") |>
+heads <- pooled_heads("uttarakhand", extras = "winner_woman_probability") |>
   mutate(
-    female_winner = as.numeric(winner_female_probability_from_name),
-    caste = coalesce(caste_reservation, "GEN"),
+    female_winner = as.numeric(winner_woman_probability),
+    caste = coalesce(reserved_caste, "GEN"),
     dalit = as.integer(caste %in% "SC")
   )
 
 by_year <- function(y) {
   heads |>
     filter(year == y) |>
-    transmute(row_id, district, block, treat = woman_reserved, caste, dalit, female_winner) |>
+    transmute(row_id, district, block, treat = reserved_woman, caste, dalit, female_winner) |>
     rename_with(~ paste0(.x, "_", y), -row_id) |>
     rename(!!paste0("row_id_", y) := row_id)
 }

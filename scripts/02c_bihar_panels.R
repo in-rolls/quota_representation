@@ -12,15 +12,23 @@ library(stringr)
 source(here("scripts/00_config.R"))
 source(here("scripts/00_pooled.R"))
 
-# A woman won when the recorded winner is female. Seats without a recorded winner
-# stay missing; an "other" winner is not a woman.
-female <- function(gender) if_else(is.na(gender), NA_integer_, as.integer(gender == "female"))
+# A woman won when the recorded winner is a woman (pooled winner_woman, 1/0).
+# Seats without a recorded winner stay missing. A winner recorded as other
+# (अन्य, तृतीय लिंग) has no winner_woman value but is not a woman, so 0.
+OTHER <- c("अन्य", "तृतीय लिंग")
+female <- function(woman, raw) {
+  case_when(
+    !is.na(woman) ~ as.integer(woman),
+    str_squish(raw) %in% OTHER ~ 0L,
+    .default = NA_integer_
+  )
+}
 
-heads <- pooled_heads("bihar", extras = c("winner_gender", "code_repeated")) |>
+heads <- pooled_heads("bihar", extras = c("winner_woman", "winner_woman_raw", "code_repeated")) |>
   mutate(
-    obc = as.integer(caste_reservation %in% "BC"),
-    dalit = as.integer(caste_reservation %in% c("SC", "ST")),
-    female_winner = female(winner_gender)
+    obc = as.integer(reserved_caste %in% "BC"),
+    dalit = as.integer(reserved_caste %in% c("SC", "ST")),
+    female_winner = female(winner_woman, winner_woman_raw)
   )
 
 # The form reuses one code for two places in a few parents, so those seats' pages
@@ -31,31 +39,31 @@ gp_2016 <- heads |>
     gp_id = row_id,
     district_2016 = str_remove(district, "^\\d+ - "),
     block_2016 = str_remove(block, "^\\d+ - "),
-    reservation_2016 = reservation_raw,
-    treat_2016 = woman_reserved, obc_2016 = obc, dalit_2016 = dalit,
+    reservation_2016 = reserved_raw,
+    treat_2016 = reserved_woman, obc_2016 = obc, dalit_2016 = dalit,
     female_winner_2016 = female_winner,
     dist_block_2016 = str_c(district_2016, block_2016, sep = "_")
   )
 
-# The 2011 reports print the seat label as written; the pooled woman_reserved is
+# The 2011 reports print the seat label as written; the pooled reserved_woman is
 # set only where the label says so. The inclusive sensitivity also reads a bare
 # category ("अनारक्षित") as not reserved for women, but only in districts whose
 # reports print women's labels at all.
 winners_2011 <- heads |>
   filter(year == 2011) |>
   group_by(district) |>
-  mutate(prints_women = any(woman_reserved %in% 1L)) |>
+  mutate(prints_women = any(reserved_woman %in% 1L)) |>
   ungroup() |>
   transmute(
     row_id_2011 = row_id,
-    treat_2011 = woman_reserved,
+    treat_2011 = reserved_woman,
     treat_2011_inclusive = case_when(
-      !is.na(woman_reserved) ~ woman_reserved,
-      !is.na(caste_reservation) & prints_women ~ 0L,
+      !is.na(reserved_woman) ~ reserved_woman,
+      !is.na(reserved_caste) & prints_women ~ 0L,
       .default = NA_integer_
     ),
     female_winner_2011 = female_winner, obc_2011 = obc, dalit_2011 = dalit,
-    reservation_2011 = reservation_raw
+    reservation_2011 = reserved_raw
   )
 
 links <- pooled_links("Bihar")
@@ -74,8 +82,8 @@ bh_11_16 <- links |>
 gp_2021 <- heads |>
   filter(year == 2021) |>
   transmute(
-    row_id_2021 = row_id, reservation_2021 = reservation_raw,
-    treat_2021 = woman_reserved, obc_2021 = obc, dalit_2021 = dalit,
+    row_id_2021 = row_id, reservation_2021 = reserved_raw,
+    treat_2021 = reserved_woman, obc_2021 = obc, dalit_2021 = dalit,
     female_winner_2021 = female_winner
   )
 
