@@ -1,0 +1,31 @@
+
+\begingroup
+\centering
+\scriptsize
+\begin{adjustbox}{max width=\linewidth}
+   \begin{threeparttable}[b]
+      \begin{tabular}{lccccccccc}
+         \toprule
+          & \multicolumn{3}{c}{All seats} & \multicolumn{3}{c}{Both routes} & \multicolumn{3}{c}{Thresholded at 0.5} \\ 
+                                      & All seats No FE & All seats Mandal FE & All seats Mandal + caste transition FE & Both routes No FE & Both routes Mandal FE & Both routes Mandal + caste transition FE & Thresholded at 0.5 No FE & Thresholded at 0.5 Mandal FE & Thresholded at 0.5 Mandal + caste transition FE \\   
+                                      & [i]             & [ii]                & [iii]                                  & [iv]              & [v]                   & [vi]                                     & [vii]                    & [viii]                       & [ix]\\  
+         \midrule 
+         $\text{Quota}_{2019}$        & 0.01            & 0.01                & 0.006                                  & 0.01              & 0.01                  & 0.007                                    & 0.01                     & 0.01                         & 0.01\\   
+                                      & (0.009)         & (0.009)             & (0.010)                                & (0.01)            & (0.01)                & (0.01)                                   & (0.01)                   & (0.01)                       & (0.01)\\   
+          \\
+         R$^2$                        & 0.0002          & 0.09                & 0.10                                   & 0.0003            & 0.10                  & 0.11                                     & 0.0002                   & 0.10                         & 0.10\\  
+         Observations                 & 6,229           & 6,229               & 6,229                                  & 5,139             & 5,139                 & 5,139                                    & 6,229                    & 6,229                        & 6,229\\  
+          \\
+         (District, Mandal) FE        &                 & $\checkmark$        & $\checkmark$                           &                   & $\checkmark$          & $\checkmark$                             &                          & $\checkmark$                 & $\checkmark$\\   
+         Caste category transition FE &                 &                     & $\checkmark$                           &                   &                       & $\checkmark$                             &                          &                              & $\checkmark$\\   
+         \bottomrule
+      \end{tabular}
+      
+      \begin{tablenotes}
+         \item Outcome: the name-based probability that the 2025 sarpanch is a woman (an expected share; neither source records the winner's sex), among seats not reserved for women in 2025. Both routes: seat pairs linked by both the commission's GP code and the GP name. Thresholded: the probability set to 1 at or above 0.5 and 0 below. Caste transition: the GP's caste category in the earlier and later elections. Standard errors clustered by district-mandal.
+      \end{tablenotes}
+   \end{threeparttable}
+\end{adjustbox}
+\par\endgroup
+
+

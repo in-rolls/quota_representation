@@ -366,6 +366,32 @@ test_that("Jharkhand estimates reproduce: raw difference and independent within-
   expect_true(all(rows$n == nrow(d)))
 })
 
+test_that("Telangana panel links one seat to one seat and the name model reads women's seats", {
+  p <- read_parquet(here("data/tg/tg_19_25.parquet"))
+  expect_false(anyDuplicated(p$gp_id) > 0)
+  expect_false(anyDuplicated(p$row_id_2019) > 0)
+  expect_setequal(unique(p$link_pass), c("code_and_name", "code_only", "name_only"))
+  for (y in c("2019", "2025")) {
+    f <- p[[paste0("female_winner_", y)]]
+    expect_true(all(f[!is.na(f)] >= 0 & f[!is.na(f)] <= 1))
+    expect_gt(mean(f[p[[paste0("treat_", y)]] == 1], na.rm = TRUE), 0.9)
+  }
+})
+
+telangana <- read_csv(here("tabs/telangana_inference.csv"), show_col_types = FALSE)
+test_that("Telangana estimates reproduce: raw difference and independent within-mandal OLS", {
+  d <- read_parquet(here("data/tg/tg_19_25.parquet")) |>
+    filter(treat_2025 == 0) |>
+    drop_na(female_winner_2025)
+  raw <- mean(d$female_winner_2025[d$treat_2019 == 1]) - mean(d$female_winner_2025[d$treat_2019 == 0])
+  rows <- telangana |> filter(period == "All seats", variance == "cluster")
+  expect_equal(rows$estimate[rows$specification == "No FE"], raw, tolerance = 1e-9)
+  within_x <- d$treat_2019 - ave(d$treat_2019, d$dist_block_2025)
+  within_y <- d$female_winner_2025 - ave(d$female_winner_2025, d$dist_block_2025)
+  expect_equal(rows$estimate[rows$specification == "Mandal FE"], unname(coef(lm(within_y ~ within_x - 1))), tolerance = 1e-9)
+  expect_true(all(rows$n == nrow(d)))
+})
+
 test_that("City panels keep one ward map and women win the women's seats", {
   del <- read_parquet(here("data/cities/del_07_12.parquet"))
   mum <- read_parquet(here("data/cities/mum_07_12.parquet"))

@@ -1,0 +1,4 @@
+"period","variable","quota_mean","open_mean","p_value","n"
+"All seats","female_winner_2019",0.240144493491577,0.802453691826923,0,11464
+"Both routes","female_winner_2019",0.235999037079954,0.808730262432012,0,9463
+"Thresholded at 0.5","female_winner_2019",0.210183767228178,0.819230769230768,0,11464
