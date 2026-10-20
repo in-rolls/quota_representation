@@ -1,0 +1,48 @@
+"period","caste_transition","open_seats","prior_quota","no_prior_quota"
+"All seats","BC->BC",25,11,14
+"All seats","BC->NONE",957,849,108
+"All seats","BC->SC",118,99,19
+"All seats","BC->ST",16,10,6
+"All seats","NONE->BC",834,665,169
+"All seats","NONE->NONE",541,449,92
+"All seats","NONE->SC",901,710,191
+"All seats","NONE->ST",322,252,70
+"All seats","SC->BC",234,182,52
+"All seats","SC->NONE",756,681,75
+"All seats","SC->SC",24,13,11
+"All seats","SC->ST",35,21,14
+"All seats","ST->BC",9,6,3
+"All seats","ST->NONE",273,241,32
+"All seats","ST->SC",24,20,4
+"All seats","ST->ST",1160,1066,94
+"Both routes","BC->BC",2,1,1
+"Both routes","BC->NONE",781,698,83
+"Both routes","BC->SC",95,80,15
+"Both routes","BC->ST",13,8,5
+"Both routes","NONE->BC",708,570,138
+"Both routes","NONE->NONE",420,359,61
+"Both routes","NONE->SC",741,579,162
+"Both routes","NONE->ST",274,213,61
+"Both routes","SC->BC",203,159,44
+"Both routes","SC->NONE",626,563,63
+"Both routes","SC->ST",28,16,12
+"Both routes","ST->BC",4,1,3
+"Both routes","ST->NONE",236,209,27
+"Both routes","ST->SC",18,16,2
+"Both routes","ST->ST",990,924,66
+"Thresholded at 0.5","BC->BC",25,11,14
+"Thresholded at 0.5","BC->NONE",957,849,108
+"Thresholded at 0.5","BC->SC",118,99,19
+"Thresholded at 0.5","BC->ST",16,10,6
+"Thresholded at 0.5","NONE->BC",834,665,169
+"Thresholded at 0.5","NONE->NONE",541,449,92
+"Thresholded at 0.5","NONE->SC",901,710,191
+"Thresholded at 0.5","NONE->ST",322,252,70
+"Thresholded at 0.5","SC->BC",234,182,52
+"Thresholded at 0.5","SC->NONE",756,681,75
+"Thresholded at 0.5","SC->SC",24,13,11
+"Thresholded at 0.5","SC->ST",35,21,14
+"Thresholded at 0.5","ST->BC",9,6,3
+"Thresholded at 0.5","ST->NONE",273,241,32
+"Thresholded at 0.5","ST->SC",24,20,4
+"Thresholded at 0.5","ST->ST",1160,1066,94

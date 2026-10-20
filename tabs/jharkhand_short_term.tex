@@ -1,0 +1,31 @@
+
+\begingroup
+\centering
+\scriptsize
+\begin{adjustbox}{max width=\linewidth}
+   \begin{threeparttable}[b]
+      \begin{tabular}{lccccccccc}
+         \toprule
+          & \multicolumn{3}{c}{All seats} & \multicolumn{3}{c}{Non-ST seats} & \multicolumn{3}{c}{ST rescaled} \\ 
+                                      & All seats No FE & All seats Block FE & All seats Block + caste transition FE & Non-ST seats No FE & Non-ST seats Block FE & Non-ST seats Block + caste transition FE & ST rescaled No FE & ST rescaled Block FE & ST rescaled Block + caste transition FE \\   
+                                      & [i]             & [ii]               & [iii]                                 & [iv]               & [v]                   & [vi]                                     & [vii]             & [viii]               & [ix]\\  
+         \midrule 
+         $\text{Quota}_{2015}$        & 0.11$^{***}$    & 0.07$^{*}$         & 0.05                                  & 0.05$^{*}$         & 0.06                  & 0.06                                     & 0.12$^{***}$      & 0.07$^{*}$           & 0.05\\   
+                                      & (0.03)          & (0.04)             & (0.04)                                & (0.03)             & (0.04)                & (0.04)                                   & (0.03)            & (0.04)               & (0.04)\\   
+          \\
+         R$^2$                        & 0.007           & 0.17               & 0.18                                  & 0.003              & 0.16                  & 0.16                                     & 0.008             & 0.17                 & 0.18\\  
+         Observations                 & 1,772           & 1,772              & 1,772                                 & 846                & 846                   & 846                                      & 1,772             & 1,772                & 1,772\\  
+          \\
+         (District, Block) FE         &                 & $\checkmark$       & $\checkmark$                          &                    & $\checkmark$          & $\checkmark$                             &                   & $\checkmark$         & $\checkmark$\\   
+         Caste category transition FE &                 &                    & $\checkmark$                          &                    &                       & $\checkmark$                             &                   &                      & $\checkmark$\\   
+         \bottomrule
+      \end{tabular}
+      
+      \begin{tablenotes}
+         \item Outcome: the name-based probability that the 2022 mukhiya is a woman (an expected share; Form 23 records no winner sex), among seats not reserved for women in 2022. Non-ST: seats not reserved for ST in either year. ST rescaled: ST seats' probability divided by the model's ST women's-seat recall. Caste transition: the GP's caste category in the earlier and later elections. Standard errors clustered by district-block.
+      \end{tablenotes}
+   \end{threeparttable}
+\end{adjustbox}
+\par\endgroup
+
+

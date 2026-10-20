@@ -1,0 +1,33 @@
+
+\begingroup
+\centering
+\scriptsize
+\begin{adjustbox}{max width=\linewidth}
+   \begin{threeparttable}[b]
+      \begin{tabular}{lcccccc}
+         \toprule
+          & \multicolumn{3}{c}{2008-2014} & \multicolumn{3}{c}{2014-2019} \\ 
+                                      & No FE         & Block FE      & Block + caste transition FE & No FE        & Block FE      & Block + caste transition FE \\   
+                                      & [i]           & [ii]          & [iii]                       & [iv]         & [v]           & [vi]\\  
+         \midrule 
+         $\text{Quota}_{2008}$        & -0.03$^{***}$ & -0.03$^{*}$   & -0.04$^{**}$                &              &               &   \\   
+                                      & (0.01)        & (0.01)        & (0.01)                      &              &               &   \\   
+         $\text{Quota}_{2014}$        &               &               &                             & -0.04$^{**}$ & -0.05$^{**}$  & -0.05$^{*}$\\   
+                                      &               &               &                             & (0.02)       & (0.02)        & (0.02)\\   
+          \\
+         R$^2$                        & 0.003         & 0.04          & 0.05                        & 0.003        & 0.06          & 0.06\\  
+         Observations                 & 2,860         & 2,860         & 2,860                       & 2,533        & 2,533         & 2,533\\  
+          \\
+         (District, Block) FE         &               & $\checkmark$  & $\checkmark$                &              & $\checkmark$  & $\checkmark$\\   
+         Caste category transition FE &               &               & $\checkmark$                &              &               & $\checkmark$\\   
+         \bottomrule
+      \end{tabular}
+      
+      \begin{tablenotes}
+         \item Outcome: the name-based probability that the pradhan is a woman (an expected share, inferred from the Devanagari name; the portal records no winner sex), among seats not reserved for women in the later election. Caste transition: the GP's caste category in the earlier and later elections. Standard errors clustered by district-block.
+      \end{tablenotes}
+   \end{threeparttable}
+\end{adjustbox}
+\par\endgroup
+
+
