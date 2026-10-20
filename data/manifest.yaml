@@ -13,7 +13,7 @@ cache_dir: ~/data
 upstream:
   local_elections:
     repo: in-rolls/local_elections
-    ref: f13aaae5b3a919fecc8976ebb026ee773401ac4f
+    ref: 5f31a5fe9eab7ccc4aee818c9fa26da4cb53845b
     raw: https://raw.githubusercontent.com/in-rolls/local_elections
     sibling: ../local_elections
     files:
