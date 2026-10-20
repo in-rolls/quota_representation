@@ -4,7 +4,7 @@
 # districts carved out after 2011).
 #
 # Outcome. The SEC's result sheets print each candidate's sex, so the outcome is
-# the winner's recorded sex (pooled extra `winner_gender`), not a name-based
+# the winner's recorded sex (pooled extra `winner_woman`, 1/0), not a name-based
 # inference.
 #
 # Quota size. Women's reservation was one third of seats in 2011 and one half from
@@ -27,19 +27,17 @@ library(stringr)
 source(here("scripts/00_config.R"))
 source(here("scripts/00_pooled.R"))
 
-heads <- pooled_heads("tamil_nadu", extras = "winner_gender") |>
+heads <- pooled_heads("tamil_nadu", extras = "winner_woman") |>
   mutate(
-    female_winner = case_when(
-      winner_gender == "female" ~ 1, winner_gender == "male" ~ 0, .default = NA_real_
-    ),
-    caste = caste_reservation,
+    female_winner = as.numeric(winner_woman),
+    caste = reserved_caste,
     dalit = as.integer(caste %in% "SC")
   )
 
 by_year <- function(years, suffix) {
   heads |>
     filter(year %in% years) |>
-    transmute(row_id, year, district, block, treat = woman_reserved, caste, dalit, female_winner) |>
+    transmute(row_id, year, district, block, treat = reserved_woman, caste, dalit, female_winner) |>
     rename_with(~ paste0(.x, "_", suffix), -row_id) |>
     rename(!!paste0("row_id_", suffix) := row_id)
 }

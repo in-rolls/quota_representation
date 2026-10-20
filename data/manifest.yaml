@@ -13,24 +13,24 @@ cache_dir: ~/data
 upstream:
   local_elections:
     repo: in-rolls/local_elections
-    ref: a89a1701b1c0687cc9cc2f6568b4c53b59f81752
+    ref: 2f0ff1b203a6d5ffe1726c9d8f6427245e882a62
     raw: https://raw.githubusercontent.com/in-rolls/local_elections
     sibling: ../local_elections
     files:
-      data/master/master_bihar.parquet: 8dc38e0aae129f6beef382605374f26d86be89ac01d289234932a7de2facee58
-      data/master/master_haryana.parquet: 36fd48afcc71bb77269761ed40ed73229a094fa2e3e9d1a81283a733e184ba8a
-      data/master/master_extras.parquet: dc45b39d33d80472a0801e128cc95e9db6cddb9965641bda5aa8bde73af24298
-      data/master/supplemental_seat_links.parquet: d9ab593d92ab1fd7ddfa7f7ec00a7f66d9260d3d3648b52dde66dc6f1449b0af
+      data/master/master_bihar.parquet: 2e6d4e3ee5cf5f15ddf125b25c670d5e723eff2fc7d3ef59eb7a7ed0d82e2bab
+      data/master/master_haryana.parquet: 00e6e1cf24fd7bb17fea3398a5890002e8b9537cf8a0c1bc418e42f172fcc3db
+      data/master/master_extras.parquet: f67bfd8a10b20a6a36758e92271cf9061b6928c424356726e81cfd36d6b84b8f
+      data/master/supplemental_seat_links.parquet: f3a98f9595307467b98ddd939fae73942d9ce47ba94edac6652900dcdc9961cf
       data/delhi/qualification_audit/sources/goyal_mapping.tab: 1e2056da3318c7a052c12caf46dd304e9f4900fcbfbd4d075d66651d18a9fd40
       data/maharashtra/mumbai/dataverse_IO9SLQ/mumbai_full.tab: 84e22d9a14809a17a8ce0af5c4e65d0c27250bebc9b6261a813607ead9e17dbb
       data/maharashtra/ulb_ward_2012.csv: 2a3efe26109358564cc0697d972749b8261add3f39bf8c5f70e4b2db518b4816
       data/opencity/kolkata_kmc_2010_candidates.csv: f5d7560894a548f190181e5f3f8a06c990f73a0276ed6ee66b5eb40c688a68ad
       data/opencity/kolkata_kmc_2015_candidates.csv: aeccd83343c50a7d615dba6ee24795d74a19647ac2933f84ea2997b67f796491
       data/opencity/kolkata_winner_sex.csv: f7c499caf25860d73792220b0258896d349bda52d42b465ceab99966f265d483
-      data/master/master_uttarakhand.parquet: d7e92c0e1cf9d46dde98ac6a927166a9ed70da37f0e303935842395e7b3814e9
-      data/master/master_tamil_nadu.parquet: 7183c8170b8632019815ecd68ee757a24f4ae75cd36c1874019ca5683715f087
-      data/master/master_jharkhand.parquet: 00ac07ca298ae0d8c656395bff3f2bb31beda8231171b952a1aed591c06d498a
-      data/master/master_telangana.parquet: 06f6560cd4e665769e4e1c51285f408e8c917089d2bc03768f88235a0e961f77
+      data/master/master_uttarakhand.parquet: 4249d1a9448c6384243813d73c9261f679ccfecb6e0fb5889d7983bac4456e86
+      data/master/master_tamil_nadu.parquet: da6a6ad334645a527526f800e2749c7c3931205d061f5049852d1e9c64e83485
+      data/master/master_jharkhand.parquet: 5d3c5d70890f4445cb274d9bc6f6d984835cba4a86c4e7f159a523fadcb6737d
+      data/master/master_telangana.parquet: f42423ad33d9c7dfeed64cc063706dedcb17892701ea399dc0061dbb574a5dcb
   local_elections_rajasthan:
     repo: in-rolls/local_elections_rajasthan
     ref: 8773067fefe9c0ff549d0c9d12688018f19a156a

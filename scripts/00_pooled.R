@@ -12,20 +12,20 @@ library(arrow)
 library(dplyr)
 library(tidyr)
 
-# GP-head rows for one state, with the requested extras as columns. woman_reserved
+# GP-head rows for one state, with the requested extras as columns. reserved_woman
 # is integer 0/1 with NA where the source does not state it.
 pooled_heads <- function(state_slug, extras = character()) {
   heads <- open_dataset(pooled_path(paste0("data/master/master_", state_slug, ".parquet"))) |>
     filter(tier == "gp_head") |>
     select(
-      row_id, year, district, block, gp_no, gram_panchayat, caste_reservation,
-      woman_reserved, reservation_raw, winner, quality_flags
+      row_id, year, district, block, gp_no, gram_panchayat, reserved_caste,
+      reserved_woman, reserved_raw, winner, quality_flags
     ) |>
     collect() |>
     mutate(
       year = as.integer(year),
-      woman_reserved = as.integer(woman_reserved),
-      caste_reservation = na_if(as.character(caste_reservation), "")
+      reserved_woman = as.integer(reserved_woman),
+      reserved_caste = na_if(as.character(reserved_caste), "")
     )
   if (length(extras)) {
     wide <- open_dataset(pooled_path("data/master/master_extras.parquet")) |>

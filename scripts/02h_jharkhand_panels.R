@@ -2,7 +2,7 @@
 # Jharkhand mukhiya (gram panchayat head) panel from the pooled corpus, 2015-2022.
 #
 # Outcome. Form 23 prints the seat's reservation, not the winner's sex, so the
-# outcome is the pooled `winner_female_probability_from_name`, made upstream in
+# outcome is the pooled `winner_woman_probability`, made upstream in
 # local_elections_jharkhand with the same model as Uttarakhand's (a character
 # model on the Devanagari name, naampy on its indicate romanization, fixed name
 # markers; fit on recorded candidate sex in Uttar Pradesh and Bihar). Averaged
@@ -32,10 +32,10 @@ library(stringr)
 source(here("scripts/00_config.R"))
 source(here("scripts/00_pooled.R"))
 
-heads <- pooled_heads("jharkhand", extras = "winner_female_probability_from_name") |>
+heads <- pooled_heads("jharkhand", extras = "winner_woman_probability") |>
   mutate(
-    female_winner = as.numeric(winner_female_probability_from_name),
-    caste = caste_reservation,
+    female_winner = as.numeric(winner_woman_probability),
+    caste = reserved_caste,
     st = as.integer(caste %in% "ST"),
     block_no = str_extract(gp_no, "^[^/]+")
   )
@@ -43,7 +43,7 @@ heads <- pooled_heads("jharkhand", extras = "winner_female_probability_from_name
 by_year <- function(y) {
   heads |>
     filter(year == y) |>
-    transmute(row_id, district, block_no, treat = woman_reserved, caste, st, female_winner) |>
+    transmute(row_id, district, block_no, treat = reserved_woman, caste, st, female_winner) |>
     rename_with(~ paste0(.x, "_", y), -row_id) |>
     rename(!!paste0("row_id_", y) := row_id)
 }

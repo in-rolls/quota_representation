@@ -2,7 +2,7 @@
 # Telangana sarpanch (gram panchayat head) panel from the pooled corpus, 2019-2025.
 #
 # Outcome. Neither the 2019 listing nor the 2025 reports record the winner's sex,
-# so the outcome is the pooled `winner_female_probability_from_name`, made
+# so the outcome is the pooled `winner_woman_probability`, made
 # upstream in local_elections_telangana: naampy on the name's words plus fixed
 # Telugu name endings, combined by a logistic regression fit on Telangana
 # assembly candidates' recorded sex (cross-validated AUC 0.982). Winners of
@@ -30,13 +30,13 @@ library(stringr)
 source(here("scripts/00_config.R"))
 source(here("scripts/00_pooled.R"))
 
-heads <- pooled_heads("telangana", extras = "winner_female_probability_from_name") |>
-  mutate(female_winner = as.numeric(winner_female_probability_from_name), caste = caste_reservation)
+heads <- pooled_heads("telangana", extras = "winner_woman_probability") |>
+  mutate(female_winner = as.numeric(winner_woman_probability), caste = reserved_caste)
 
 by_year <- function(y) {
   heads |>
     filter(year == y) |>
-    transmute(row_id, district, block, treat = woman_reserved, caste, female_winner) |>
+    transmute(row_id, district, block, treat = reserved_woman, caste, female_winner) |>
     rename_with(~ paste0(.x, "_", y), -row_id) |>
     rename(!!paste0("row_id_", y) := row_id)
 }
