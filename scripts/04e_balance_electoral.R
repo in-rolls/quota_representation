@@ -54,9 +54,9 @@ compute_balance_row <- function(data, var, treat_var) {
 # =============================================================================
 message("\n--- Loading Rajasthan Panels ---")
 
-raj_05_10 <- read_parquet(raj_product_path("raj_05_10.parquet"))
-raj_10_15 <- read_parquet(raj_product_path("raj_10_15.parquet"))
-raj_15_20 <- read_parquet(raj_product_path("raj_15_20.parquet"))
+raj_05_10 <- read_raj(raj_product_path("raj_05_10.parquet"))
+raj_10_15 <- read_raj(raj_product_path("raj_10_15.parquet"))
+raj_15_20 <- read_raj(raj_product_path("raj_15_20.parquet"))
 
 message("Raj 05-10 N: ", nrow(raj_05_10))
 message("Raj 10-15 N: ", nrow(raj_10_15))

@@ -16,7 +16,7 @@ for (state in c("raj", "up")) {
     outcome <- paste0("female_winner_", years[2])
     district <- paste0(if (state == "raj") "district_std_" else "district_name_eng_", years[2])
     block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", years[2])
-    data <- as.data.frame(read_parquet(election_panel_path(state, paste0(state, "_", panel, ".parquet"))))
+    data <- as.data.frame(read_election_panel(state, paste0(state, "_", panel, ".parquet")))
     p <- vapply(split(data, data[[district]]), function(d) {
       tab <- table(factor(d[[treatment]], levels = 0:1), factor(d[[current]], levels = 0:1))
       if (any(rowSums(tab) == 0) || any(colSums(tab) == 0)) {

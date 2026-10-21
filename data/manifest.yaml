@@ -33,28 +33,28 @@ upstream:
       data/master/master_telangana.parquet: 4ef8b5c95865709e8df138273092fd1ac111ee12544011f5406b941148ff998d
   local_elections_rajasthan:
     repo: in-rolls/local_elections_rajasthan
-    ref: 8773067fefe9c0ff549d0c9d12688018f19a156a
+    ref: 4947b284e60f59cef37d598c978ae4def08e62bb
     raw: https://raw.githubusercontent.com/in-rolls/local_elections_rajasthan
     sibling: ../local_elections_rajasthan
     files:
-      data/fin/elections/candidates_2020_events.parquet: 1f538baaed94ca71064bf7983ede169bcf83b662996ec6947e158c10ec316abf
+      data/fin/elections/candidates_2020_events.parquet: 4aa2048966c407208f13a7035f2f0a967d652c4403ab71bffae1afcece2118e0
       data/fin/elections/gp_lgd_crosswalk.parquet: b2a87dd960845f575de246c3e4bc46ce4034f598903d02568324a4d177a6cef6
-      data/fin/elections/raj_05_10.parquet: 44f4a0f63fb9304b94525e574d6e8ba11365954d6c18525ce86ce5b70f1aa0c8
-      data/fin/elections/raj_05_20.parquet: 8332d9b6de3943cdaebbe8cd786f2c03d399f82b1585ecb1a7c6a6b6ccaa3f4d
-      data/fin/elections/raj_10_15.parquet: 5eccb9a29c2589eec03609dab42379b7466f0d1bbaf0d3d3deca4a988d1dc1ac
-      data/fin/elections/raj_15_20.parquet: ed740ffb382967f6886ea4011e94645927a4e4d716ca31238878d6ad8b104a4f
-      data/fin/elections/source_records.parquet: c667a443536f60e4dcbe9cda4fb5afff06c5aba4388a2be4e59933ef8fb3fd96
-      data/fin/elections/winners_2020_events.parquet: 28c94fae750fbde43b7197eca353219c8f60665a634af36fefd1583bedef3c77
+      data/fin/elections/raj_05_10.parquet: f7ea772b3b32f820749c2c41a38a980d081c20528e84a468a573e730ee1d00b6
+      data/fin/elections/raj_05_20.parquet: edf689fefe23ad1f75313b3cdaef113456f83e791f4cc0c2a483b59f0df2b08b
+      data/fin/elections/raj_10_15.parquet: 3a2fd87de0e8e7dbb425f06343e8eb00b620be8c785a80e0212963f43c634d18
+      data/fin/elections/raj_15_20.parquet: 1f5b9835f8e990730a6ee707a89c537b7d2e0281a9b6ea48c283ecc012e5e618
+      data/fin/elections/source_records.parquet: 0b1c9997f26b4ad0fe62aa639d9692b24cb117dbfda73f7002b4dd5a4e40c855
+      data/fin/elections/winners_2020_events.parquet: c193288222a808e974622d3bb05715326f91082d8449f43214221b85ea640fde
       data/source/geography/lgd_raj_block_gp.csv: 453fc82c673b31819f061166dda68de1148451f62c693bf2c6dfd871db96c06a
       data/source/geography/raj_block_xwalk.csv: 69004dab616b9b9d2a15005e5c423ca8f74cd26069495c1e3c47dedcae532453
       data/source/geography/raj_district_xwalk.csv: e3f58eb23b7f44be86ea25a1f6ab5c478e4d0721ccdb736f8444b2bc475244fa
       data/source/geography/raj_samiti_std.csv: d70e9c58e020afea0ee3228ddfb510bc8402a3e94374b0f49f4d74cf1875f866
       data/source/geography/raj_samiti_xwalk.csv: fad26d12608c8ba506a691185ccaa26d5a73ab31c5a524cae4d9780a0d878901
       data/source/geography/raj_village_gp_mapping_2024.csv: 469888c02b619802be44933fdb9a4a14e4c921c46712d6d4f15f83dc784342b6
-      data/fin/source_2005_std.parquet: 488ecf8e08225417e8f293f8edd596a57c2860439cd421a4ec82095e3b716d8d
-      data/fin/source_2010_std.parquet: 8e4e4780fc6379a8367031c223d3321843e6c3ee8d9cc40aa5b153e58128d1be
-      data/fin/source_2015_std.parquet: 077acbf06cc1c66cabd4a584414afa95e414b2c3de08e8d3f8f24b8a34518397
-      data/fin/source_2020_std.parquet: ea0c2fca01cad3b599db29d11f637be7a0f1314d2a9c014638eefab5aefe81f6
+      data/fin/source_2005_std.parquet: bae4ca5e76815d6ee5f36c830f649abebf8128e42aba3a1a3e985d06b724e165
+      data/fin/source_2010_std.parquet: 7973ba96c001cc88e3188220ae1c3f83b5fdb740cc4d14886d220561fb58441f
+      data/fin/source_2015_std.parquet: e029fb871e69bea01032b2bd446310b831f40631b94f5c57e1cf6b190ad6eb9f
+      data/fin/source_2020_std.parquet: 76cd596506c8de77dd8fda6cb9b77726b3037317bd71aaa44e9ff7d1fdb1d0a1
       data/fin/scrape_2020_2022/ContestingSarpanch.parquet: 385cf12352831697da2b2e274fa21029126d75b48bc198227f82b45a62e76167
       data/fin/scrape_2020_2022/WinnerSarpanch.parquet: 0d87b3fcba53c9f5f6a0bf7df1d438e9d5d67675f7525e936bd503101af0efab
       data/source/sarpanch/sarpanch_2005.csv: 642c992acc6aa6f81dcfdfbe630a71b017aff551736c435e3ac839bbd85e2c92

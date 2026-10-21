@@ -14,10 +14,10 @@ source(here::here("scripts/00_config.R"))
 # =============================================================================
 
 # Rajasthan year files
-raj_2005 <- read_parquet(raj_path("data/fin/source_2005_std.parquet"))
-raj_2010 <- read_parquet(raj_path("data/fin/source_2010_std.parquet"))
-raj_2015 <- read_parquet(raj_path("data/fin/source_2015_std.parquet"))
-raj_2020 <- read_parquet(raj_path("data/fin/source_2020_std.parquet"))
+raj_2005 <- read_raj(raj_path("data/fin/source_2005_std.parquet"))
+raj_2010 <- read_raj(raj_path("data/fin/source_2010_std.parquet"))
+raj_2015 <- read_raj(raj_path("data/fin/source_2015_std.parquet"))
+raj_2020 <- read_raj(raj_path("data/fin/source_2020_std.parquet"))
 
 raj_stats <- list(
   gp_2005 = nrow(raj_2005),

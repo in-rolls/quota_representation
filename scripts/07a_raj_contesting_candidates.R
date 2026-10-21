@@ -5,8 +5,8 @@ library(here)
 source(here("scripts/00_config.R"))
 source(here("scripts/00_utils.R"))
 
-candidates <- read_parquet(raj_product_path("candidates_2020_events.parquet"))
-winners <- read_parquet(raj_product_path("winners_2020_events.parquet"))
+candidates <- read_raj(raj_product_path("candidates_2020_events.parquet"))
+winners <- read_raj(raj_product_path("winners_2020_events.parquet"))
 candidacy <- candidates |>
   filter(gp_event_unique) |>
   summarise(
@@ -39,7 +39,7 @@ votes <- winners |>
   ) |>
   select(match_key, fem_vote_share)
 
-panel <- read_parquet(raj_product_path("raj_05_20.parquet"))
+panel <- read_raj(raj_product_path("raj_05_20.parquet"))
 analysis <- panel |>
   left_join(candidacy,
     by = c("match_key_2020" = "match_key"),

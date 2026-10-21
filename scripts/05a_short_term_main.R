@@ -17,9 +17,9 @@ message("=== Short-Term Effects Analysis ===")
 # Load all panels
 # =============================================================================
 
-raj_05_10 <- read_parquet(raj_product_path("raj_05_10.parquet"))
-raj_10_15 <- read_parquet(raj_product_path("raj_10_15.parquet"))
-raj_15_20 <- read_parquet(raj_product_path("raj_15_20.parquet"))
+raj_05_10 <- read_raj(raj_product_path("raj_05_10.parquet"))
+raj_10_15 <- read_raj(raj_product_path("raj_10_15.parquet"))
+raj_15_20 <- read_raj(raj_product_path("raj_15_20.parquet"))
 
 up_05_10 <- read_parquet(here("data/up/up_05_10.parquet"))
 up_10_15 <- read_parquet(here("data/up/up_10_15.parquet"))
