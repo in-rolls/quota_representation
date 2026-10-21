@@ -50,7 +50,7 @@ library(tidyr)
 source(here("scripts/00_config.R"))
 
 goyal <- read_tsv(
-  pooled_path("data/delhi/qualification_audit/sources/goyal_mapping.tab"),
+  pooled_path("data/delhi/interim/qualification_audit/sources/goyal_mapping.tab"),
   col_types = cols(.default = col_character())
 )
 
@@ -79,7 +79,7 @@ stopifnot(
 )
 
 deposit <- read_tsv(
-  pooled_path("data/maharashtra/mumbai/dataverse_IO9SLQ/mumbai_full.tab"),
+  pooled_path("data/maharashtra/raw/mumbai/dataverse_IO9SLQ/mumbai_full.tab"),
   col_types = cols(.default = col_character())
 )
 council <- function(row_year, y) {
@@ -93,7 +93,7 @@ council <- function(row_year, y) {
     rename_with(~ paste0(.x, "_", y), -ward)
 }
 roster_2012 <- read_csv(
-  pooled_path("data/maharashtra/ulb_ward_2012.csv"),
+  pooled_path("data/maharashtra/release/ulb_ward_2012.csv"),
   col_types = cols(.default = col_character())
 ) |>
   transmute(
