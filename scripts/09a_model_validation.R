@@ -146,7 +146,7 @@ for (state in c("raj", "up")) {
     outcome <- paste0("female_winner_", years[2])
     district <- paste0(if (state == "raj") "district_std_" else "district_name_eng_", years[2])
     block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", years[2])
-    data <- as.data.frame(read_parquet(election_panel_path(state, paste0(state, "_", panel, ".parquet"))))
+    data <- as.data.frame(read_election_panel(state, paste0(state, "_", panel, ".parquet")))
     open <- data[!is.na(data[[current]]) & data[[current]] == 0, ]
     eligible <- eligible_districts(data, treatment, current, district)
     fit_inference(open, state, panel, "full", outcome, treatment, block)
@@ -162,7 +162,7 @@ for (state in c("raj", "up")) {
   block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", end)
   outcome <- paste0("female_winner_", end)
   current <- paste0("treat_", end)
-  data <- as.data.frame(read_parquet(election_panel_path(state, paste0(state, "_", panel, ".parquet"))))
+  data <- as.data.frame(read_election_panel(state, paste0(state, "_", panel, ".parquet")))
   open <- data[!is.na(data[[current]]) & data[[current]] == 0, ]
   transitions <- list(c("2005", "2010"), c("2010", "2015"), c("2015", end))
   eligible <- lapply(transitions, function(years) eligible_districts(data, paste0("treat_", years[1]), paste0("treat_", years[2]), district))

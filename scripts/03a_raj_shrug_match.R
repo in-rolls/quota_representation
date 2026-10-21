@@ -5,7 +5,7 @@ library(readr)
 library(here)
 source(here("scripts/00_config.R"))
 
-raj_mapping <- read_parquet(raj_product_path("gp_lgd_crosswalk.parquet"))
+raj_mapping <- read_raj(raj_product_path("gp_lgd_crosswalk.parquet"))
 stopifnot(!anyDuplicated(raj_mapping$match_key))
 
 shrug_pca <- read_csv(shrug_path("shrug-pca01-csv/pc01_pca_clean_shrid.csv.zip"), show_col_types = FALSE)
@@ -62,7 +62,7 @@ shrug_covars <- shrug_lgd_full %>%
 message("SHRUG covariates aggregated to ", n_distinct(shrug_covars$LGD_code), " LGD GPs")
 
 for (period in c("05_10", "10_15", "15_20", "05_20")) {
-  panel <- read_parquet(raj_product_path(paste0("raj_", period, ".parquet")))
+  panel <- read_raj(raj_product_path(paste0("raj_", period, ".parquet")))
   result <- panel |>
     left_join(raj_mapping, by = "match_key", relationship = "many-to-one") |>
     left_join(shrug_covars, by = c("lgd_gp_code" = "LGD_code"), relationship = "many-to-one")

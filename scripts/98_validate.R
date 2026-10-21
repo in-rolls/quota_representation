@@ -38,8 +38,8 @@ test_that("source acquisition verifies cold-cache downloads and skips mismatched
   expect_false(file.exists(recovered))
 })
 
-candidates <- read_parquet(raj_product_path("candidates_2020_events.parquet"))
-winners <- read_parquet(raj_product_path("winners_2020_events.parquet"))
+candidates <- read_raj(raj_product_path("candidates_2020_events.parquet"))
+winners <- read_raj(raj_product_path("winners_2020_events.parquet"))
 test_that("sex linkage is unique within an election and invariant to source order", {
   expect_true(all(candidates$election_type == "General Election"))
   expect_setequal(unique(candidates$election_duration), c("JAN-MAR 2020", "SEP-OCT 2020"))
@@ -88,16 +88,24 @@ test_that("UP geographic bridge attaches by source identity and survives reorder
   }
 })
 
+# Panels written from R carried a stray per-column names attribute (the caste
+# label) that Python-written panels do not; it is not data, so it is dropped
+# before the identity check.
+unname_columns <- function(d) {
+  d[] <- lapply(d, unname)
+  d
+}
+
 test_that("SHRUG joins preserve panel rows and observable facility definitions", {
   facilities <- c("pc01_vd_edu_fac", "pc01_vd_medi_fac", "pc01_vd_power_supl", "pc01_vd_bank_fac")
   for (state in c("raj", "up")) {
     panels <- if (state == "raj") c("05_10", "10_15", "15_20", "05_20") else c("05_10", "10_15", "15_21", "05_21")
     for (panel in panels) {
       original_path <- election_panel_path(state, paste0(state, "_", panel, ".parquet"))
-      original <- read_parquet(original_path)
+      original <- if (state == "raj") read_raj(original_path) else read_parquet(original_path)
       matched <- read_parquet(here("data", state, paste0("shrug_gp_", state, "_", panel, "_block.parquet")))
       expect_equal(nrow(original), nrow(matched))
-      if (state == "raj") expect_identical(matched[names(original)], original)
+      if (state == "raj") expect_identical(unname_columns(matched[names(original)]), unname_columns(original))
       for (facility in facilities) {
         expect_true(all(is.na(matched[[facility]]) | matched[[facility]] %in% 0:1))
         coverage <- matched[[paste0(facility, "_n_observed")]]
@@ -110,7 +118,7 @@ test_that("SHRUG joins preserve panel rows and observable facility definitions",
 
 test_that("candidacy joins conserve rows and keep unknown outcomes unavailable", {
   analysis <- read_parquet(here("data/raj/candidacy_analysis.parquet"))
-  panel <- read_parquet(raj_product_path("raj_05_20.parquet"))
+  panel <- read_raj(raj_product_path("raj_05_20.parquet"))
   expect_equal(nrow(analysis), nrow(panel))
   expect_true(all(analysis$fem_vote_share >= 0 & analysis$fem_vote_share <= 1, na.rm = TRUE))
   expect_true(all(analysis$prop_women >= 0 & analysis$prop_women <= 1, na.rm = TRUE))
@@ -156,7 +164,7 @@ test_that("reported cumulative contrasts reproduce after independent within-bloc
     panel <- if (state == "raj") "05_20" else "05_21"
     block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", end)
     outcome <- paste0("female_winner_", end)
-    source <- read_parquet(election_panel_path(state, paste0(state, "_", panel, ".parquet"))) |>
+    source <- read_election_panel(state, paste0(state, "_", panel, ".parquet")) |>
       filter(.data[[paste0("treat_", end)]] == 0) |>
       drop_na(all_of(c(block, outcome, "treat_2005", "treat_2010", "treat_2015")))
     x <- model.matrix(~ treat_2005 * treat_2010 * treat_2015, data = source)[, -1]
@@ -194,7 +202,7 @@ test_that("bootstrap outputs use the declared draws and reproduce one seeded tes
   expect_true(all(is.finite(primary$bootstrap_low) & is.finite(primary$bootstrap_high)))
   bootstraps <- readRDS(here("data/model_bootstrap.rds"))
   expect_length(bootstraps, nrow(primary))
-  d <- read_parquet(raj_product_path("raj_05_10.parquet")) |>
+  d <- read_raj(raj_product_path("raj_05_10.parquet")) |>
     filter(treat_2010 == 0) |>
     drop_na(female_winner_2010, treat_2005, dist_samiti_2010) |>
     mutate(dist_samiti_2010 = as.integer(factor(dist_samiti_2010)))

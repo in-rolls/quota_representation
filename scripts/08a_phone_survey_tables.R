@@ -101,7 +101,7 @@ write_csv(bind_rows(contact_counts), here("tabs/phone_contact_counts.csv"))
 
 # The call sheet lacks GP names. Only unique phase/district/samiti/winner links identify a seat.
 lookup_columns <- c("election_type", "election_duration", "district", "panchayat_samiti", "winner_candidate_name")
-winner_lookup <- read_parquet(raj_product_path("winners_2020_events.parquet")) |>
+winner_lookup <- read_raj(raj_product_path("winners_2020_events.parquet")) |>
   mutate(across(all_of(lookup_columns), ~ str_to_lower(str_squish(.x)))) |>
   add_count(across(all_of(lookup_columns)), name = "survey_key_records") |>
   filter(survey_key_records == 1, winner_key_unique, gp_event_unique) |>

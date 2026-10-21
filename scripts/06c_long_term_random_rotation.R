@@ -15,7 +15,7 @@ for (state in c("raj", "up")) {
   block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", end)
   outcome <- paste0("female_winner_", end)
   current <- paste0("treat_", end)
-  data <- as.data.frame(read_parquet(election_panel_path(state, paste0(file, ".parquet"))))
+  data <- as.data.frame(read_election_panel(state, paste0(file, ".parquet")))
   transitions <- list(c("2005", "2010"), c("2010", "2015"), c("2015", end))
   eligible <- lapply(transitions, function(years) {
     p <- vapply(split(data, data[[district]]), function(d) {

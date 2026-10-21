@@ -5,7 +5,7 @@ library(here)
 library(kableExtra)
 source(here("scripts/00_config.R"))
 
-candidates <- read_parquet(raj_product_path("candidates_2020_events.parquet")) |>
+candidates <- read_raj(raj_product_path("candidates_2020_events.parquet")) |>
   filter(candidate_key_unique, gp_event_unique) |>
   mutate(
     treat = primary_female_reserved,
@@ -21,7 +21,7 @@ candidates <- read_parquet(raj_product_path("candidates_2020_events.parquet")) |
     assets = as.numeric(total_value_of_capital_assets),
     log_assets = log1p(psych::winsor(assets, trim = 0.1, na.rm = TRUE))
   )
-winner_keys <- read_parquet(raj_product_path("winners_2020_events.parquet")) |>
+winner_keys <- read_raj(raj_product_path("winners_2020_events.parquet")) |>
   filter(winner_key_unique, gp_event_unique) |>
   select(event_key, name_of_contesting_candidate = winner_candidate_name)
 winners <- candidates |>

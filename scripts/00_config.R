@@ -236,6 +236,66 @@ raj_path <- function(file) sibling_path(file, source = "local_elections_rajastha
 
 raj_product_path <- function(file) raj_path(file.path("data/fin/elections", file))
 
+## Rajasthan publishes NAMING.md names (reserved_woman_2015, winner_woman_2020,
+## ...); the analysis here speaks one vocabulary across states (female_reserved_,
+## caste_category_, winner_female_, female_winner_). This maps the one onto the
+## other at the read, so no analysis script depends on the upstream names.
+## female_winner_2020 is the results sheet's sex where it prints one, else the
+## sex on the winner's own candidate record, as the panels carried it before
+## the rename.
+raj_renames <- c(
+  winner_sex_from_cand = "winner_woman_from_candidates_2020",
+  candidate_reservation_raw = "reserved_raw_from_candidates",
+  candidate_reservation_unique = "reserved_from_candidates_unique",
+  candidate_reserved = "reserved_woman_from_candidates",
+  candidate_caste = "reserved_caste_from_candidates",
+  reservation_gender_conflict = "reserved_woman_conflict",
+  reservation_caste_conflict = "reserved_caste_conflict",
+  gender = "candidate_woman_raw",
+  category_of_candidate = "candidate_caste_raw",
+  primary_female_reserved = "primary_reserved_woman",
+  primary_caste_category = "primary_reserved_caste",
+  primary_reservation_raw = "primary_reserved_raw",
+  primary_reservation_available = "primary_reserved_available",
+  candidate_female = "candidate_woman",
+  female_runnerup_2020 = "runner_up_woman_2020"
+)
+
+read_raj <- function(path) {
+  file <- tools::file_path_sans_ext(basename(path))
+  d <- rename(read_parquet(path), any_of(raj_renames))
+  raw_name <- switch(file,
+    candidates_2020_events = "category_of_gram_panchayat",
+    winners_2020_events = "category_of_gram_panchyat",
+    "reservation_raw"
+  )
+  d <- rename(d, any_of(setNames("reserved_raw", raw_name)))
+  d <- rename_with(
+    d,
+    \(x) sub("^reserved_woman", "female_reserved", sub("^reserved_caste", "caste_category", x)),
+    matches("^reserved_(woman|caste)(_[0-9]{4})?$")
+  )
+  winner_to <- if (file == "winners_2020_events") "female_winner" else "winner_female"
+  d <- rename_with(d, \(x) sub("^winner_woman", winner_to, x), matches("^winner_woman(_[0-9]{4})?$"))
+  if (startsWith(file, "raj_")) {
+    for (y in c("2005", "2010", "2015", "2020")) {
+      from <- paste0("winner_female_", y)
+      if (!from %in% names(d)) next
+      d[[paste0("female_winner_", y)]] <- if (y == "2020") {
+        coalesce(d[[from]], d$winner_sex_from_cand)
+      } else {
+        d[[from]]
+      }
+    }
+  }
+  d
+}
+
+read_election_panel <- function(state, file) {
+  path <- election_panel_path(state, file)
+  if (state == "raj") read_raj(path) else read_parquet(path)
+}
+
 bihar_path <- function(file) sibling_path(file, source = "local_elections_bihar")
 ## The pooled corpus: state repositories' seats in one schema, with recorded and
 ## name-inferred winner sex in separate columns and the states' seat links.
