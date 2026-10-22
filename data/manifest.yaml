@@ -13,27 +13,27 @@ cache_dir: ~/data
 upstream:
   local_elections:
     repo: in-rolls/local_elections
-    ref: 1f9bd678c33f0dab5b721e2e800e07f47d77a93c
+    ref: 300139de3ee3c76d56a621a4227eff159a9a1f0c
     raw: https://raw.githubusercontent.com/in-rolls/local_elections
     sibling: ../local_elections
     files:
-      data/master/master_bihar.parquet: 2e6d4e3ee5cf5f15ddf125b25c670d5e723eff2fc7d3ef59eb7a7ed0d82e2bab
-      data/master/master_haryana.parquet: 17d5893ea037f8f8248be7e580c4cd2eb0791718691feef4d71e729cd396daec
+      data/master/master_bihar.parquet: 6d012f13a7bffc7ddfb88b2048a14ae04c0a6aa133048f772bc46df765c49564
+      data/master/master_haryana.parquet: f0432ad58cac811836d2fde821502a71574d16f7e1d05e96dd5eb68b180e2223
       data/master/master_extras.parquet: f7cbcc9f6f9f3d9331d215c22d5cc64cf5ddb8f04080f2df749dde16659cc2c8
-      data/master/supplemental_seat_links.parquet: 776fcf2cd5ba005013fe2c819b23f44f1bebb09014afce3f247fc8e3cca74adf
+      data/master/supplemental_seat_links.parquet: 3f0f3c9d5718796d4e5344d8f503db7f91fbca40e32b6c3bea2c5b5d3e372b16
       data/delhi/interim/qualification_audit/sources/goyal_mapping.tab: 1e2056da3318c7a052c12caf46dd304e9f4900fcbfbd4d075d66651d18a9fd40
       data/maharashtra/raw/mumbai/dataverse_IO9SLQ/mumbai_full.tab: 84e22d9a14809a17a8ce0af5c4e65d0c27250bebc9b6261a813607ead9e17dbb
       data/maharashtra/release/ulb_ward_2012.csv: 2a3efe26109358564cc0697d972749b8261add3f39bf8c5f70e4b2db518b4816
       data/opencity/kolkata_kmc_2010_candidates.csv: f5d7560894a548f190181e5f3f8a06c990f73a0276ed6ee66b5eb40c688a68ad
       data/opencity/kolkata_kmc_2015_candidates.csv: aeccd83343c50a7d615dba6ee24795d74a19647ac2933f84ea2997b67f796491
       data/opencity/kolkata_winner_sex.csv: f7c499caf25860d73792220b0258896d349bda52d42b465ceab99966f265d483
-      data/master/master_uttarakhand.parquet: 4249d1a9448c6384243813d73c9261f679ccfecb6e0fb5889d7983bac4456e86
-      data/master/master_tamil_nadu.parquet: 5b373770bd5ef9916d7a3e2a90b3f078b7ec859578202a84420d7692ee361afb
-      data/master/master_jharkhand.parquet: 07846600c4798991ed8feac31fefd1e688bab4d2c047c8d7f3a22b034ebca567
-      data/master/master_telangana.parquet: 4ef8b5c95865709e8df138273092fd1ac111ee12544011f5406b941148ff998d
+      data/master/master_uttarakhand.parquet: 2a80d229bc1e2e9cb30401657c10dd19847e64a5d37c583000fc9704b23c9324
+      data/master/master_tamil_nadu.parquet: 9ef05efb9f1ecebf4a4917ccf7422f85b03dc5573c3e95c7352841041c2c07ae
+      data/master/master_jharkhand.parquet: 147627d9d4fdd667554a3787c7c65e01e439ac8ef91f55990c1d6978035fd9a9
+      data/master/master_telangana.parquet: 7d7a6b52a47cdc5416b94197575ed50fa6b7f42260873eb3d019568327ed02aa
   local_elections_rajasthan:
     repo: in-rolls/local_elections_rajasthan
-    ref: 4947b284e60f59cef37d598c978ae4def08e62bb
+    ref: 5607ceb0f0786fedf18570a028adc8091adb0aa5
     raw: https://raw.githubusercontent.com/in-rolls/local_elections_rajasthan
     sibling: ../local_elections_rajasthan
     files:
@@ -61,19 +61,6 @@ upstream:
       data/source/sarpanch/sarpanch_2010.csv: 84c9ed22680e75ac5e06f05fcc93e57bc38cc6d835e5cb22887e9d5f982089db
       data/source/sarpanch/sarpanch_2015_manual_sex.csv: 4b787ccd8115cbdf4edcf22ae38aa2b7b02e8e9be48dd3e6c696e69965901cc0
       data/source/sarpanch/sarpanch_2020_clean.csv: 0f13bc76ea6d5203a55bb42d858fc832852136f18afd0cc7baf6fd66422f0449
-  local_elections_bihar:
-    repo: in-rolls/local_elections_bihar
-    ref: bb9cc9c14316dd7a98c331ee988a650132c05c96
-    raw: https://raw.githubusercontent.com/in-rolls/local_elections_bihar
-    sibling: ../local_elections_bihar
-    files:
-      data/2011/mukhiya_reports/winner_records.parquet: 3cdb740e116412a27d059df0b42c0dd05523069de636683f7c0d997a73437c56
-      data/2016/seats.parquet: 5f234dad9afc7603e37aa34401ff4210fee31e6448cb8f94d79737a667d1761c
-      data/2016/winners.parquet: 1f1712f0a91370cb3db6a4b891d419a60cd81a4a7dbc00c57ea04e4fc14aeb13
-      data/2021/current_reservations.parquet: a432377012f1d55f5862f44fe3f9f8a4b391b1b215fc44c5d5d626f96dc71073
-      data/2021/winners.parquet: 32c40abc700179c19c8ff0c36ce860c34640e22a3be534f51fb77f78031b3c10
-      data/linkage/mukhiya_2011_2016.parquet: 1418380db13ff5c8baba151f08ef97fef565252345f2ade50b628d6857b569d8
-      data/linkage/mukhiya_2016_2021.parquet: c53cf34d82629bf4012046f5bdf59421e2845a28d900ed71ff6863e8c16d9985
   local_elections_up:
     repo: in-rolls/local_elections_up
     ref: 3ef1d56f278a2ca98a2b9a61027c130781fb236f

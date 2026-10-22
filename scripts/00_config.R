@@ -296,7 +296,6 @@ read_election_panel <- function(state, file) {
   if (state == "raj") read_raj(path) else read_parquet(path)
 }
 
-bihar_path <- function(file) sibling_path(file, source = "local_elections_bihar")
 ## The pooled corpus: state repositories' seats in one schema, with recorded and
 ## name-inferred winner sex in separate columns and the states' seat links.
 pooled_path <- function(file) sibling_path(file, source = "local_elections")
