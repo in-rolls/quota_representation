@@ -39,37 +39,35 @@ raj_stats <- list(
   women_res_2020 = round(100 * mean(raj_2020$female_reserved, na.rm = TRUE), 1)
 )
 
-# UP year files
-up_2005 <- read_parquet(up_path("gp/gp_head_winner_records_2005.parquet"))
-up_2010 <- read_parquet(up_path("gp/gp_head_winner_records_2010.parquet"))
-up_2015 <- read_parquet(up_path("gp/gp_head_winner_records_2015.parquet"))
-up_2021 <- read_parquet(up_path("gp/gp_head_candidates_2021.parquet"))
-
-up_2021_winners <- up_2021[up_2021$result == "विजेता", ]
+# UP gram panchayat head records: one row per GP per election (2021: winners).
+# A GP is a district-block-name triple. In 2021 the commission prints the GP
+# number with the name ("12 - <name>"), so it stays part of the name there and
+# two same-named GPs in one block remain distinct.
+up_records <- read_parquet(up_path("panels/gp_head_election_records.parquet"))
+up_year <- function(year) {
+  d <- up_records[up_records$election_year == year, ]
+  gp <- if (year == 2021L) paste(d$gp_number_raw, "-", d$gp_name_hindi) else d$gp_name_hindi
+  list(
+    gp = n_distinct(paste(d$district_name_hindi, d$block_name_hindi, gp)),
+    block = n_distinct(paste(d$district_name_hindi, d$block_name_hindi)),
+    dist = n_distinct(d$district_name_hindi),
+    women_res = round(100 * mean(grepl("Female", d$reserved_raw_english, ignore.case = TRUE)), 1)
+  )
+}
+up_2005 <- up_year(2005L)
+up_2010 <- up_year(2010L)
+up_2015 <- up_year(2015L)
+up_2021 <- up_year(2021L)
 
 up_stats <- list(
-  gp_2005 = n_distinct(paste(up_2005$district_name, up_2005$block_name, up_2005$gp_name)),
-  gp_2010 = n_distinct(paste(up_2010$district_name, up_2010$block_name, up_2010$gp_name)),
-  gp_2015 = n_distinct(paste(up_2015$district_name, up_2015$block_name, up_2015$gp_name)),
-  gp_2021 = n_distinct(paste(up_2021$district_name, up_2021$block_name, up_2021$gp)),
-  block_2005 = n_distinct(paste(up_2005$district_name, up_2005$block_name)),
-  block_2010 = n_distinct(paste(up_2010$district_name, up_2010$block_name)),
-  block_2015 = n_distinct(paste(up_2015$district_name, up_2015$block_name)),
-  block_2021 = n_distinct(paste(up_2021$district_name, up_2021$block_name)),
-  dist_2005 = n_distinct(up_2005$district_name),
-  dist_2010 = n_distinct(up_2010$district_name),
-  dist_2015 = n_distinct(up_2015$district_name),
-  dist_2021 = n_distinct(up_2021$district_name),
-  max_gp = max(
-    n_distinct(paste(up_2005$district_name, up_2005$block_name, up_2005$gp_name)),
-    n_distinct(paste(up_2010$district_name, up_2010$block_name, up_2010$gp_name)),
-    n_distinct(paste(up_2015$district_name, up_2015$block_name, up_2015$gp_name)),
-    n_distinct(paste(up_2021$district_name, up_2021$block_name, up_2021$gp))
-  ),
-  women_res_2005 = round(100 * mean(grepl("Female", up_2005$gp_res_status_fin_eng, ignore.case = TRUE), na.rm = TRUE), 1),
-  women_res_2010 = round(100 * mean(grepl("Female", up_2010$gp_res_status_fin_eng, ignore.case = TRUE), na.rm = TRUE), 1),
-  women_res_2015 = round(100 * mean(grepl("Female", up_2015$gp_reservation_status_eng, ignore.case = TRUE), na.rm = TRUE), 1),
-  women_res_2021 = round(100 * mean(grepl("Female", up_2021_winners$gp_reservation_status_eng, ignore.case = TRUE), na.rm = TRUE), 1)
+  gp_2005 = up_2005$gp, gp_2010 = up_2010$gp, gp_2015 = up_2015$gp, gp_2021 = up_2021$gp,
+  block_2005 = up_2005$block, block_2010 = up_2010$block,
+  block_2015 = up_2015$block, block_2021 = up_2021$block,
+  dist_2005 = up_2005$dist, dist_2010 = up_2010$dist,
+  dist_2015 = up_2015$dist, dist_2021 = up_2021$dist,
+  max_gp = max(up_2005$gp, up_2010$gp, up_2015$gp, up_2021$gp),
+  women_res_2005 = up_2005$women_res, women_res_2010 = up_2010$women_res,
+  women_res_2015 = up_2015$women_res, women_res_2021 = up_2021$women_res
 )
 
 phone_counts <- read_csv(here("tabs/phone_contact_counts.csv"), show_col_types = FALSE) |>
