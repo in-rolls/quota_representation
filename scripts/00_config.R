@@ -191,8 +191,37 @@ sibling_path <- function(file, source = "local_elections_up") {
 }
 
 ## Convenience wrappers so call sites read as what they are.
-up_path <- function(f) sibling_path(file.path("data/release", f))
+up_path <- function(f) sibling_path(file.path("data", f))
 ref_path <- function(f) sibling_path(file.path("data/external/weaver", f))
+
+## UP publishes NAMING.md names (reserved_raw_2015, reserved_woman_2015, ...);
+## the analysis keeps one vocabulary across states. Each rule maps an upstream
+## column back onto the name the panels carried before the rename; every
+## renamed column was checked to hold identical values under its old name.
+up_renames <- c(
+  "^reserved_raw_english_([0-9]{4})$" = "gp_reservation_status_eng_\\1",
+  "^reserved_raw_cleaned_english_([0-9]{4})$" = "gp_res_status_fin_eng_\\1",
+  "^reserved_raw_cleaned_([0-9]{4})$" = "gp_res_status_fin_\\1",
+  "^reserved_raw_([0-9]{4})$" = "gp_reservation_status_\\1",
+  "^candidate_caste_raw_cleaned_([0-9]{4})$" = "candidate_res_status_fin_\\1",
+  "^candidate_caste_raw_english_([0-9]{4})$" = "candidate_reservation_status_eng_\\1",
+  "^candidate_caste_raw_(2005|2010)$" = "candidate_res_status_\\1",
+  "^candidate_caste_raw_(2015|2021)$" = "candidate_reservation_status_\\1",
+  "^winner_woman_raw_cleaned_([0-9]{4})$" = "cand_sex_fin_\\1",
+  "^winner_woman_raw_([0-9]{4})$" = "sex_\\1",
+  "^candidate_woman_raw_2021$" = "sex_2021",
+  "^reserved_woman_([0-9]{4})$" = "women_reserved_\\1",
+  "^reserved_caste_([0-9]{4})$" = "reservation_class_\\1"
+)
+
+read_up <- function(path) {
+  rename_with(read_parquet(path), \(names) {
+    for (pattern in names(up_renames)) {
+      names <- sub(pattern, up_renames[[pattern]], names)
+    }
+    names
+  })
+}
 
 ## Reference datasets: public downloads shared by several repos, held once in the
 ## cache rather than copied into each. Unlike sibling_path() there is nothing to
