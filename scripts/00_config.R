@@ -191,7 +191,7 @@ sibling_path <- function(file, source = "local_elections_up") {
 }
 
 ## Convenience wrappers so call sites read as what they are.
-up_path <- function(f) sibling_path(file.path("data", f))
+up_path <- function(f) sibling_path(file.path("data/release", f))
 ref_path <- function(f) sibling_path(file.path("data/external/weaver", f))
 
 ## UP publishes NAMING.md names (reserved_raw_2015, reserved_woman_2015, ...);

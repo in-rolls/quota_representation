@@ -63,28 +63,28 @@ upstream:
       data/source/sarpanch/sarpanch_2020_clean.csv: 0f13bc76ea6d5203a55bb42d858fc832852136f18afd0cc7baf6fd66422f0449
   local_elections_up:
     repo: in-rolls/local_elections_up
-    ref: e50d11a8202df0dd27ddaac5f61ee9c073346cf8
+    ref: 8228a2a5112c2800e4a1b4bfc83946350c2e1dd1
     raw: https://raw.githubusercontent.com/in-rolls/local_elections_up
     sibling: ../local_elections_up
     files:
-      data/panels/gp_lgd_bridge.parquet: 13ebbc2dd8b98ea9f2f98129b10f9ea09c7f856a39582044d80ac08b4f81d3f2
+      data/release/panels/gp_lgd_bridge.parquet: 13ebbc2dd8b98ea9f2f98129b10f9ea09c7f856a39582044d80ac08b4f81d3f2
       data/crosswalks/active/up_block_xwalk.csv: 0cc6f3dd84118402e10e3f1d5a98a96d1d4aa4e3d21419eb41cd04fcf8ca0e8c
       data/external/lgd/lgd_up_block_gp.csv: fb4ba2dc7eeb7f905acb6437585df164372c3754e829d103da7c0a48f32fa314
       data/external/lgd/up_village_gp_mapping_2024.csv: 01ce35bbaed75b94dc4b8272e31ad986eb1527dd30f7cc7ce0114f462acbb344
-      data/panels/gp_adjacent_links.parquet: 9f2cb8d34b08ac35c99fd0e5c7af2275de604f6b366037bde87849c03047a9c0
-      data/panels/gp_four_election_links.parquet: 18687e8f1144464a53bf4cf64b23f3e18f42170b1593f1f80d487627bab3ea84
-      data/panels/gp_panel_2005_2010.parquet: 53f3768a700ebe2191d0a0163109751d8afeadac8b1e8afe837e3838d8bd0d10
-      data/panels/gp_panel_2005_2010_2015_2021.parquet: 8346f9426f1d5eb9a4a208fc37bf79337fb4aee707a34571c032d9b5b65d6eda
-      data/panels/gp_panel_2010_2015.parquet: 262cea7c064237a0ad452f7cd1ffa9967acb4857ab19ac37d668560954e2e92a
-      data/panels/gp_panel_2015_2021.parquet: b6e4e5e18f741d55aea39b542232608f85c5b2a188568865d877effe35fc9388
-      data/panels/weaver_20250302_wide.parquet: d819d0641f2bbb633694c25bc87956dbbafb6978e4f323fc7562115c94811023
-      data/panels/weaver_20250317_wide.parquet: 5450407c8200ccd4ab501f4a6ae5865b06cefb8dc79ba11ecdd2333a12ec160a
+      data/release/panels/gp_adjacent_links.parquet: 9f2cb8d34b08ac35c99fd0e5c7af2275de604f6b366037bde87849c03047a9c0
+      data/release/panels/gp_four_election_links.parquet: 18687e8f1144464a53bf4cf64b23f3e18f42170b1593f1f80d487627bab3ea84
+      data/release/panels/gp_panel_2005_2010.parquet: 53f3768a700ebe2191d0a0163109751d8afeadac8b1e8afe837e3838d8bd0d10
+      data/release/panels/gp_panel_2005_2010_2015_2021.parquet: 8346f9426f1d5eb9a4a208fc37bf79337fb4aee707a34571c032d9b5b65d6eda
+      data/release/panels/gp_panel_2010_2015.parquet: 262cea7c064237a0ad452f7cd1ffa9967acb4857ab19ac37d668560954e2e92a
+      data/release/panels/gp_panel_2015_2021.parquet: b6e4e5e18f741d55aea39b542232608f85c5b2a188568865d877effe35fc9388
+      data/release/panels/weaver_20250302_wide.parquet: d819d0641f2bbb633694c25bc87956dbbafb6978e4f323fc7562115c94811023
+      data/release/panels/weaver_20250317_wide.parquet: 5450407c8200ccd4ab501f4a6ae5865b06cefb8dc79ba11ecdd2333a12ec160a
       data/external/weaver/weaver_data.dta.gz: 1e561493bfda584b29f312080a91b0ff2a1580fea0081248e45614f7599dee11
       data/external/weaver/weaver_data_2.dta.gz: 2a79036d7de6c1bfcfd17fdad7652caad58d70458a298eb1ad534fd383515aec
       data/external/weaver/nw_election10.dta.gz: dca9d0c13040d40893f6557e7b8ace969c9780ac9867e9aea02949eda9b30d21
       data/external/weaver/nw_elections_analysis.dta.gz: be188ed096e8771836991534bafceb7429dcb5a13a9bb0a28de2790df5b4232c
       data/external/weaver/nw_up_nregs.dta.gz: 02401e2a879bbe5c887f4c6dc14c899e6aa684dc3f958695ffcc56ea76332fdf
-      data/panels/gp_head_election_records.parquet: 4d8652a1947a5d5b687ef10acaf8a45ce371f22e59a92f62bb8ef7f93bf3c195
+      data/release/panels/gp_head_election_records.parquet: 4d8652a1947a5d5b687ef10acaf8a45ce371f22e59a92f62bb8ef7f93bf3c195
 
 reference:
   shrug:
