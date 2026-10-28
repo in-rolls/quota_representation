@@ -58,7 +58,7 @@ panels <- list(
 for (name in names(panels)) {
   years <- panels[[name]]
   file <- paste0("panels/gp_panel_", paste(years, collapse = "_"), ".parquet")
-  panel <- recode_up_panel(read_parquet(up_path(file)), years)
+  panel <- recode_up_panel(read_up(up_path(file)), years)
   if (name == "05_21") {
     panel <- panel |> mutate(
       twice_treated = as.integer((treat_2005 + treat_2010 + treat_2015) == 2),
