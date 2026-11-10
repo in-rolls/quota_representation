@@ -1,0 +1,86 @@
+\clearpage
+\section{Women's Electoral Success in the Next Open Election}\label{sec:app_next_election}
+\suppressfloats[t]
+
+The average next-election gain is \poolEstimate{} percentage points (95\% interval [\poolLow{}, \poolHigh{}]). This appendix reports the component regressions, the construction of that average, and sensitivity to inference, specification, and sample composition.
+
+\subsection{Component estimates and precision}
+
+Table~\ref{tab:short_term_main} reports the six adjacent-election regressions. Table~\ref{tab:short_term_bootstrap} combines sample support, block-clustered and wild-bootstrap inference, and approximate minimum detectable effects. The latter range from \shortMdeMin{} to \shortMdeMax{} percentage points in the full samples, using 80\% power and two-sided 5\% size. These fitted-model precision summaries do not establish that an effect is zero.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Women's Electoral Success in the Next Open Election: Regression Specifications}
+    \label{tab:short_term_main}
+    \input{../tabs/short_term_combined.tex}
+\end{table}
+\FloatBarrier
+
+\input{../tabs/short_term_bootstrap}
+\FloatBarrier
+
+\subsection{Pooling Next-Election Comparisons}\label{sec:pooling}
+
+We give each state half the weight and each of its three next-election comparisons one-third of the state's weight. The resulting average is $\widehat\beta_{\mathrm{avg}}=\sum_{j=1}^{6}w_j\widehat\beta_j$, with $w_j=1/6$. Each component retains its original analysis sample and outcome-year block fixed effects. The non-quota baseline averages the six comparison-group win rates with the same weights. These weights describe the studied states and transitions, rather than a population-weighted effect for rural India. Within each component, the block-fixed-effects coefficient retains its regression weights.
+
+To estimate dependence across comparisons, we reconcile geographic block names using the linked election records, including district renamings in UP. The observed block mappings are one-to-one across adjacent panels. Let $\widetilde x_{igj}$ denote treatment demeaned within the block for comparison $j$, and $\widehat u_{igj}$ its fitted residual. For geographic block $g$, define the influence contribution
+\[
+ q_{gj}=\frac{\sum_{i\in g}\widetilde x_{igj}\widehat u_{igj}}{\sum_i\widetilde x_{ij}^{2}}.
+\]
+Blocks absent from a comparison contribute zero. We apply each equation's usual cluster and degrees-of-freedom corrections to its influence contributions, then form the joint covariance $\widehat V=Q'Q$. Its diagonal reproduces the six original cluster-robust variances; its off-diagonal entries capture dependence across elections within the same geographic block. The pooled variance is $w'\widehat Vw$. We use a $t$ reference distribution with degrees of freedom equal to the smallest number of clusters among contributing comparisons minus one. Inference allows arbitrary dependence within blocks across elections and assumes independence across blocks.
+
+Table~\ref{tab:short_term_pooled} varies the weights and composition and also allows dependence within districts. The joint wild multiplier bootstrap uses 9,999 Rademacher draws on the corrected block influence contributions, assigning the same multiplier to a block across all elections; its interval uses the quantiles of the centered pooled draws. Omitting a comparison preserves equal state weights and redistributes the omitted comparison's weight across the remaining elections in that state. Omitting a state instead reports the remaining state's average. These checks change the set of effects being averaged and do not estimate a common effect for an unobserved population of states.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Sensitivity of the Average Next-Election Effect}
+    \label{tab:short_term_pooled}
+    \small
+    \input{../tabs/short_term_pooled.tex}
+    \par\smallskip
+    \begin{minipage}{\textwidth}\footnotesize
+    Estimates and 95\% intervals are in percentage points. All rows retain the original block-fixed-effects estimates. Unless specified otherwise, intervals use the joint block-cluster covariance across elections. Analysis-sample weights are proportional to the six regression sample sizes, counting a GP again when it appears in a different comparison. The district and bootstrap rows change inference, keeping the primary weights. Each omission averages only the remaining comparisons.
+    \end{minipage}
+\end{table}
+\FloatBarrier
+
+\subsection{Specification and sample sensitivity}
+
+Table~\ref{tab:sample_comparisons} separates Census sample selection from covariate adjustment: it reports the full sample, the complete-Census subset without covariates, and the same subset with the five covariates. Adjustment changes estimates by at most \maxWithinSampleAdjustment{} percentage points on the same observations.
+
+Table~\ref{tab:allocation_checks} holds the sample fixed while changing the allocation groups. It requires both block identifiers and observed treatment-year caste reservation, but no Census match. Using treatment-year rather than outcome-year blocks leaves the point estimates unchanged. Adding treatment-year block-by-caste-reservation fixed effects changes Rajasthan's 2010$\rightarrow$2015 estimate from \rajShortTwo{} to \rajCasteShortTwo{} points; other changes are smaller. The treatment-year specifications cluster by treatment-year block. Caste categories describe the office's reservation, not the winner's caste. These adjustments do not resolve imbalance in UP or establish comparability on unobserved characteristics.
+
+The restricted rows in Table~\ref{tab:short_term_bootstrap} retain districts where tests do not detect dependence between successive quota assignments. Rajasthan's 2010$\rightarrow$2015 estimate changes from \rajShortTwo{} to \rajRestrictedShortTwo{} percentage points (95\% cluster interval [\rajRestrictedShortTwoLow{}, \rajRestrictedShortTwoHigh{}]; $N=\rajRestrictedShortTwoN{}$); its 2015$\rightarrow$2020 estimate becomes \rajRestrictedShortThree{} points. No UP districts meet the criterion for 2015$\rightarrow$2021. The restriction probes sensitivity to observed rotation; nonrejection does not establish random assignment.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Separating Census Sample Selection from Covariate Adjustment}
+    \label{tab:sample_comparisons}
+    \small
+    \input{../tabs/short_term_sample_comparisons.tex}
+    \par\smallskip
+    \begin{minipage}{\textwidth}\footnotesize
+    Percentage-point estimates with 95\% block-clustered intervals in brackets and model sample sizes below. All columns include outcome-year block fixed effects. Adjusted models add the five 2001 Census covariates described in Section~\ref{sec:analysis_data}.
+    \end{minipage}
+\end{table}
+\FloatBarrier
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Sensitivity to Block Definitions and Caste Reservation}
+    \label{tab:allocation_checks}
+    \small
+    \input{../tabs/short_term_allocation_checks.tex}
+    \par\smallskip
+    \begin{minipage}{\textwidth}\footnotesize
+    Percentage-point estimates with 95\% block-clustered intervals in brackets. Columns use the same observations within each row. The last column absorbs treatment-year block-by-caste-reservation groups and clusters by treatment-year block.
+    \end{minipage}
+\end{table}
+\FloatBarrier
+
+\subsection{Replication with independent UP data}
+
+Independently collected UP data from \citet{weaver_data}, assembled for \citet{narasimhan2024polity}, give estimates of \weaverShortOne{} points for 2010$\rightarrow$2015 and \weaverShortTwo{} points for 2015$\rightarrow$2021, using \weaverShortOneN{} and \weaverShortTwoN{} GPs, respectively (Table~\ref{tab:weaver_short}). These estimates are similar to our main UP results. The models use 2011 Census district--block identifiers for fixed effects and clustering; Appendix~\ref{sec:weaver} describes the source and its election-year coding.
+
+\input{../tabs/weaver_short_term}
+\FloatBarrier

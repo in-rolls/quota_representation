@@ -241,9 +241,9 @@ dict_shrug <- c(
   "treat_2010" = "$\\text{Quota}_{t-1}$",
   "treat_2015" = "$\\text{Quota}_{t-1}$",
   "log_pop" = "Log(Population)",
-  "sc_share" = "SC Share",
-  "lit_share" = "Literacy Share",
-  "female_share" = "Female Share",
+  "sc_share" = "SC population (\\%)",
+  "lit_share" = "Literacy (\\%)",
+  "female_share" = "Female population (\\%)",
   "infra_index" = "Infrastructure Index",
   "(Intercept)" = "Intercept",
   "dist_samiti_2010" = "(District, Samiti)",
@@ -272,3 +272,100 @@ aer_etable(all_models,
 message("Created: tabs/short_term_shrug_covariates.tex")
 
 message("\n=== Short-Term with SHRUG Covariates Complete ===")
+
+readr::write_csv(purrr::imap_dfr(all_models, ~ broom::tidy(.x, conf.int = TRUE) |>
+  dplyr::mutate(model = .y, n = nobs(.x))), here("tabs/short_term_covariate_estimates.csv"))
+
+sample_comparisons <- list()
+open_balance <- list()
+allocation_checks <- list()
+for (state in c("raj", "up")) {
+  periods <- if (state == "raj") c("05_10", "10_15", "15_20") else c("05_10", "10_15", "15_21")
+  for (period in periods) {
+    years <- paste0("20", strsplit(period, "_")[[1]])
+    treatment <- paste0("treat_", years[1])
+    current <- paste0("treat_", years[2])
+    outcome <- paste0("female_winner_", years[2])
+    block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", years[2])
+    baseline_block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", years[1])
+    caste <- paste0(if (state == "raj") "caste_category_" else "reservation_class_", years[1])
+    data <- read_parquet(here("data", state, paste0("shrug_gp_", state, "_", period, "_block.parquet"))) |>
+      add_shrug_covariates() |> filter(.data[[current]] == 0)
+    if (state == "raj") {
+      district_name <- data[[paste0("district_std_", years[1])]]
+      samiti_name <- data[[paste0("samiti_std_", years[1])]]
+      data[[baseline_block]] <- ifelse(is.na(district_name) | is.na(samiti_name), NA_character_,
+        paste(district_name, samiti_name, sep = "::"))
+    }
+    covariates <- c("log_pop", "sc_share", "lit_share", "female_share", "infra_index")
+    complete <- data[complete.cases(data[c(outcome, treatment, block, covariates)]), ]
+    plain <- as.formula(paste(outcome, "~", treatment, "|", block))
+    adjusted <- as.formula(paste(outcome, "~", treatment, "+", paste(covariates, collapse = " + "), "|", block))
+    fits <- list(
+      full = feols(plain, data = data, vcov = as.formula(paste("~", block)), ssc = MODEL_SSC, fixef.rm = "none"),
+      common = feols(plain, data = complete, vcov = as.formula(paste("~", block)), ssc = MODEL_SSC, fixef.rm = "none"),
+      adjusted = feols(adjusted, data = complete, vcov = as.formula(paste("~", block)), ssc = MODEL_SSC, fixef.rm = "none")
+    )
+    stopifnot(nobs(fits$common) == nobs(fits$adjusted))
+    sample_comparisons[[paste(state, period)]] <- purrr::imap_dfr(fits, ~ broom::tidy(.x, conf.int = TRUE) |>
+      filter(term == treatment) |> mutate(state = state, period = period, specification = .y, n = nobs(.x)))
+    joint <- feols(as.formula(paste(treatment, "~", paste(covariates, collapse = " + "), "|", block)),
+      data = complete, vcov = as.formula(paste("~", block)), ssc = MODEL_SSC, fixef.rm = "none")
+    open_balance[[paste(state, period)]] <- data.frame(
+      state, period, n = nobs(joint), blocks = n_distinct(complete[[block]]),
+      joint_p = wald(joint, keep = covariates, print = FALSE)$p
+    )
+    allocation_sample <- data[complete.cases(data[c(outcome, treatment, block, baseline_block, caste)]), ]
+    allocation_sample$allocation_group <- interaction(allocation_sample[[baseline_block]], allocation_sample[[caste]], drop = TRUE)
+    allocation_fits <- list(
+      outcome_block = feols(plain, data = allocation_sample,
+        vcov = as.formula(paste("~", block)), ssc = MODEL_SSC, fixef.rm = "none"),
+      treatment_block = feols(as.formula(paste(outcome, "~", treatment, "|", baseline_block)), data = allocation_sample,
+        vcov = as.formula(paste("~", baseline_block)), ssc = MODEL_SSC, fixef.rm = "none"),
+      treatment_block_caste = feols(as.formula(paste(outcome, "~", treatment, "| allocation_group")), data = allocation_sample,
+        vcov = as.formula(paste("~", baseline_block)), ssc = MODEL_SSC, fixef.rm = "none")
+    )
+    allocation_checks[[paste(state, period)]] <- purrr::imap_dfr(allocation_fits, ~ broom::tidy(.x, conf.int = TRUE) |>
+      filter(term == treatment) |> mutate(state = state, period = period, specification = .y, n = nobs(.x)))
+  }
+}
+sample_comparisons <- bind_rows(sample_comparisons)
+open_balance <- bind_rows(open_balance)
+allocation_checks <- bind_rows(allocation_checks)
+readr::write_csv(sample_comparisons, here("tabs/short_term_sample_comparisons.csv"))
+readr::write_csv(open_balance, here("tabs/open_sample_balance.csv"))
+readr::write_csv(allocation_checks, here("tabs/short_term_allocation_checks.csv"))
+
+format_estimate <- function(estimate, low, high) {
+  sprintf("%.1f [%.1f, %.1f]", 100 * estimate, 100 * low, 100 * high)
+}
+write_check_table <- function(rows, filename, headers) {
+  table <- knitr::kable(rows, format = "latex", booktabs = TRUE, escape = FALSE,
+    col.names = headers, align = paste0("l", strrep("r", ncol(rows) - 1))) |>
+    kableExtra::pack_rows("Rajasthan", 1, 3) |>
+    kableExtra::pack_rows("Uttar Pradesh", 4, 6)
+  writeLines(table, here("tabs", filename))
+}
+sample_table <- sample_comparisons |>
+  mutate(value = paste0("\\shortstack{", format_estimate(estimate, conf.low, conf.high),
+    "\\\\$N=", format(n, big.mark = ",", trim = TRUE), "$}")) |>
+  select(state, period, specification, value) |>
+  pivot_wider(names_from = specification, values_from = value) |>
+  mutate(elections = gsub("_", "--20", paste0("20", period))) |>
+  select(elections, full, common, adjusted)
+write_check_table(sample_table, "short_term_sample_comparisons.tex",
+  c("Elections", "Full sample", "Census sample", "Census sample, adjusted"))
+allocation_table <- allocation_checks |>
+  mutate(value = format_estimate(estimate, conf.low, conf.high)) |>
+  select(state, period, n, specification, value) |>
+  pivot_wider(names_from = specification, values_from = value) |>
+  mutate(elections = gsub("_", "--20", paste0("20", period)), n = format(n, big.mark = ",", trim = TRUE)) |>
+  select(elections, n, outcome_block, treatment_block, treatment_block_caste)
+write_check_table(allocation_table, "short_term_allocation_checks.tex",
+  c("Elections", "$N$", "Outcome block", "Treatment block", "Block $\\times$ caste"))
+balance_table <- open_balance |>
+  mutate(elections = gsub("_", "--20", paste0("20", period)),
+    n = format(n, big.mark = ",", trim = TRUE),
+    joint_p = format_p_value(joint_p)) |>
+  select(elections, n, blocks, joint_p)
+write_check_table(balance_table, "open_sample_balance.tex", c("Elections", "$N$", "Blocks", "Joint $p$-value"))

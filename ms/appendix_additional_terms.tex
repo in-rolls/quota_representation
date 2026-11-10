@@ -1,0 +1,25 @@
+\clearpage
+\section{Additional Reserved Terms}\label{sec:app_additional_terms}
+\suppressfloats[t]
+
+Adding a second reserved term yields small, imprecise estimated increments. Larger full-sample estimates for three terms rather than one are sensitive to the districts included. We distinguish these additional-term comparisons from three terms versus no observed reservation, which also includes the immediately preceding reserved term.
+
+\subsection{History contrasts, sample support, and precision}
+
+Table~\ref{tab:cumulative_contrasts} combines the contrasts, history counts, shared blocks, inference, and approximate minimum detectable effects. The three digits encode reservation in 2005, 2010, and 2015: 1 indicates a women's quota and 0 its absence. Thus 001 denotes reservation only in 2015 and 000 denotes no reservation in the three observed prior elections. Outcomes are Rajasthan's 2020 and UP's 2021 elections. Contrasts use the full covariance of the reservation-history model. Bootstrap intervals use 9,999 null-imposed wild cluster draws; the minimum detectable effects use a normal approximation at 80\% power and two-sided 5\% size.
+
+\input{../tabs/cumulative_contrasts}
+\FloatBarrier
+
+\subsection{Sensitivity to district restrictions}
+
+The restricted rows retain districts where tests do not detect dependence between quota assignments in either 2005--2010 or 2010--2015. The samples fall to \rajRestrictedAlwaysN{} GPs in Rajasthan and \upRestrictedAlwaysN{} in UP. No UP districts satisfy the stricter restriction covering all three transitions. Nonrejection does not establish random assignment; the restriction probes sensitivity to the observed rotation pattern.
+
+The separate comparison of three reserved terms with no observed reservation yields \rajFullAlways{} percentage points in Rajasthan (95\% interval [\rajFullAlwaysLow{}, \rajFullAlwaysHigh{}]) and \upFullAlways{} in UP ([\upFullAlwaysLow{}, \upFullAlwaysHigh{}]). Under the district restriction, the estimates are \rajRestrictedAlways{} points in Rajasthan ([\rajRestrictedAlwaysLow{}, \rajRestrictedAlwaysHigh{}]) and \upRestrictedAlways{} in UP ([\upRestrictedAlwaysLow{}, \upRestrictedAlwaysHigh{}]). These contrasts include the immediately preceding reservation, so they do not isolate the gain from extending reservation beyond one term.
+
+\subsection{Replication with independent UP data}
+
+The independent UP panel described in Appendix~\ref{sec:weaver} supports comparisons of 2010 and 2015 reservation histories at the 2021 election (Table~\ref{tab:weaver_long}). Its shorter coverage does not permit the three-prior-term comparison.
+
+\input{../tabs/weaver_long_term}
+\FloatBarrier

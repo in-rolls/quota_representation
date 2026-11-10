@@ -1,6 +1,6 @@
 Standardized Differences for Balance Covariates
 ================================================
-Generated: 2026-09-13 06:02:31.439083
+Generated: 2026-11-09 20:09:10.105992
 
 Formula: |mean_quota - mean_open| / sqrt((sd_quota^2 + sd_open^2) / 2)
 Threshold for concern: 0.20 (Austin 2009)
@@ -8,124 +8,106 @@ Threshold for concern: 0.20 (Austin 2009)
 === RAJASTHAN ===
 
 Panel 2005->2010:
-  Max standardized diff: 0.062
+  Max standardized diff: 0.0625
   By covariate:
     Population: 0.0213
-    Female Share: 0.0378
-    SC Share: 0.0226
-    ST Share: 0.0165
-    Medical fac./1k: 0.0119
-    Mat. homes/1k: 0.0167
-    FW Centres/1k: 0.0531
-    Prim. sch./1k: 0.0119
-    Mid. sch./1k: 0.062
-    Handpumps/1k: 0.0154
-    Tap water/1k: 0.0013
-    Wells/1k: 0.0214
-    Banking/1k: 0.0052
-    Power/1k: 0.0206
-    Mud road/1k: 0.0072
+    Female (\%): 0.0378
+    SC (\%): 0.019
+    ST (\%): 0.0176
+    Medical facility (\%): 0.0235
+    Maternity homes/1k: 0.0166
+    Maternal/child centers/1k: 0.0532
+    Primary schools/1k: 0.0116
+    Middle schools/1k: 0.0625
+    Banking (\%): 8e-04
+    Power supply (\%): 0.0542
+    Mud road (\%): 0.0208
 
 Panel 2010->2015:
-  Max standardized diff: 0.0732
+  Max standardized diff: 0.0731
   By covariate:
-    Population: 0.0409
-    Female Share: 0.0174
-    SC Share: 0.0732
-    ST Share: 0.0211
-    Medical fac./1k: 0.046
-    Mat. homes/1k: 0.0101
-    FW Centres/1k: 0.0157
-    Prim. sch./1k: 0.0549
-    Mid. sch./1k: 0.0137
-    Handpumps/1k: 0.0224
-    Tap water/1k: 0.0581
-    Wells/1k: 0.0203
-    Banking/1k: 0.0284
-    Power/1k: 0.0352
-    Mud road/1k: 0.002
+    Population: 0.0397
+    Female (\%): 0.0182
+    SC (\%): 0.0731
+    ST (\%): 0.0216
+    Medical facility (\%): 0.0334
+    Maternity homes/1k: 0.0102
+    Maternal/child centers/1k: 0.0159
+    Primary schools/1k: 0.0561
+    Middle schools/1k: 0.013
+    Banking (\%): 0.0242
+    Power supply (\%): 3e-04
+    Mud road (\%): 0.0032
 
 Panel 2015->2020:
-  Max standardized diff: 0.053
+  Max standardized diff: 0.0543
   By covariate:
-    Population: 0.0082
-    Female Share: 0.0337
-    SC Share: 0.0032
-    ST Share: 9e-04
-    Medical fac./1k: 0.0378
-    Mat. homes/1k: 0.0071
-    FW Centres/1k: 0.0191
-    Prim. sch./1k: 0.053
-    Mid. sch./1k: 0.0117
-    Handpumps/1k: 0.0513
-    Tap water/1k: 0.0235
-    Wells/1k: 0.0305
-    Banking/1k: 0.0314
-    Power/1k: 0.016
-    Mud road/1k: 0.0116
+    Population: 0.0067
+    Female (\%): 0.0345
+    SC (\%): 0.0046
+    ST (\%): 0.0018
+    Medical facility (\%): 0.0269
+    Maternity homes/1k: 0.007
+    Maternal/child centers/1k: 0.0193
+    Primary schools/1k: 0.0543
+    Middle schools/1k: 0.0124
+    Banking (\%): 0.0122
+    Power supply (\%): 0.0152
+    Mud road (\%): 0.0329
 
-RAJASTHAN MAX (all panels): 0.0732
+RAJASTHAN MAX (all panels): 0.0731
 
 === UTTAR PRADESH ===
 
 Panel 2005->2010:
-  Max standardized diff: 0.1299
+  Max standardized diff: 0.1385
   By covariate:
-    Population: 0.0893
-    Female Share: 0.0813
-    SC Share: 0.1299
-    ST Share: 0.0152
-    Medical fac./1k: 0.0238
-    Mat. homes/1k: 0.0057
-    FW Centres/1k: 0.0377
-    Prim. sch./1k: 0.0159
-    Mid. sch./1k: 0.0017
-    Handpumps/1k: 0.0313
-    Tap water/1k: 0.0114
-    Wells/1k: 0.0111
-    Banking/1k: 0.0313
-    Power/1k: 0.0281
-    Mud road/1k: 0.0281
+    Population: 0.0902
+    Female (\%): 0.0811
+    SC (\%): 0.1385
+    ST (\%): 0.0152
+    Medical facility (\%): 0.0595
+    Maternity homes/1k: 0.0054
+    Maternal/child centers/1k: 0.0385
+    Primary schools/1k: 0.0159
+    Middle schools/1k: 0.0021
+    Banking (\%): 0.059
+    Power supply (\%): 0.0095
+    Mud road (\%): 0.0222
 
 Panel 2010->2015:
-  Max standardized diff: 0.1254
+  Max standardized diff: 0.1264
   By covariate:
-    Population: 0.0045
-    Female Share: 0.0387
-    SC Share: 0.1254
-    ST Share: 0.035
-    Medical fac./1k: 0
-    Mat. homes/1k: 0.028
-    FW Centres/1k: 0.0134
-    Prim. sch./1k: 0.0113
-    Mid. sch./1k: 0.0246
-    Handpumps/1k: 0.0035
-    Tap water/1k: 0.011
-    Wells/1k: 0.0191
-    Banking/1k: 0.037
-    Power/1k: 0.0305
-    Mud road/1k: 0.0064
+    Population: 0.0041
+    Female (\%): 0.038
+    SC (\%): 0.1264
+    ST (\%): 0.0358
+    Medical facility (\%): 0.0088
+    Maternity homes/1k: 0.028
+    Maternal/child centers/1k: 0.014
+    Primary schools/1k: 0.0111
+    Middle schools/1k: 0.0246
+    Banking (\%): 0.0121
+    Power supply (\%): 0.0179
+    Mud road (\%): 0.0206
 
 Panel 2015->2021:
-  Max standardized diff: 0.4022
+  Max standardized diff: 0.4009
   By covariate:
-    Population: 0.4022
-    Female Share: 0.0191
-    SC Share: 0.0622
-    ST Share: 0.0126
-    Medical fac./1k: 0.0454
-    Mat. homes/1k: 0.0456
-    FW Centres/1k: 0.0209
-    Prim. sch./1k: 0.1452
-    Mid. sch./1k: 0.0236
-    Handpumps/1k: 0.2236
-    Tap water/1k: 0.0711
-    Wells/1k: 0.1409
-    Banking/1k: 0.0602
-    Power/1k: 0.1402
-    Mud road/1k: 0.1805
+    Population: 0.4009
+    Female (\%): 0.0181
+    SC (\%): 0.06
+    ST (\%): 0.0128
+    Medical facility (\%): 0.1073
+    Maternity homes/1k: 0.0439
+    Maternal/child centers/1k: 0.0207
+    Primary schools/1k: 0.1451
+    Middle schools/1k: 0.0232
+    Banking (\%): 0.1679
+    Power supply (\%): 0.0212
+    Mud road (\%): 0.0733
 
-UP MAX (all panels): 0.4022
+UP MAX (all panels): 0.4009
 
 === OVERALL SUMMARY ===
-Maximum standardized difference (all states, all panels): 0.4022
+Maximum standardized difference (all states, all panels): 0.4009

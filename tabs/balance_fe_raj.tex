@@ -9,28 +9,24 @@
 \cmidrule(l{3pt}r{3pt}){2-4} \cmidrule(l{3pt}r{3pt}){5-7} \cmidrule(l{3pt}r{3pt}){8-10}
 Variable & Coef & SE & p & Coef & SE & p & Coef & SE & p\\
 \midrule
-Population & -51.19 & 37.77 & 0.18 & -60.06 & 37.31 & 0.11 & 14.29 & 36.86 & 0.70\\
-Female Pop. & -24.41 & 18.14 & 0.18 & -30.30 & 18.08 & 0.10 & 7.73 & 17.67 & 0.66\\
-SC (Female) & 5.67 & 6.27 & 0.37 & 2.37 & 5.88 & 0.69 & 0.74 & 5.97 & 0.90\\
-ST (Female) & -9.65 & 7.93 & 0.22 & -0.57 & 6.48 & 0.93 & 4.45 & 6.13 & 0.47\\
-Medical fac. & -0.01 & 0.01 & 0.25 & 0.01 & 0.01 & 0.25 & -0.01 & 0.01 & 0.53\\
+Population & -51.20 & 37.57 & 0.17 & -57.68 & 37.25 & 0.12 & 11.81 & 36.88 & 0.75\\
+Female (\%) & 0.02 & 0.04 & 0.56 & -0.02 & 0.04 & 0.65 & 0.02 & 0.04 & 0.59\\
+SC (\%) & 0.37 & 0.25 & 0.15 & 0.41 & 0.24 & 0.08 & -0.16 & 0.23 & 0.50\\
+ST (\%) & -0.42 & 0.35 & 0.23 & 0.14 & 0.32 & 0.66 & 0.24 & 0.33 & 0.46\\
+Medical facility (\%) & -1.10 & 0.94 & 0.24 & 1.30 & 1.11 & 0.24 & -0.74 & 1.15 & 0.52\\
 \addlinespace
-Maternity homes & 0.00 & 0.01 & 0.64 & 0.00 & 0.01 & 0.88 & 0.00 & 0.01 & 0.68\\
-FW Centres & -0.02 & 0.01 & 0.02 & 0.00 & 0.01 & 0.69 & 0.00 & 0.01 & 0.77\\
-Primary sch. & -0.02 & 0.06 & 0.74 & -0.16 & 0.05 & 0.00 & 0.13 & 0.05 & 0.02\\
-Middle sch. & 0.03 & 0.03 & 0.23 & -0.01 & 0.02 & 0.78 & 0.01 & 0.02 & 0.73\\
-Handpumps & -0.09 & 0.08 & 0.27 & -0.14 & 0.06 & 0.03 & 0.11 & 0.07 & 0.11\\
+Maternity homes/1k & 0.00 & 0.00 & 0.75 & 0.00 & 0.00 & 0.88 & 0.00 & 0.00 & 0.67\\
+Maternal/child centers/1k & 0.00 & 0.00 & 0.05 & 0.00 & 0.00 & 0.54 & 0.00 & 0.00 & 0.59\\
+Primary schools/1k & 0.01 & 0.02 & 0.62 & -0.03 & 0.01 & 0.03 & 0.03 & 0.01 & 0.03\\
+Middle schools/1k & 0.01 & 0.01 & 0.03 & 0.00 & 0.01 & 0.78 & 0.00 & 0.01 & 0.56\\
+Banking (\%) & -0.13 & 1.23 & 0.91 & -1.12 & 1.27 & 0.38 & 0.82 & 1.28 & 0.52\\
 \addlinespace
-Tap water & -0.07 & 0.12 & 0.58 & -0.23 & 0.11 & 0.03 & 0.10 & 0.10 & 0.33\\
-Wells & -0.09 & 0.07 & 0.23 & -0.12 & 0.07 & 0.07 & 0.08 & 0.06 & 0.20\\
-Banking & 0.00 & 0.01 & 0.92 & -0.01 & 0.01 & 0.33 & 0.01 & 0.01 & 0.47\\
-Power supply & 0.01 & 0.00 & 0.12 & 0.00 & 0.00 & 0.82 & 0.00 & 0.00 & 0.75\\
-Mud road & -0.03 & 0.05 & 0.53 & -0.04 & 0.05 & 0.39 & 0.00 & 0.05 & 0.96\\
-\addlinespace
-N & 4985.00 & NA & NA & 4609.00 & NA & NA & 4518.00 & NA & NA\\
-Joint p (Wald) & 0.05 & NA & NA & 0.17 & NA & NA & 0.57 & NA & NA\\
+Power supply (\%) & 0.59 & 0.38 & 0.12 & 0.07 & 0.30 & 0.82 & -0.10 & 0.32 & 0.75\\
+Mud road (\%) & -0.94 & 0.95 & 0.32 & -0.23 & 0.88 & 0.80 & -1.29 & 0.94 & 0.17\\
+N & 4980.00 & NA & NA & 4605.00 & NA & NA & 4514.00 & NA & NA\\
+Joint p (Wald) & 0.02 & NA & NA & 0.13 & NA & NA & 0.30 & NA & NA\\
 \bottomrule
 \multicolumn{10}{l}{\rule{0pt}{1em}\textit{Note: }}\\
-\multicolumn{10}{l}{\rule{0pt}{1em}Each row: coefficient on treatment from regression of covariate on treatment with district-samiti/block FE and standard errors clustered at that level.}\\
+\multicolumn{10}{l}{\rule{0pt}{1em}Each row regresses the covariate on quota assignment with block fixed effects and clustering. Percentage outcomes use percentage-point differences. Facility counts are per 1,000 residents; availability indicates any linked village with the facility, with complete coverage required for absence. Water-source code sums are excluded because their aggregation does not preserve availability.}\\
 \end{tabular}
 \end{table}

@@ -1,0 +1,15 @@
+"q98","q03","exclusion_reason","gps"
+0,0,"history_not_verified",4
+0,0,"no_current_interview",2
+0,0,"observed",66
+0,0,"sex_unresolved",1
+0,1,"history_not_verified",3
+0,1,"observed",31
+0,1,"sex_unresolved",1
+1,0,"history_not_verified",4
+1,0,"interview_id_unresolved",1
+1,0,"no_current_interview",1
+1,0,"observed",28
+1,1,"observed",19
+1,1,"visit_year_unresolved",1
+,0,"history_not_verified",3

@@ -1,0 +1,24 @@
+{
+  "model": {
+    "indicate": "0.11.0",
+    "torch": "2.15.0",
+    "engine": "model",
+    "source": "hindi",
+    "beam": 5,
+    "assets": {
+      "hindi_tokens.json": "1fc24ff69fd952d9e1d665901b9b6e873d7c5a41a76f66b965e541a50fc7ea9f",
+      "english_tokens.json": "cbb125b7b0bf62d099d31546b628c53540900395d2ba82e420ad011d3253b316",
+      "saved_weights/encoder.safetensors": "91fc2ede8ad45e17b55020431d370c1425f5923bfac65b29efc3fdde3b32592c",
+      "saved_weights/decoder.safetensors": "9110d4204e225786dea7140eb14892132ffda874275fe5992bd4f1e967a3968b"
+    }
+  },
+  "inputs": {
+    "2016/winners.parquet": "acb1f400882c12fa87a05d45cdf4bd63a35b96312f44e70ee65f049ea97161dd",
+    "2016/candidates.parquet": "af592cfa5e5c35782c84da40fa5a89166a89e59f1980112d681e0304172915fd",
+    "2021/candidates.parquet": "e5679156c18bd8ae44d8983484f27fac26fcda1d658d17bf1aff67a8c14f5768"
+  },
+  "names": 78580,
+  "model_names": 68351,
+  "output_sha256": "8adea2413d62e149bd24fcba555d88ebd7810ca255f4e93c2ba86faa8244ce20",
+  "interpretation": "Transliterations, not verified person identities. No sex inference."
+}

@@ -14,66 +14,73 @@ source(here::here("scripts/00_config.R"))
 # =============================================================================
 
 # Rajasthan year files
-raj_2005 <- read_parquet(raj_path("data/fin/source_2005_std.parquet"))
-raj_2010 <- read_parquet(raj_path("data/fin/source_2010_std.parquet"))
-raj_2015 <- read_parquet(raj_path("data/fin/source_2015_std.parquet"))
-raj_2020 <- read_parquet(raj_path("data/fin/source_2020_std.parquet"))
+raj_2005 <- read_raj(raj_path("data/release/2005/sarpanch_results.parquet"))
+raj_2010 <- read_raj(raj_path("data/release/2010/sarpanch_results.parquet"))
+raj_2015 <- read_raj(raj_path("data/release/2015/sarpanch_results.parquet"))
+raj_2020 <- read_raj(raj_path("data/release/2020/sarpanch_reservations.parquet"))
 
-raj_stats <- list(
-  gp_2005 = nrow(raj_2005),
-  gp_2010 = nrow(raj_2010),
-  gp_2015 = nrow(raj_2015),
-  gp_2020 = nrow(raj_2020),
-  samiti_2005 = n_distinct(paste(raj_2005$district_raw, raj_2005$samiti_raw)),
-  samiti_2010 = n_distinct(paste(raj_2010$district_raw, raj_2010$samiti_raw)),
-  samiti_2015 = n_distinct(paste(raj_2015$district_raw, raj_2015$samiti_raw)),
-  samiti_2020 = n_distinct(paste(raj_2020$district_raw, raj_2020$samiti_raw)),
-  dist_2005 = n_distinct(raj_2005$district_raw),
-  dist_2010 = n_distinct(raj_2010$district_raw),
-  dist_2015 = n_distinct(raj_2015$district_raw),
-  dist_2020 = n_distinct(raj_2020$district_raw),
-  max_gp = max(nrow(raj_2005), nrow(raj_2010), nrow(raj_2015), nrow(raj_2020)),
-  women_res_2005 = round(100 * mean(raj_2005$female_reserved, na.rm = TRUE), 1),
-  women_res_2010 = round(100 * mean(raj_2010$female_reserved, na.rm = TRUE), 1),
-  women_res_2015 = round(100 * mean(raj_2015$female_reserved, na.rm = TRUE), 1),
-  women_res_2020 = round(100 * mean(raj_2020$female_reserved, na.rm = TRUE), 1)
-)
+election_coverage <- function(data, state, year, district, block, gp, reservation) {
+  clean_name <- function(x) {
+    value <- stringr::str_to_lower(stringr::str_squish(stringi::stri_trans_nfc(as.character(x))))
+    dplyr::na_if(value, "")
+  }
+  records <- tibble(
+    district = clean_name(data[[district]]), block = clean_name(data[[block]]),
+    gp = clean_name(data[[gp]]), reservation = reservation
+  )
+  stopifnot(all(is.na(records$reservation) | records$reservation %in% 0:1))
+  identified <- records |> filter(if_all(c(district, block, gp), ~ !is.na(.x)))
+  offices <- identified |> summarise(
+    reservation_conflict = n_distinct(reservation, na.rm = TRUE) > 1L,
+    reservation = if (n_distinct(reservation, na.rm = TRUE) == 1L) {
+      unique(reservation[!is.na(reservation)])
+    } else NA_integer_,
+    .by = c(district, block, gp)
+  )
+  tibble(state, year, source_records = nrow(records), identified_gps = nrow(offices),
+    missing_identity_records = nrow(records) - nrow(identified),
+    duplicate_identity_records = nrow(identified) - nrow(offices),
+    blocks = nrow(distinct(filter(records, !is.na(district), !is.na(block)), district, block)),
+    districts = n_distinct(records$district, na.rm = TRUE),
+    known_reservation_gps = sum(!is.na(offices$reservation)),
+    quota_gps = sum(offices$reservation == 1L, na.rm = TRUE),
+    conflicting_reservation_gps = sum(offices$reservation_conflict),
+    quota_share = mean(offices$reservation, na.rm = TRUE))
+}
 
-# UP year files
-up_2005 <- read_parquet(up_path("gp/gp_head_winner_records_2005.parquet"))
-up_2010 <- read_parquet(up_path("gp/gp_head_winner_records_2010.parquet"))
-up_2015 <- read_parquet(up_path("gp/gp_head_winner_records_2015.parquet"))
-up_2021 <- read_parquet(up_path("gp/gp_head_candidates_2021.parquet"))
+raj_coverage <- bind_rows(lapply(c(2005, 2010, 2015, 2020), function(year) {
+  data <- get(paste0("raj_", year))
+  election_coverage(data, "Rajasthan", year, "district_raw", "samiti_raw", "gp_std", data$female_reserved)
+}))
+coverage_stats <- function(coverage, block_name) {
+  stats <- list(max_gp = max(coverage$identified_gps))
+  for (j in seq_len(nrow(coverage))) {
+    row <- coverage[j, ]
+    stats[[paste0("gp_", row$year)]] <- row$identified_gps
+    stats[[paste0(block_name, "_", row$year)]] <- row$blocks
+    stats[[paste0("dist_", row$year)]] <- row$districts
+    stats[[paste0("women_res_", row$year)]] <- round(100 * row$quota_share, 1)
+  }
+  stats
+}
+raj_stats <- coverage_stats(raj_coverage, "samiti")
 
-up_2021_winners <- up_2021[up_2021$result == "विजेता", ]
-
-up_stats <- list(
-  gp_2005 = n_distinct(paste(up_2005$district_name, up_2005$block_name, up_2005$gp_name)),
-  gp_2010 = n_distinct(paste(up_2010$district_name, up_2010$block_name, up_2010$gp_name)),
-  gp_2015 = n_distinct(paste(up_2015$district_name, up_2015$block_name, up_2015$gp_name)),
-  gp_2021 = n_distinct(paste(up_2021$district_name, up_2021$block_name, up_2021$gp)),
-  block_2005 = n_distinct(paste(up_2005$district_name, up_2005$block_name)),
-  block_2010 = n_distinct(paste(up_2010$district_name, up_2010$block_name)),
-  block_2015 = n_distinct(paste(up_2015$district_name, up_2015$block_name)),
-  block_2021 = n_distinct(paste(up_2021$district_name, up_2021$block_name)),
-  dist_2005 = n_distinct(up_2005$district_name),
-  dist_2010 = n_distinct(up_2010$district_name),
-  dist_2015 = n_distinct(up_2015$district_name),
-  dist_2021 = n_distinct(up_2021$district_name),
-  max_gp = max(
-    n_distinct(paste(up_2005$district_name, up_2005$block_name, up_2005$gp_name)),
-    n_distinct(paste(up_2010$district_name, up_2010$block_name, up_2010$gp_name)),
-    n_distinct(paste(up_2015$district_name, up_2015$block_name, up_2015$gp_name)),
-    n_distinct(paste(up_2021$district_name, up_2021$block_name, up_2021$gp))
-  ),
-  women_res_2005 = round(100 * mean(grepl("Female", up_2005$gp_res_status_fin_eng, ignore.case = TRUE), na.rm = TRUE), 1),
-  women_res_2010 = round(100 * mean(grepl("Female", up_2010$gp_res_status_fin_eng, ignore.case = TRUE), na.rm = TRUE), 1),
-  women_res_2015 = round(100 * mean(grepl("Female", up_2015$gp_reservation_status_eng, ignore.case = TRUE), na.rm = TRUE), 1),
-  women_res_2021 = round(100 * mean(grepl("Female", up_2021_winners$gp_reservation_status_eng, ignore.case = TRUE), na.rm = TRUE), 1)
-)
+# The consolidated release contains one source winner record per GP and year.
+up_records <- read_up_election_records()
+up_coverage <- bind_rows(lapply(c(2005, 2010, 2015, 2021), function(year) {
+  data <- filter(up_records, election_year == year)
+  data$gp_identity <- if (year == 2021L) {
+    ifelse(is.na(data$gp_number_raw) | is.na(data$gp_name_hindi), NA_character_,
+      paste(data$gp_number_raw, "-", data$gp_name_hindi))
+  } else data$gp_name_hindi
+  election_coverage(data, "Uttar Pradesh", year,
+    "district_name_hindi", "block_name_hindi", "gp_identity", data$reserved_woman)
+}))
+up_stats <- coverage_stats(up_coverage, "block")
+write_csv(bind_rows(raj_coverage, up_coverage), here("tabs/election_coverage.csv"))
 
 phone_counts <- read_csv(here("tabs/phone_contact_counts.csv"), show_col_types = FALSE) |>
-  filter(section == "Initial contact", category == "Answered")
+  filter(section == "Contact attempts", category == "Answered")
 quota_counts <- filter(phone_counts, survey == "phone_survey")
 open_counts <- filter(phone_counts, survey == "phone_survey_openseats")
 stopifnot(nrow(quota_counts) == 1L, nrow(open_counts) == 1L)
@@ -101,7 +108,7 @@ data_sources_df <- data.frame(
     "Rajasthan", "Rajasthan"
   ),
   Years = c(
-    "2005, 2010, 2015, 2020", "2005, 2010, 2015", "2020",
+    "2005, 2010, 2015, 2020", "2005, 2010, 2015, 2021", "2020",
     "2020", "1991, 2001, 2011", "2001", "2024", "2024"
   ),
   Variables = c(
@@ -163,8 +170,8 @@ save_kable(treat_status_table, file = "tabs/treat_status.tex")
 
 gp_summary_df <- data.frame(
   Metric = c(
-    "Gram Panchayats", "Panchayat Samitis", "Districts", "Women Reserved (\\%)",
-    "Gram Panchayats", "Panchayat Samitis", "Districts", "Women Reserved (\\%)"
+    "Identified GPs", "Blocks", "Districts", "Women reserved (\\%)",
+    "Identified GPs", "Blocks", "Districts", "Women reserved (\\%)"
   ),
   Y2005 = c(
     format(raj_stats$gp_2005, big.mark = ","), raj_stats$samiti_2005,
@@ -194,7 +201,7 @@ gp_summary_df <- data.frame(
 
 gp_summary_table <- kbl(gp_summary_df,
   format = "latex", booktabs = TRUE,
-  col.names = c("", "2005", "2010", "2015", "2020"),
+  col.names = c("", "2005", "2010", "2015", "2020/2021"),
   caption = "Summary of Gram Panchayats by Election Year",
   label = "gp_summary_combined",
   align = c("l", "r", "r", "r", "r"),
@@ -204,7 +211,7 @@ gp_summary_table <- kbl(gp_summary_df,
   pack_rows("Panel A: Rajasthan", 1, 4, italic = TRUE) %>%
   pack_rows("Panel B: Uttar Pradesh", 5, 8, italic = TRUE) %>%
   footnote(
-    general = "GP counts represent the total number of Gram Panchayats for which we have electoral data. The number of GPs increased between 2010 and 2020 due to delimitation (redistricting). The 2020 column for UP contains 2021 election data.",
+    general = "Identified GPs are distinct complete district--block--GP names in the source files, using cleaned GP names. Missing identities are excluded from GP counts; repeated names within a block count once. Reservation shares use identified GPs with known, non-conflicting reservation. District and block counts use observed names. The last column contains Rajasthan 2020 and UP 2021. Coverage changes reflect both administrative changes and source availability.",
     threeparttable = TRUE
   )
 
@@ -241,53 +248,103 @@ save_kable(state_local_table, file = "tabs/state_local_totals.tex")
 
 message("Generated tabs/data_sources.tex, tabs/treat_status.tex, tabs/gp_summary.tex, and tabs/state_local_totals.tex")
 
+# Next-election samples and the composition of the non-quota group.
+next_election_samples <- list()
+for (state in c("raj", "up")) {
+  periods <- if (state == "raj") c("05_10", "10_15", "15_20") else c("05_10", "10_15", "15_21")
+  for (period in periods) {
+    years <- paste0("20", strsplit(period, "_")[[1]])
+    treatment <- paste0("treat_", years[1])
+    current <- paste0("treat_", years[2])
+    prior_winner <- paste0("female_winner_", years[1])
+    outcome <- paste0("female_winner_", years[2])
+    block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", years[2])
+    panel <- read_analysis_parquet(election_panel_path(state, paste0(state, "_", period, ".parquet")))
+    open <- panel |> filter(.data[[current]] == 0)
+    analysis <- open[complete.cases(open[c(treatment, outcome, block)]), ]
+    control <- analysis |> filter(.data[[treatment]] == 0)
+    observed <- sum(!is.na(control[[prior_winner]]))
+    women <- sum(control[[prior_winner]] == 1, na.rm = TRUE)
+    stopifnot(observed > 0L, all(na.omit(control[[prior_winner]]) %in% 0:1))
+    next_election_samples[[paste(state, period)]] <- data.frame(
+      state, period, treatment_year = as.integer(years[1]), outcome_year = as.integer(years[2]),
+      linked = nrow(panel), open_at_followup = nrow(open), analysis_n = nrow(analysis),
+      quota_n = sum(analysis[[treatment]] == 1), control_n = nrow(control),
+      control_sex_observed = observed, control_women = women,
+      control_women_share = women / observed,
+      control_followup_women_share = mean(control[[outcome]])
+    )
+  }
+}
+next_election_samples <- bind_rows(next_election_samples)
+write_csv(next_election_samples, here("tabs/next_election_samples.csv"))
+next_election_display <- next_election_samples |>
+  transmute(
+    Elections = paste(treatment_year, outcome_year, sep = "--"),
+    Linked = linked, Analyzed = analysis_n, Quota = quota_n, Nonquota = control_n,
+    SexObserved = control_sex_observed,
+    Women = sprintf("%.1f", 100 * control_women_share)
+  ) |>
+  mutate(across(where(is.numeric), ~ format(.x, big.mark = ",", trim = TRUE)))
+next_election_table <- kbl(next_election_display,
+  format = "latex", booktabs = TRUE, escape = FALSE,
+  col.names = c("Elections", "Linked", "Analyzed", "Quota", "Non-quota", "Sex observed", "Women (\\%)"),
+  align = c("l", rep("r", 6))
+) |>
+  add_header_above(c(" " = 1, "GP counts" = 4, "Non-quota offices in $t$" = 2), escape = FALSE) |>
+  pack_rows("Rajasthan", 1, 3, italic = TRUE) |>
+  pack_rows("Uttar Pradesh", 4, 6, italic = TRUE)
+writeLines(as.character(next_election_table), here("tabs/next_election_samples.tex"))
+
 # =============================================================================
 # Figure: India Map highlighting Rajasthan and UP
 # =============================================================================
 
-message("\n--- Generating India Map ---")
+if ("--map" %in% commandArgs(trailingOnly = TRUE)) {
+  message("\n--- Generating India Map ---")
 
-library(sf)
-library(ggplot2)
+  library(sf)
+  library(ggplot2)
 
-if (!dir.exists(here("figs"))) dir.create(here("figs"))
+  if (!dir.exists(here("figs"))) dir.create(here("figs"))
 
-india_states <- st_read(here("data/shapefiles/India_State_Boundary.shp"), quiet = TRUE)
-india_states$name <- india_states$State_Name
-india_states$highlight <- case_when(
-  grepl("Rajasthan", india_states$name, ignore.case = TRUE) ~ "Rajasthan",
-  grepl("Uttar Pradesh", india_states$name, ignore.case = TRUE) ~ "Uttar Pradesh",
-  TRUE ~ "Other"
-)
-
-india_states$highlight <- factor(
-  india_states$highlight,
-  levels = c("Rajasthan", "Uttar Pradesh", "Other")
-)
-
-p <- ggplot(india_states) +
-  geom_sf(aes(fill = highlight), color = "white", linewidth = 0.3) +
-  scale_fill_manual(
-    values = c(
-      "Rajasthan" = "#4A4A4A",
-      "Uttar Pradesh" = "#808080",
-      "Other" = "#E8E8E8"
-    ),
-    name = NULL
-  ) +
-  theme_pub() +
-  theme(
-    legend.position = "none",
-    axis.text = element_blank(),
-    axis.ticks = element_blank(),
-    panel.border = element_blank()
+  india_states <- st_read(here("data/shapefiles/India_State_Boundary.shp"), quiet = TRUE)
+  india_states$name <- india_states$State_Name
+  india_states$highlight <- case_when(
+    grepl("Rajasthan", india_states$name, ignore.case = TRUE) ~ "Rajasthan",
+    grepl("Uttar Pradesh", india_states$name, ignore.case = TRUE) ~ "Uttar Pradesh",
+    TRUE ~ "Other"
   )
 
-ggsave(
-  here("figs", "india_map_up_raj.pdf"),
-  p,
-  width = 5,
-  height = 6,
-  device = cairo_pdf
-)
-message("Saved: figs/india_map_up_raj.pdf")
+  india_states$highlight <- factor(
+    india_states$highlight,
+    levels = c("Rajasthan", "Uttar Pradesh", "Other")
+  )
+
+  p <- ggplot(india_states) +
+    geom_sf(aes(fill = highlight), color = "white", linewidth = 0.3) +
+    scale_fill_manual(
+      values = c(
+        "Rajasthan" = "#4A4A4A",
+        "Uttar Pradesh" = "#808080",
+        "Other" = "#E8E8E8"
+      ),
+      name = NULL
+    ) +
+    theme_pub() +
+    theme(
+      legend.position = "none",
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.border = element_blank()
+    )
+
+  ggsave(
+    here("figs", "india_map_up_raj.pdf"),
+    p,
+    width = 5,
+    height = 6,
+    device = cairo_pdf
+  )
+  message("Saved: figs/india_map_up_raj.pdf")
+}

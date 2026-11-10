@@ -7,6 +7,52 @@ source(here("scripts/00_config.R"))
 source(here("scripts/00_utils.R"))
 setFixest_nthreads(1)
 
+write_inference_tables <- function(inference) {
+  primary <- inference %>% filter(fixed_effects, variance == "cluster", sample %in% c("full", "restricted"))
+  for (histories in c(FALSE, TRUE)) {
+    data <- primary %>% filter(grepl("-", contrast) == histories)
+    display <- data %>% transmute(
+      State = recode(state, raj = "Rajasthan", up = "UP"),
+      Elections = paste0("20", sub("_", "--20", period)), Sample = sample,
+      History = contrast, `N (L/R)` = paste0(left_n, "/", right_n),
+      `Mixed blocks` = common_clusters, Estimate = format_number(100 * estimate),
+      `Cluster CI` = sprintf("[%.1f, %.1f]", 100 * conf_low, 100 * conf_high),
+      `Bootstrap CI` = sprintf("[%.1f, %.1f]", 100 * bootstrap_low, 100 * bootstrap_high),
+      MDE = format_number(100 * mde_80)
+    )
+    if (histories) display$Elections <- NULL else display$History <- NULL
+    file <- if (histories) "cumulative_contrasts" else "short_term_bootstrap"
+    caption <- if (histories) "Reservation-History Contrasts: Support, Inference, and Precision" else {
+      "Next-Election Estimates: Support, Inference, and Precision"
+    }
+    support_note <- if (histories) {
+      sizes <- distinct(data, state, sample, n)
+      paste("Model samples:", paste(paste(recode(sizes$state, raj = "Rajasthan", up = "UP"),
+        sizes$sample, format(sizes$n, big.mark = ",", trim = TRUE)), collapse = "; "), ".")
+    } else {
+      "L/R counts denote prior quota/non-quota offices. The model sample is their sum."
+    }
+    tex <- knitr::kable(display, format = "latex", booktabs = TRUE, row.names = FALSE,
+      caption = caption, label = file) %>%
+      kableExtra::kable_styling(font_size = 8, latex_options = "scale_down") %>%
+      kableExtra::footnote(general = paste(
+        "Estimates, 95% intervals, and approximate minimum detectable effects (MDEs) are in percentage points.",
+        "All models include block fixed effects and cluster by block.",
+        "Mixed blocks contain both compared groups; L/R counts refer to the left/right groups in each contrast.",
+        support_note,
+        "Bootstrap intervals use 9,999 null-imposed wild cluster draws.",
+        "MDEs use a normal approximation at 80% power and two-sided 5% size."
+      ), threeparttable = TRUE)
+    writeLines(trimws(strsplit(as.character(tex), "\n")[[1]], which = "right"),
+      here("tabs", paste0(file, ".tex")))
+  }
+}
+
+if ("--tables-only" %in% commandArgs(trailingOnly = TRUE)) {
+  write_inference_tables(read.csv(here("tabs/model_inference.csv")))
+  quit(save = "no")
+}
+
 bootstrap_results <- list()
 inference_rows <- list()
 support_rows <- list()
@@ -146,7 +192,7 @@ for (state in c("raj", "up")) {
     outcome <- paste0("female_winner_", years[2])
     district <- paste0(if (state == "raj") "district_std_" else "district_name_eng_", years[2])
     block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", years[2])
-    data <- as.data.frame(read_parquet(election_panel_path(state, paste0(state, "_", panel, ".parquet"))))
+    data <- as.data.frame(read_analysis_parquet(election_panel_path(state, paste0(state, "_", panel, ".parquet"))))
     open <- data[!is.na(data[[current]]) & data[[current]] == 0, ]
     eligible <- eligible_districts(data, treatment, current, district)
     fit_inference(open, state, panel, "full", outcome, treatment, block)
@@ -162,7 +208,7 @@ for (state in c("raj", "up")) {
   block <- paste0(if (state == "raj") "dist_samiti_" else "dist_block_", end)
   outcome <- paste0("female_winner_", end)
   current <- paste0("treat_", end)
-  data <- as.data.frame(read_parquet(election_panel_path(state, paste0(state, "_", panel, ".parquet"))))
+  data <- as.data.frame(read_analysis_parquet(election_panel_path(state, paste0(state, "_", panel, ".parquet"))))
   open <- data[!is.na(data[[current]]) & data[[current]] == 0, ]
   transitions <- list(c("2005", "2010"), c("2010", "2015"), c("2015", end))
   eligible <- lapply(transitions, function(years) eligible_districts(data, paste0("treat_", years[1]), paste0("treat_", years[2]), district))
@@ -184,21 +230,5 @@ write.csv(inference, here("tabs/model_inference.csv"), row.names = FALSE)
 saveRDS(bootstrap_results, here("data/model_bootstrap.rds"))
 write.csv(bind_rows(support_rows), here("tabs/treatment_history_support.csv"), row.names = FALSE)
 
-primary <- inference %>% filter(fixed_effects, variance == "cluster", sample %in% c("full", "restricted"))
-summary_table <- function(data, file, caption) {
-  display <- data %>% transmute(
-    State = recode(state, raj = "Rajasthan", up = "Uttar Pradesh"),
-    Period = paste0("20", sub("_", "--20", period)), Sample = sample,
-    Contrast = contrast, `Cell N (L/R)` = paste0(left_n, "/", right_n),
-    `Shared clusters` = common_clusters, `Estimate (pp)` = 100 * estimate,
-    `Cluster CI` = sprintf("[%.2f, %.2f]", 100 * conf_low, 100 * conf_high),
-    `Bootstrap p` = format.pval(bootstrap_p, digits = 3, eps = 1 / 10000),
-    `Bootstrap CI` = sprintf("[%.2f, %.2f]", 100 * bootstrap_low, 100 * bootstrap_high)
-  )
-  tex <- knitr::kable(display, format = "latex", booktabs = TRUE, digits = 3, caption = caption, label = sub(".tex", "", file, fixed = TRUE)) %>%
-    kableExtra::kable_styling(font_size = 8, latex_options = "scale_down")
-  writeLines(as.character(tex), here("tabs", file))
-}
-summary_table(primary %>% filter(grepl("-", contrast)), "cumulative_contrasts.tex", "Cumulative contrasts: cell counts refer to left/right histories; shared clusters contain both histories")
-summary_table(primary %>% filter(!grepl("-", contrast)), "short_term_bootstrap.tex", "Short-run estimates: cell counts refer to prior quota/open seats; shared clusters contain both groups")
+write_inference_tables(inference)
 message("Saved model inference, history support, bootstrap draws, and contrast tables.")

@@ -299,11 +299,19 @@ for (state in c("raj", "up")) {
 }
 write.csv(bind_rows(distance_stats), here("tabs/heterogeneity_distance_sensitivity.csv"), row.names = FALSE)
 write.csv(bind_rows(heterogeneity_support), here("tabs/heterogeneity_sample_support.csv"), row.names = FALSE)
-aer_etable(distance_models,
-  file = here("tabs/heterogeneity_distance_sensitivity.tex"),
-  keep = "%treat_.*:", notes = paste(
-    "All models include district-samiti/block fixed effects and clustered standard errors.",
-    "Mean distance is the primary GP definition; minimum observed village distance is the sensitivity definition.",
-    "Unknown facility availability is excluded from the infrastructure index. Medians use observed values."
-  )
-)
+bind_rows(distance_stats) |>
+  filter(grepl(":", term)) |>
+  mutate(
+    State = recode(state, raj = "Rajasthan", up = "Uttar Pradesh"),
+    Elections = vapply(strsplit(panel, "_"), function(years) paste0("20", years, collapse = "--"), character(1)),
+    Characteristic = recode(sub(".*:", "", term), near_town = "Near town",
+      high_infra = "High infrastructure", high_f_literacy = "High female literacy"),
+    value = paste0(format_number(100 * estimate), " [", format_number(100 * conf.low),
+      ", ", format_number(100 * conf.high), "]")
+  ) |>
+  select(State, Elections, Characteristic, distance, value) |>
+  tidyr::pivot_wider(names_from = distance, values_from = value) |>
+  knitr::kable(format = "latex", booktabs = TRUE, align = c("l", "l", "l", "r", "r"),
+    col.names = c("State", "Elections", "Characteristic", "Mean distance", "Minimum distance")) |>
+  as.character() |>
+  writeLines(here("tabs/heterogeneity_distance_sensitivity.tex"))

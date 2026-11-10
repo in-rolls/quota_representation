@@ -1,0 +1,7 @@
+source,path,sha256
+links,/Users/soodoku/Documents/GitHub/in-rolls/local_elections_bihar/data/release/linkage/mukhiya_2016_2021.parquet,5efb645e7a87e8eb6ae214527778ca4bed7869be4fbd6fda39554ccfcd0daa8c
+seats2016,/Users/soodoku/Documents/GitHub/in-rolls/local_elections_bihar/data/release/2016/seats.parquet,b6687ac806078cbc5280de07d1d5e7d8938873405785a779ad078066a61fef98
+winners2016,/Users/soodoku/Documents/GitHub/in-rolls/local_elections_bihar/data/release/2016/winners.parquet,acb1f400882c12fa87a05d45cdf4bd63a35b96312f44e70ee65f049ea97161dd
+candidates2016,/Users/soodoku/Documents/GitHub/in-rolls/local_elections_bihar/data/release/2016/candidates.parquet,af592cfa5e5c35782c84da40fa5a89166a89e59f1980112d681e0304172915fd
+seats2021,/Users/soodoku/Documents/GitHub/in-rolls/local_elections_bihar/data/release/2021/seats.parquet,690f4e18e5e73558bb578f539b1c957c09dd17469b49726f69961c636b3d1fab
+candidates2021,/Users/soodoku/Documents/GitHub/in-rolls/local_elections_bihar/data/release/2021/candidates.parquet,e5679156c18bd8ae44d8983484f27fac26fcda1d658d17bf1aff67a8c14f5768

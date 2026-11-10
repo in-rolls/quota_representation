@@ -1,0 +1,2 @@
+"frame_gps","observed_gps","observed_difference","lower_difference","upper_difference","uncertainty"
+99,94,0.0119047619047619,-0.036231884057971,0.0739130434782609,"Finite-roster identification bounds; not a sampling CI or causal bound"

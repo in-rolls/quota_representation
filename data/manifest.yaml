@@ -10,64 +10,132 @@
 
 cache_dir: ~/data
 
+local_inputs:
+  data/up_urban/district_crosswalk.csv: 1151498ab7c8df99f0f96a4b243cbde67e6e5cc426d737933a7da00b682a6e3b
+  data/shrug_gp_xwalk/data/shrug_LGD_matched.csv: e124937117df726a343bfec8c58f06beb68bb306b55d5eeb40057bc4b4eb254b
+
 upstream:
   local_elections_rajasthan:
     repo: in-rolls/local_elections_rajasthan
-    ref: 8773067fefe9c0ff549d0c9d12688018f19a156a
+    ref: b7d85b2462f7bbde012f27434bd10f926c3c4204
     raw: https://raw.githubusercontent.com/in-rolls/local_elections_rajasthan
     sibling: ../local_elections_rajasthan
     files:
-      data/fin/elections/candidates_2020_events.parquet: 1f538baaed94ca71064bf7983ede169bcf83b662996ec6947e158c10ec316abf
-      data/fin/elections/gp_lgd_crosswalk.parquet: b2a87dd960845f575de246c3e4bc46ce4034f598903d02568324a4d177a6cef6
-      data/fin/elections/raj_05_10.parquet: 44f4a0f63fb9304b94525e574d6e8ba11365954d6c18525ce86ce5b70f1aa0c8
-      data/fin/elections/raj_05_20.parquet: 8332d9b6de3943cdaebbe8cd786f2c03d399f82b1585ecb1a7c6a6b6ccaa3f4d
-      data/fin/elections/raj_10_15.parquet: 5eccb9a29c2589eec03609dab42379b7466f0d1bbaf0d3d3deca4a988d1dc1ac
-      data/fin/elections/raj_15_20.parquet: ed740ffb382967f6886ea4011e94645927a4e4d716ca31238878d6ad8b104a4f
-      data/fin/elections/source_records.parquet: c667a443536f60e4dcbe9cda4fb5afff06c5aba4388a2be4e59933ef8fb3fd96
-      data/fin/elections/winners_2020_events.parquet: 28c94fae750fbde43b7197eca353219c8f60665a634af36fefd1583bedef3c77
-      data/source/geography/lgd_raj_block_gp.csv: 453fc82c673b31819f061166dda68de1148451f62c693bf2c6dfd871db96c06a
-      data/source/geography/raj_block_xwalk.csv: 69004dab616b9b9d2a15005e5c423ca8f74cd26069495c1e3c47dedcae532453
-      data/source/geography/raj_district_xwalk.csv: e3f58eb23b7f44be86ea25a1f6ab5c478e4d0721ccdb736f8444b2bc475244fa
-      data/source/geography/raj_samiti_std.csv: d70e9c58e020afea0ee3228ddfb510bc8402a3e94374b0f49f4d74cf1875f866
-      data/source/geography/raj_samiti_xwalk.csv: fad26d12608c8ba506a691185ccaa26d5a73ab31c5a524cae4d9780a0d878901
-      data/source/geography/raj_village_gp_mapping_2024.csv: 469888c02b619802be44933fdb9a4a14e4c921c46712d6d4f15f83dc784342b6
-      data/fin/source_2005_std.parquet: 488ecf8e08225417e8f293f8edd596a57c2860439cd421a4ec82095e3b716d8d
-      data/fin/source_2010_std.parquet: 8e4e4780fc6379a8367031c223d3321843e6c3ee8d9cc40aa5b153e58128d1be
-      data/fin/source_2015_std.parquet: 077acbf06cc1c66cabd4a584414afa95e414b2c3de08e8d3f8f24b8a34518397
-      data/fin/source_2020_std.parquet: ea0c2fca01cad3b599db29d11f637be7a0f1314d2a9c014638eefab5aefe81f6
-      data/fin/scrape_2020_2022/ContestingSarpanch.parquet: 385cf12352831697da2b2e274fa21029126d75b48bc198227f82b45a62e76167
-      data/fin/scrape_2020_2022/WinnerSarpanch.parquet: 0d87b3fcba53c9f5f6a0bf7df1d438e9d5d67675f7525e936bd503101af0efab
-      data/source/sarpanch/sarpanch_2005.csv: 642c992acc6aa6f81dcfdfbe630a71b017aff551736c435e3ac839bbd85e2c92
-      data/source/sarpanch/sarpanch_2010.csv: 84c9ed22680e75ac5e06f05fcc93e57bc38cc6d835e5cb22887e9d5f982089db
-      data/source/sarpanch/sarpanch_2015_manual_sex.csv: 4b787ccd8115cbdf4edcf22ae38aa2b7b02e8e9be48dd3e6c696e69965901cc0
-      data/source/sarpanch/sarpanch_2020_clean.csv: 0f13bc76ea6d5203a55bb42d858fc832852136f18afd0cc7baf6fd66422f0449
+      data/release/2020/sarpanch_candidate_events.parquet: 83e66e172059217b558276048d9e0b2be1fd6cf32716eef746bbe5578837f005
+      data/release/linkage/gp_lgd_crosswalk.parquet: 5acbd60af860d19d63ee9f59de72a475e7fec32d49c86a0305db7db770ffb180
+      data/release/linkage/sarpanch_2005_2010.parquet: f7ea772b3b32f820749c2c41a38a980d081c20528e84a468a573e730ee1d00b6
+      data/release/linkage/sarpanch_2005_2020.parquet: edf689fefe23ad1f75313b3cdaef113456f83e791f4cc0c2a483b59f0df2b08b
+      data/release/linkage/sarpanch_2010_2015.parquet: 3a2fd87de0e8e7dbb425f06343e8eb00b620be8c785a80e0212963f43c634d18
+      data/release/linkage/sarpanch_2015_2020.parquet: 1f5b9835f8e990730a6ee707a89c537b7d2e0281a9b6ea48c283ecc012e5e618
+      data/release/sarpanch_source_records.parquet: 0b1c9997f26b4ad0fe62aa639d9692b24cb117dbfda73f7002b4dd5a4e40c855
+      data/release/2020/sarpanch_winner_events.parquet: f33b1288167c9d6eb40b9a393edba91877b7a29c9c9e8b958918f4497c80e72b
+      data/reference/geography/lgd_raj_block_gp.csv: 453fc82c673b31819f061166dda68de1148451f62c693bf2c6dfd871db96c06a
+      data/reference/geography/raj_block_xwalk.csv: 69004dab616b9b9d2a15005e5c423ca8f74cd26069495c1e3c47dedcae532453
+      data/reference/geography/raj_district_xwalk.csv: e3f58eb23b7f44be86ea25a1f6ab5c478e4d0721ccdb736f8444b2bc475244fa
+      data/reference/geography/raj_samiti_std.csv: d70e9c58e020afea0ee3228ddfb510bc8402a3e94374b0f49f4d74cf1875f866
+      data/reference/geography/raj_samiti_xwalk.csv: fad26d12608c8ba506a691185ccaa26d5a73ab31c5a524cae4d9780a0d878901
+      data/reference/geography/raj_village_gp_mapping_2024.csv: 469888c02b619802be44933fdb9a4a14e4c921c46712d6d4f15f83dc784342b6
+      data/release/2005/sarpanch_results.parquet: bae4ca5e76815d6ee5f36c830f649abebf8128e42aba3a1a3e985d06b724e165
+      data/release/2010/sarpanch_results.parquet: 7973ba96c001cc88e3188220ae1c3f83b5fdb740cc4d14886d220561fb58441f
+      data/release/2015/sarpanch_results.parquet: e029fb871e69bea01032b2bd446310b831f40631b94f5c57e1cf6b190ad6eb9f
+      data/release/2020/sarpanch_reservations.parquet: 76cd596506c8de77dd8fda6cb9b77726b3037317bd71aaa44e9ff7d1fdb1d0a1
+      data/release/sarpanch_candidates.parquet: 3c30bcf9b86fe192475212c0a35dd48886ed2dc56e2938c37724e077642202af
+      data/release/sarpanch_winners.parquet: cd2c0f784848294d2bea703ea2a4a996e92b83aa5c0cfe23ce23d1185c71e9b0
+      data/raw/sarpanch/sarpanch_2005.csv: 642c992acc6aa6f81dcfdfbe630a71b017aff551736c435e3ac839bbd85e2c92
+      data/raw/sarpanch/sarpanch_2010.csv: 84c9ed22680e75ac5e06f05fcc93e57bc38cc6d835e5cb22887e9d5f982089db
+      data/manual/sarpanch/sarpanch_2015_manual_sex.csv: 4b787ccd8115cbdf4edcf22ae38aa2b7b02e8e9be48dd3e6c696e69965901cc0
+      data/raw/sarpanch/sarpanch_2020_clean.csv: 0f13bc76ea6d5203a55bb42d858fc832852136f18afd0cc7baf6fd66422f0449
   local_elections_up:
     repo: in-rolls/local_elections_up
-    ref: 3ef1d56f278a2ca98a2b9a61027c130781fb236f
+    ref: 05209a52b48d0726c00450bc94d6079cfddbf4ed
     raw: https://raw.githubusercontent.com/in-rolls/local_elections_up
     sibling: ../local_elections_up
     files:
-      data/release/panels/gp_lgd_bridge.parquet: e92f0e42bf23497691dbb96c5496ec06e4c061ae8affa699d24996cbbcf37eeb
-      data/crosswalks/active/up_block_xwalk.csv: 0cc6f3dd84118402e10e3f1d5a98a96d1d4aa4e3d21419eb41cd04fcf8ca0e8c
-      data/external/lgd/lgd_up_block_gp.csv: fb4ba2dc7eeb7f905acb6437585df164372c3754e829d103da7c0a48f32fa314
-      data/external/lgd/up_village_gp_mapping_2024.csv: 01ce35bbaed75b94dc4b8272e31ad986eb1527dd30f7cc7ce0114f462acbb344
-      data/release/panels/gp_adjacent_links.parquet: 16e7f28ebd926b2db6b0cecd0f767ab7335b63429a95dcb0dac25526f54df5e9
-      data/release/panels/gp_four_election_links.parquet: af379f5a584dffdcd8062d48c39c697c5dda4ab198632eb973f409b3623733b7
-      data/release/panels/gp_panel_2005_2010.parquet: 95b7578b6165206fdf3e8adfa1cdd201443ad424f5399fa907774521dbdf9af0
-      data/release/panels/gp_panel_2005_2010_2015_2021.parquet: 8b3999f2b7fd434142e3c33212e92de32e813b9a022e0a74b88525292d762e5a
-      data/release/panels/gp_panel_2010_2015.parquet: c0f4988fe080c78cbaabbb168b6729d52b40536c2612e162490b3b9e2a257d8b
-      data/release/panels/gp_panel_2015_2021.parquet: 43eb83b00dc0c564584ecde3b2b2dec811f894f1f589cc28f6eda604a940c989
-      data/release/weaver/weaver_20250302_wide.parquet: e7a6411af5b2980255c670d80af1c171baaef431515157ab35f1addac90eb695
-      data/release/weaver/weaver_20250317_wide.parquet: d2a3a0c5ee079850e83ef241d5ad9e5bb4198fa725c76ec9f0a4b520f7a46f85
-      data/release/gp/gp_head_winner_records_2005.parquet: f6b9087ab7c844b5eec6188e78ef1b29ca095db4c4c0530155e06b8a27a7fe2a
-      data/release/gp/gp_head_winner_records_2010.parquet: 5c9e0de7b58b84cc8c4a046e37ca50d939e9252dbd9b364aadc188e5d9093631
-      data/release/gp/gp_head_winner_records_2015.parquet: d1a064de88b5a80eef04a25bf77b6c26847c48ad7173565d25a29f41eecaabc2
-      data/release/gp/gp_head_candidates_2021.parquet: 3f6e3e1cba08bd6cc012a445369f2f360b20a67bce1e7a022657d06d8263e0bd
-      data/external/weaver/weaver_data.dta.gz: 1e561493bfda584b29f312080a91b0ff2a1580fea0081248e45614f7599dee11
-      data/external/weaver/weaver_data_2.dta.gz: 2a79036d7de6c1bfcfd17fdad7652caad58d70458a298eb1ad534fd383515aec
-      data/external/weaver/nw_election10.dta.gz: dca9d0c13040d40893f6557e7b8ace969c9780ac9867e9aea02949eda9b30d21
-      data/external/weaver/nw_elections_analysis.dta.gz: be188ed096e8771836991534bafceb7429dcb5a13a9bb0a28de2790df5b4232c
-      data/external/weaver/nw_up_nregs.dta.gz: 02401e2a879bbe5c887f4c6dc14c899e6aa684dc3f958695ffcc56ea76332fdf
+      data/release/linkage/gp_lgd_bridge.parquet: 13ebbc2dd8b98ea9f2f98129b10f9ea09c7f856a39582044d80ac08b4f81d3f2
+      data/manual/crosswalks/active/up_block_xwalk.csv: 0cc6f3dd84118402e10e3f1d5a98a96d1d4aa4e3d21419eb41cd04fcf8ca0e8c
+      data/reference/lgd/lgd_up_block_gp.csv: fb4ba2dc7eeb7f905acb6437585df164372c3754e829d103da7c0a48f32fa314
+      data/reference/lgd/up_village_gp_mapping_2024.csv: 01ce35bbaed75b94dc4b8272e31ad986eb1527dd30f7cc7ce0114f462acbb344
+      data/release/linkage/gp_adjacent_links.parquet: 9f2cb8d34b08ac35c99fd0e5c7af2275de604f6b366037bde87849c03047a9c0
+      data/release/linkage/gp_four_election_links.parquet: 18687e8f1144464a53bf4cf64b23f3e18f42170b1593f1f80d487627bab3ea84
+      data/release/linkage/gp_panel_2005_2010.parquet: 53f3768a700ebe2191d0a0163109751d8afeadac8b1e8afe837e3838d8bd0d10
+      data/release/linkage/gp_panel_2005_2010_2015_2021.parquet: 8346f9426f1d5eb9a4a208fc37bf79337fb4aee707a34571c032d9b5b65d6eda
+      data/release/linkage/gp_panel_2010_2015.parquet: 262cea7c064237a0ad452f7cd1ffa9967acb4857ab19ac37d668560954e2e92a
+      data/release/linkage/gp_panel_2015_2021.parquet: b6e4e5e18f741d55aea39b542232608f85c5b2a188568865d877effe35fc9388
+      data/release/linkage/weaver_20250302_wide.parquet: d819d0641f2bbb633694c25bc87956dbbafb6978e4f323fc7562115c94811023
+      data/release/linkage/weaver_20250317_wide.parquet: 5450407c8200ccd4ab501f4a6ae5865b06cefb8dc79ba11ecdd2333a12ec160a
+      data/build/gp_enriched/gp_head_candidates_2021.parquet: 4b02015d5e4e827ff272d7f8201a87b28c7a8a7e184c086d89f3371834125d16
+      data/reference/weaver/weaver_data.dta.gz: 1e561493bfda584b29f312080a91b0ff2a1580fea0081248e45614f7599dee11
+      data/reference/weaver/weaver_data_2.dta.gz: 2a79036d7de6c1bfcfd17fdad7652caad58d70458a298eb1ad534fd383515aec
+      data/reference/weaver/nw_election10.dta.gz: dca9d0c13040d40893f6557e7b8ace969c9780ac9867e9aea02949eda9b30d21
+      data/reference/weaver/nw_elections_analysis.dta.gz: be188ed096e8771836991534bafceb7429dcb5a13a9bb0a28de2790df5b4232c
+      data/reference/weaver/nw_up_nregs.dta.gz: 02401e2a879bbe5c887f4c6dc14c899e6aa684dc3f958695ffcc56ea76332fdf
+      data/release/linkage/gp_head_election_records.parquet: 4d8652a1947a5d5b687ef10acaf8a45ce371f22e59a92f62bb8ef7f93bf3c195
+  local_elections:
+    repo: in-rolls/local_elections
+    ref: 493a5e4121f9e679c21d161ffe0ca6b96fad9244
+    raw: https://raw.githubusercontent.com/in-rolls/local_elections
+    sibling: ../local_elections
+    files:
+      data/chandigarh/release/ward_panel_2006_2011.parquet: 95463d8fd4acec7fc1d299a46077a429ce67c250b36fecd56b61da4d3b171f79
+      data/chandigarh/release/ward_panel_2011_2016.parquet: 3709c530b1e339f0d7f90697b7eedad300e66af70165de14a20d03c56e683d0d
+      data/karnataka/build/urban_expansion/ward_panel_2010_2015.parquet: 09faa1e554f9f77100668bc0b49288f65321ddbe7ae19f648e5a59200309f034
+      data/maharashtra/release/mumbai/bhavnani_comparison_1997_2002.parquet: 865af63472ce67d88be5a617bcdc882e66f37bcb9b143ca7749cdcda669fc8c1
+      data/maharashtra/raw/mumbai/bhavnani_2009/Bhavnani APSR 2009 replication data.dta: 051a36514e9906cd9f060068362d1e156211c44a9715da107b6d46036983f56f
+      data/maharashtra/raw/mumbai/bhavnani_2009/Bhavnani APSR 2009 replication code.do: 6bf54345d2f4a0445c778dc444a0ea1f206210b1aef9948463414beb95965fef
+      data/delhi/interim/sex_review.csv: 9ac27ace6e221fc615c0d8b10ca6e8c4ce8665764c7adf6ca1937404020790c8
+      data/delhi/raw/sex_validation/sources.json: b034f37320b4af9a5fceca7d643fb6f314214489e6346286df4ba96cc1b3f09c
+      data/delhi/raw/sex_validation/adr_women_winners_1.html: 9f0f128c09979498589604530b2f49863960f81ef42a9c53eeb703d1ee5bfc44
+      data/delhi/raw/sex_validation/official_directory_2016.pdf: 690e174daac4d45c3a0227f27746184e69a42000ac91ed6f1404f6b6e6753072
+      data/delhi/raw/sex_validation/adr_women_winners_6.html: 201b46d0cca10aa9458d8ad28dd81b1313e42abbec62b26430c01c05d6db1200
+      data/delhi/raw/sex_validation/adr_women_winners_7.html: 88f9733553f932c75704dd62d0738a1e66e5cfe8018bbe732f3a03ca7d1a6419
+      data/delhi/raw/sex_validation/adr_women_winners_4.html: c059dcb35ab12c87439cbbb2d7047eacdb2657a5cacfc8bacaf1a06c430411a7
+      data/delhi/raw/sex_validation/adr_women_winners_5.html: 280a6b2ca7d36f6c2b458d9566aa08805911e5d11941088b774d909a7c0f60ef
+      data/delhi/raw/sex_validation/adr_women_winners.csv: a9718af55eb7a483d21fa947b608509f2d6b64b8711ee0171be4a19680527b92
+      data/delhi/raw/sex_validation/adr_women_winners_2.html: 38a8c99214a704f6691984208bf010372deefcb369912affb2989228c94acf6c
+      data/delhi/raw/sex_validation/adr_women_winners_3.html: 798751ef029fbc0efa15202fb07ce71e7f3ae19aa77c625220691ab9cbdb63c2
+      data/delhi/interim/qualification_audit/sources/goyal_candidates.xlsx: 79d853354f3c682859749c06af534798815e09c543aaeea8eb7c0fa6c635ed30
+      data/delhi/interim/qualification_audit/sources/goyal_codebook.pdf: a0e0074b76eaa9af93b1901e06a56c43fd257aeaced3daf4a8cf994f0d4fde7b
+      data/delhi/interim/qualification_audit/sources/goyal_readme.txt: 7d66801712cb28c6742f8ce05118abbc4aef0e08d555830679499c2eac1b6d6e
+      data/delhi/raw/reservation_order_municipal_corporation_of_delhi_election_2007.pdf: b993e228efc62397cf7d7cdd65aebbcdf13ae71274b40aa194cb74098a13f781
+
+  local_elections_delhi:
+    sibling: ../local_elections_delhi
+    ref: c648decf835851ab7107d7070e1998a1f4be0425
+    files:
+      data/raw/2012/reservation_order.pdf: 8265ec2be68e4e7e1706ff12ab8344b255d077017a45aa9a2d71972f303d1aa6
+      data/release/persistence/wards_2007_2012.parquet: 379fb8663656fa8788b9941d1f935e754fe888429ddc147759f93edd5fe73f4a
+    repo: in-rolls/local_elections_delhi
+    raw: https://raw.githubusercontent.com/in-rolls/local_elections_delhi
+
+  local_elections_bihar:
+    repo: in-rolls/local_elections_bihar
+    ref: ee5463819d8c39e88e8b344809b25a473ea33b24
+    raw: https://raw.githubusercontent.com/in-rolls/local_elections_bihar
+    sibling: ../local_elections_bihar
+    files:
+      data/release/linkage/mukhiya_2011_2016.parquet: a794fb5b4955fa98120be284be695b495e55a93952feb22f971f210639900024
+      data/release/linkage/mukhiya_2016_2021.parquet: 5efb645e7a87e8eb6ae214527778ca4bed7869be4fbd6fda39554ccfcd0daa8c
+      data/release/2021/candidates.parquet: e5679156c18bd8ae44d8983484f27fac26fcda1d658d17bf1aff67a8c14f5768
+      data/release/2021/seats.parquet: 690f4e18e5e73558bb578f539b1c957c09dd17469b49726f69961c636b3d1fab
+      data/release/2011/mukhiya_reports/winner_records.parquet: 83b07aed81343393692d866067f5c3b75295067027e803bc70f7ab3942428104
+      data/release/2016/seats.parquet: b6687ac806078cbc5280de07d1d5e7d8938873405785a779ad078066a61fef98
+      data/release/2016/winners.parquet: acb1f400882c12fa87a05d45cdf4bd63a35b96312f44e70ee65f049ea97161dd
+      data/release/2016/candidates.parquet: af592cfa5e5c35782c84da40fa5a89166a89e59f1980112d681e0304172915fd
+      data/release/2016/winner_list/no_winner_reviewed.csv: 7093df1c3d4e8891b6a2224699ac9235071efd04b9341ff1cb9e879f0bb17ac2
+      data/release/2016/winner_list/winner_list_records.parquet: b6aead4fe8ca0827864f2c7d7e9dc76832753f3921847d8fbab76e13fa115a90
+
+  local_elections_up_urban:
+    repo: in-rolls/local_elections_up
+    ref: 05209a52b48d0726c00450bc94d6079cfddbf4ed
+    raw: https://raw.githubusercontent.com/in-rolls/local_elections_up
+    sibling: ../local_elections_up
+    files:
+      data/release/2012/municipal_council_chair_declared_winner.parquet: 344e64c232ea8c7c660d0e36a499d30fddcaffd42a23059f6e2438aa8cef2e47
+      data/release/2012/nagar_panchayat_chair_declared_winner.parquet: 53d9a5b8c53874d48fd0e7dc8e7833fc1267d84a65115229c962a97b2fbffbd0
+      data/release/2017/municipal_council_chair_declared_winner.parquet: e31cb3a5e51b34a969199744c9aa9630ff6324327e58903e3ad8585eb0e18ade
+      data/release/2017/nagar_panchayat_chair_declared_winner.parquet: e5f57cb3b2f6402bc404510ffa9b6c2dc68fe8853c3d79554fa28e1dcd31325f
+      data/collections/sec_historical_results/ulb2012/parsed/20260911T113301294231Z/winner_reservations.parquet: 6ad6787d389fa3afdce4b0b5a0fa1a4a4bf2ef40e15618c513955126f39e9edd
+      data/collections/sec_historical_results/ulb2017/combined/20260911/winner_reservations.parquet: 02d9b090096b803c5435a1f702ec45d69bf6188eb32142a8a5b997525be1411f
 
 reference:
   shrug:

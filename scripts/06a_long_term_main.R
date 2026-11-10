@@ -18,7 +18,7 @@ message("=== Long-Term Effects Analysis ===")
 # Load 4-way panels
 # =============================================================================
 
-raj_05_20 <- read_parquet(raj_product_path("raj_05_20.parquet"))
+raj_05_20 <- read_raj(raj_product_path("raj_05_20.parquet"))
 up_05_21 <- read_parquet(here("data/up/up_05_21.parquet"))
 
 message("\nLoaded 4-way panels:")
@@ -134,15 +134,15 @@ coef_long$label <- factor(coef_long$label, levels = rev(c(
   "2010 × 2005", "2015 × 2005", "2015 × 2010", "2015 × 2010 × 2005"
 )))
 
-p_long <- ggplot(coef_long, aes(x = estimate, y = label)) +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
-  geom_errorbar(
+p_long <- ggplot(coef_long, aes(x = 100 * estimate, y = label)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = FIG_STYLE$reference, linewidth = FIG_STYLE$reference_width) +
+  geom_linerange(
     orientation = "y",
-    aes(xmin = conf.low, xmax = conf.high),
-    width = 0, color = COLORS_PUB["secondary"], linewidth = 0.6
+    aes(xmin = 100 * conf.low, xmax = 100 * conf.high),
+    color = FIG_STYLE$interval, linewidth = FIG_STYLE$interval_width
   ) +
-  geom_point(size = 2.5, color = COLORS_PUB["primary"]) +
-  labs(x = "Effect on Pr(Woman Elected in 2020)", y = NULL) +
+  geom_point(size = FIG_STYLE$point_size, color = FIG_STYLE$estimate) +
+  labs(x = "Effect on women elected (percentage points)", y = NULL) +
   theme_pub() +
   theme(axis.text.y = element_text(hjust = 0))
 
@@ -176,13 +176,13 @@ persistence_data$transition <- factor(persistence_data$transition,
   levels = c("2005 -> 2010", "2010 -> 2015", "2015 -> 2020")
 )
 
-p_persist <- ggplot(persistence_data, aes(x = transition, y = proportion)) +
-  geom_hline(yintercept = 0.5, linetype = "dashed", color = "gray50") +
+p_persist <- ggplot(persistence_data, aes(x = transition, y = 100 * proportion)) +
+  geom_hline(yintercept = 50, linetype = "dashed", color = "gray50") +
   geom_col(fill = COLORS_PUB["primary"], width = 0.6) +
-  scale_y_continuous(limits = c(0, 1), expand = c(0, 0)) +
-  labs(x = "Electoral Transition", y = "Proportion Remaining Quota") +
+  scale_y_continuous(limits = c(0, 100), expand = c(0, 0)) +
+  labs(x = "Electoral Transition", y = "Remaining reserved (%)") +
   annotate("text",
-    x = 0.6, y = 0.53, label = "Random (50%)",
+    x = 0.6, y = 53, label = "50%",
     color = "gray50", hjust = 0, size = 3
   ) +
   theme_pub()

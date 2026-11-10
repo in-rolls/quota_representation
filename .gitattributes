@@ -1,0 +1,5 @@
+*.csv -text whitespace=cr-at-eol
+*.parquet -text
+*.pdf -text
+tabs/*.tex -whitespace
+wb/data/source_dictionary.csv whitespace=-blank-at-eol,cr-at-eol

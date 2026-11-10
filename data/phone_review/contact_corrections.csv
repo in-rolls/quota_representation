@@ -1,0 +1,17 @@
+file,excel_row,field,old,new,reason
+sampled_nos_full_analysis.xlsx,25,any_answered,no,yes,Remarks explicitly document an answered later attempt or callback.
+sampled_nos_full_analysis.xlsx,44,any_answered,no,yes,Remarks explicitly document an answered later attempt or callback.
+sampled_nos_full_analysis.xlsx,119,any_answered,no,yes,Remarks explicitly document an answered later attempt or callback.
+sampled_nos_full_analysis.xlsx,159,any_answered,no,yes,Remarks explicitly document an answered later attempt or callback.
+sampled_nos_full_analysis.xlsx,432,any_answered,no,yes,Remarks explicitly document an answered later attempt or callback.
+sampled_mobile_nos_open_seats.xlsx,3,any_answered,no,yes,Remarks explicitly document an answered later attempt or callback.
+sampled_mobile_nos_open_seats.xlsx,375,any_answered,no,yes,Remarks explicitly document an answered later attempt or callback.
+sampled_mobile_nos_open_seats.xlsx,161,any_answered,no,yes,"Notes cover unsuccessful first and second attempts. Third attempt has a one-minute duration and substantive answers attributed to the member, documenting answered contact."
+sampled_mobile_nos_open_seats.xlsx,409,any_answered,no,yes,"Wrong-number record identifies a male non-member and records a ten-second second-attempt call. Treat as answered wrong-number contact, not contact with officeholder."
+sampled_nos_full_analysis.xlsx,65,any_officeholder_contact,no,yes,Explicit transfer or later call reaches the member; non-member respondent field records an earlier contact. No sex inferred for later answerer.
+sampled_mobile_nos_open_seats.xlsx,61,any_officeholder_contact,no,yes,Explicit transfer or later call reaches the member; non-member respondent field records an earlier contact. No sex inferred for later answerer.
+sampled_mobile_nos_open_seats.xlsx,504,any_officeholder_contact,no,yes,Explicit transfer or later call reaches the member; non-member respondent field records an earlier contact. No sex inferred for later answerer.
+jaipur_audit.xlsx,22,any_answered,no,yes,Explicit call notes and respondent fields establish answered contact.
+jaipur_audit.xlsx,63,any_answered,yes,no,All three attempts unanswered or unreachable; no respondent recorded.
+jaipur_audit.xlsx,153,any_officeholder_contact,no,yes,Later attempt explicitly records officeholder contact; summary respondent records nonmember.
+jaipur_audit.xlsx,245,any_officeholder_contact,no,yes,Later attempt explicitly records officeholder contact; summary respondent records nonmember.

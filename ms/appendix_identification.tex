@@ -1,0 +1,74 @@
+\clearpage
+\section{Quota Assignment and Identification}\label{sec:app_identification}
+\suppressfloats[t]
+
+Quota assignments vary across elections, and our panels include both consecutive reservations and transitions out of reservation. We present four types of evidence on identification: treatment rotation regressions, chi-squared tests of independence, balance tests on prior electoral characteristics, and balance tests on pre-treatment census covariates.
+
+\subsection{Assignment across elections}
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Treatment Rotation: Quota Assignment Correlation Across Election Cycles (2-Way Panel)}
+    \label{tab:treat_corr}
+    \input{../tabs/treatment_rotation.tex}
+\end{table}
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Treatment Rotation: Quota Assignment Correlation Across Election Cycles (4-Way Panel)}
+    \label{tab:long_term_treat_rotation}
+    \input{../tabs/long_term_treatment_rotation.tex}
+\end{table}
+\FloatBarrier
+
+Tables~\ref{tab:treat_corr} and \ref{tab:long_term_treat_rotation} show how reservation in one election predicts reservation in the next. Table~\ref{tab:treat_corr} uses adjacent-election panels, while Table~\ref{tab:long_term_treat_rotation} restricts to GPs present in all four election years. Rajasthan's 2005--2010 association is near zero; its later transitions and all three UP transitions have negative estimates. These coefficients are reported in percentage points: a negative value means that GPs reserved in one election are less likely to be reserved in the next.
+
+Tables~\ref{tab:chi_sq_raj} and \ref{tab:chi_sq_up} test independence of quota assignment across election pairs. In Rajasthan, the tests do not reject independence for 2005--2010 or the non-adjacent 2005--2015 and 2005--2020 pairs, but reject it for the later adjacent elections. In UP, the tests reject independence for the reported pairs, including the non-adjacent 2005--2021 comparison.
+
+\input{../tabs/reserved_or_not_chi_sq_raj}
+\FloatBarrier
+
+\input{../tabs/up_chi_squared_results}
+\FloatBarrier
+
+\subsection{Balance on prior electoral characteristics}
+
+Table~\ref{tab:balance_electoral} tests whether quota assignment is balanced on prior electoral characteristics across all election transitions. In Rajasthan, the 2005$\rightarrow$2010 transition shows similar rates of prior female winners, but later transitions show imbalance consistent with rotation---reserved GPs were less likely to have had prior female winners. In UP, reserved GPs had slightly fewer prior female winners and differed on caste reservation status across all transitions. The primary models include block fixed effects; Table~\ref{tab:allocation_checks} separately conditions on caste reservation in the treatment election. We do not control for the sex of the winner elected under the quota assignment being studied: that is a consequence of treatment.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Electoral Balance Tests for Quota Assignment Across Election Cycles}
+    \label{tab:balance_electoral}
+    \input{../tabs/balance_electoral}
+\end{table}
+\FloatBarrier
+
+\subsection{Balance on Census characteristics}
+
+Tables~\ref{tab:balance_raj_2005_2010} and \ref{tab:balance_up_2005_2010} report descriptive balance on Census covariates measured before treatment. They include pooled likelihood-ratio tests and joint Wald tests with district--block fixed effects and clustering. The block-adjusted joint tests reject balance for Rajasthan's first transition ($p=\broadRajFirstP{}$) and all three UP transitions. These broader samples include GPs reserved at follow-up and use a larger set of Census characteristics than the open-election tests below. The tests account for the analysis\textquotesingle{}s block structure; they are not randomization tests.
+
+\input{../tabs/balance_raj}
+\input{../tabs/balance_up}
+\FloatBarrier
+
+Table~\ref{tab:open_sample_balance} tests balance in the samples used for the covariate-adjusted electoral models. Each regression predicts treatment-year quota assignment from log population, SC share, literacy, female population share, and the infrastructure index, with outcome-year block fixed effects. The sample requires an open follow-up election, observed treatment and winner sex at follow-up, a block identifier, and all five Census covariates. Joint Wald tests use block-clustered covariance estimates. They reject the joint null in each UP comparison and do not reject it in Rajasthan. These tests address observed characteristics in the Census-complete subset; nonrejection does not establish random assignment.
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Census Balance in the Open-Election Analysis Samples}
+    \label{tab:open_sample_balance}
+    \input{../tabs/open_sample_balance.tex}
+\end{table}
+\FloatBarrier
+
+\subsection{Temporal falsification}\label{sec:app_placebo}
+
+Temporal falsification tests examine whether future treatment predicts past outcomes. A failure to reject does not verify random assignment, and the estimated coefficients in Table~\ref{tab:placebo_combined} are not uniformly zero. The diagnostics use block-clustered inference; we do not permute reservation assignments globally without a documented assignment mechanism.
+
+\begin{table}[!htbp]
+\centering
+\caption{Placebo Tests: Future Treatment Predicting Past Outcomes}
+\label{tab:placebo_combined}
+\input{../tabs/placebo_combined}
+\end{table}
+\FloatBarrier

@@ -1,38 +1,38 @@
 category,n,denominator,section,survey
-Answered,377,500,Initial contact,phone_survey
-No answer recorded,123,500,Initial contact,phone_survey
-Recorded as elected representative,35,377,Among answered,phone_survey
-Male non-member,319,377,Among answered,phone_survey
-Female non-member,6,377,Among answered,phone_survey
-"Non-member, sex unavailable",6,377,Among answered,phone_survey
-Identity unavailable,11,377,Among answered,phone_survey
-Child,46,319,Among male non-members,phone_survey
-Other recorded relative,44,319,Among male non-members,phone_survey
-Relationship recorded as self,1,319,Among male non-members,phone_survey
-Relationship unavailable,56,319,Among male non-members,phone_survey
-Spouse,172,319,Among male non-members,phone_survey
-Did not transfer,283,331,Among non-members,phone_survey
-Transfer recorded as not applicable,2,331,Among non-members,phone_survey
-Transfer status unavailable,43,331,Among non-members,phone_survey
-Transferred,3,331,Among non-members,phone_survey
-Answered,400,507,Initial contact,phone_survey_openseats
-No answer recorded,107,507,Initial contact,phone_survey_openseats
-Recorded as elected representative,305,400,Among answered,phone_survey_openseats
-Male non-member,66,400,Among answered,phone_survey_openseats
-Female non-member,10,400,Among answered,phone_survey_openseats
-"Non-member, sex unavailable",3,400,Among answered,phone_survey_openseats
-Identity unavailable,16,400,Among answered,phone_survey_openseats
-Answered,63,78,Initial contact,jaipur_urban_phone_survey_quota
-No answer recorded,15,78,Initial contact,jaipur_urban_phone_survey_quota
-Recorded as elected representative,20,63,Among answered,jaipur_urban_phone_survey_quota
-Male non-member,39,63,Among answered,jaipur_urban_phone_survey_quota
-Female non-member,2,63,Among answered,jaipur_urban_phone_survey_quota
-"Non-member, sex unavailable",0,63,Among answered,jaipur_urban_phone_survey_quota
-Identity unavailable,2,63,Among answered,jaipur_urban_phone_survey_quota
-Answered,146,170,Initial contact,jaipur_urban_phone_survey_open
-No answer recorded,24,170,Initial contact,jaipur_urban_phone_survey_open
-Recorded as elected representative,129,146,Among answered,jaipur_urban_phone_survey_open
-Male non-member,10,146,Among answered,jaipur_urban_phone_survey_open
-Female non-member,0,146,Among answered,jaipur_urban_phone_survey_open
-"Non-member, sex unavailable",3,146,Among answered,jaipur_urban_phone_survey_open
-Identity unavailable,4,146,Among answered,jaipur_urban_phone_survey_open
+Answered,382,500,Contact attempts,phone_survey
+No answer recorded,118,500,Contact attempts,phone_survey
+Officeholder contact recorded,38,382,Among answered,phone_survey
+Male non-member only,321,382,Among answered,phone_survey
+Female non-member only,6,382,Among answered,phone_survey
+"Non-member, sex unavailable",6,382,Among answered,phone_survey
+Identity unavailable,11,382,Among answered,phone_survey
+Child,46,322,Recorded male non-members,phone_survey
+Other recorded relative,45,322,Recorded male non-members,phone_survey
+Relationship recorded as self,1,322,Recorded male non-members,phone_survey
+Relationship unavailable,56,322,Recorded male non-members,phone_survey
+Spouse,174,322,Recorded male non-members,phone_survey
+Did not transfer,286,334,Recorded non-members,phone_survey
+Transfer recorded as not applicable,2,334,Recorded non-members,phone_survey
+Transfer status unavailable,43,334,Recorded non-members,phone_survey
+Transferred,3,334,Recorded non-members,phone_survey
+Answered,404,507,Contact attempts,phone_survey_openseats
+No answer recorded,103,507,Contact attempts,phone_survey_openseats
+Officeholder contact recorded,310,404,Among answered,phone_survey_openseats
+Male non-member only,65,404,Among answered,phone_survey_openseats
+Female non-member only,10,404,Among answered,phone_survey_openseats
+"Non-member, sex unavailable",3,404,Among answered,phone_survey_openseats
+Identity unavailable,16,404,Among answered,phone_survey_openseats
+Answered,66,83,Contact attempts,jaipur_urban_phone_survey_quota
+No answer recorded,17,83,Contact attempts,jaipur_urban_phone_survey_quota
+Officeholder contact recorded,22,66,Among answered,jaipur_urban_phone_survey_quota
+Male non-member only,40,66,Among answered,jaipur_urban_phone_survey_quota
+Female non-member only,2,66,Among answered,jaipur_urban_phone_survey_quota
+"Non-member, sex unavailable",1,66,Among answered,jaipur_urban_phone_survey_quota
+Identity unavailable,1,66,Among answered,jaipur_urban_phone_survey_quota
+Answered,143,165,Contact attempts,jaipur_urban_phone_survey_open
+No answer recorded,22,165,Contact attempts,jaipur_urban_phone_survey_open
+Officeholder contact recorded,130,143,Among answered,jaipur_urban_phone_survey_open
+Male non-member only,7,143,Among answered,jaipur_urban_phone_survey_open
+Female non-member only,0,143,Among answered,jaipur_urban_phone_survey_open
+"Non-member, sex unavailable",2,143,Among answered,jaipur_urban_phone_survey_open
+Identity unavailable,4,143,Among answered,jaipur_urban_phone_survey_open

@@ -1,0 +1,111 @@
+\clearpage
+\section{Phone Audit}\label{sec:app_phone}
+\suppressfloats[t]
+
+The rural audit records officeholder contact in \phoneQuotaMemberPct{}\% of quota seats with an answered call and \phoneOpenMemberPct{}\% of non-quota seats. This appendix documents the protocol, detailed responses, classification uncertainty, and the urban extension.
+
+\subsection{Sampling and protocol}\label{sec:phone_survey_script}
+
+The completed rural audit covers \phoneQuotaSampled{} representatives from women-reserved seats and \phoneOpenSampled{} representatives from non-quota seats. The sampling procedure stratified both groups by district and reservation category. The retained initial selections contain 578 quota-seat and 593 non-quota-seat records; the records do not document the reduction to the completed audit samples. Mobile phones are used for citizen engagement in local politics \citep{rigillo2018whatsapp}; interviews with political staff also informed the audit.\footnote{Author's phone interview with former secretarial staff (name and affiliation withheld on request), December 20, 2024.} We called the self-reported numbers in the Rajasthan State Election Commission's 2020 winner records, making up to three attempts between 10:00 am and 6:30 pm in 2024. Rural quota-seat calls lasted about one minute on average.
+
+We used the following script for our survey, conducted by a native Hindi speaker in India. The interviewer documented the date, time, and duration of each call. To monitor data quality, interviewers provided screenshots of call history, which we randomly sampled and matched against spreadsheet entries with perfect accuracy.
+
+\begin{quote}
+Hello, I am [RA name] talking on behalf of researchers based in the United States who want to study the panchayat system in Rajasthan. Am I talking to [representative name]?
+
+\medskip
+\textit{Notes to RA: If the name does not match, ask them to transfer the call to the actual representative. If they refuse, thank them and end the conversation, recording their reason.}
+
+\medskip
+If the actual representative answers: We obtained your phone number from the Rajasthan Election Commission's website. We want to understand governance in panchayats in Rajasthan. We have a few questions about your experience as an elected representative; this will take 2-3 minutes. We will not share any personal information and are not recording this call, but will take notes. Would you be willing to talk to us?
+\end{quote}
+
+\textit{If the respondent consents, proceed to questions:}
+\begin{enumerate}
+    \item Have you contested in elections before?
+    \item Has anybody from your family contested in elections before?
+    \item Are the Panchayat meetings held regularly?
+    \item Do you attend meetings regularly?
+\end{enumerate}
+
+\noindent\rule{\linewidth}{0.4pt}
+
+\clearpage
+\subsection{Rural audit results}
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Detailed Phone Audit Responses}
+    \label{tab:phone_detail}
+    \setlength{\tabcolsep}{4pt}
+
+    \begin{subtable}[t]{0.45\linewidth}
+        \centering\scriptsize
+        \caption*{\textbf{Panel A: Gender-Quota Seats}}
+        \input{../tabs/phone_survey}
+    \end{subtable}
+    \hspace{2em}
+    \begin{subtable}[t]{0.45\linewidth}
+        \centering\scriptsize
+        \caption*{\textbf{Panel B: Non-Quota Seats}}
+        \input{../tabs/phone_survey_openseats}
+    \end{subtable}
+
+    \vspace{\medskipamount}
+
+    \parbox{0.9\textwidth}{\scriptsize
+        \emph{Notes:} Rajasthan village heads elected in 2020, contacted in 2024. The unit is a sampled officeholder. Contact includes transfers and callbacks; answered wrong numbers count as answered contacts. Officeholder contact takes precedence over other categories. Relationship and transfer panels include all recorded non-member respondents, including those who subsequently passed the call to the officeholder. Percentages use the denominator indicated by each panel.
+
+    }
+\end{table}
+\FloatBarrier
+
+\clearpage
+\subsection{Sensitivity to respondent classification}
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Officeholder Contact: Sensitivity to Respondent Classification}
+    \label{tab:phone_identity_sensitivity}
+    \input{../tabs/phone_contact_sensitivity}
+    \parbox{0.95\textwidth}{\scriptsize
+        \emph{Notes:} Percentages use sampled officeholders with at least one answered call as the denominator. Recorded contact includes transfers and callbacks. The classification range treats unidentified respondents and unresolved identity conflicts as unknown, then assigns every unknown contact to a non-member (lower endpoint) or the officeholder (upper endpoint). Conflicts include disagreement between a claimed member's recorded sex and the uniquely linked elected officeholder's sex, and contradictory respondent fields or notes. Neither sex nor identity is silently adjudicated. These ranges describe classification uncertainty among answered records, not sampling uncertainty or outcomes for unanswered records.
+    }
+\end{table}
+
+\FloatBarrier
+
+\subsection{Characteristics of reached officeholders}
+
+The \phoneQuotaMemberN{} quota-seat officeholders recorded as reached by phone are a selected subset of quota winners. Their mean age is \phoneRespondentAge{} years, compared with \allAgeQuota{} among quota winners overall, and a smaller share report being unemployed (Table~\ref{tab:phone_reply_char}). Recorded contact includes transfers and callbacks; it does not establish who exercises political authority.
+
+\input{../tabs/mean_values_respondents}
+
+\FloatBarrier
+
+\clearpage
+\subsection{Jaipur extension}
+
+\begin{table}[!htbp]
+    \centering
+    \caption{Urban Phone Survey Response Distribution (Jaipur)}
+    \label{tab:urban_survey}
+    \begin{subtable}[t]{0.47\linewidth}
+        \centering
+        \caption{Gender-Quota Seats}
+        \label{tab:jaipur_quota}
+        \input{../tabs/jaipur_urban_phone_survey_quota}
+    \end{subtable}
+    \hfill
+    \begin{subtable}[t]{0.47\linewidth}
+        \centering
+        \caption{Open Seats}
+        \label{tab:jaipur_open}
+        \input{../tabs/jaipur_urban_phone_survey_open}
+    \end{subtable}
+    \vspace{0.5ex}
+    \parbox{0.9\textwidth}{\scriptsize
+        \emph{Notes:} Jaipur Greater and Jaipur Heritage, 2025. Calls were attempted to \jaipurQuotaSampled{} quota-seat and \jaipurOpenSampled{} open-seat representatives. Reservation status is taken from the official ward category \citep[pp.~43--53]{secrajasthan2020municipal}. The unit and contact definitions match Table~\ref{tab:full_survey}.
+    }
+\end{table}
+\FloatBarrier

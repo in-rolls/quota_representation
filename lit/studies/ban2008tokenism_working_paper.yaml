@@ -1,0 +1,16 @@
+key: ban2008tokenism_working_paper
+pdf: ban_rao_2007_wp.pdf
+pdf_version: May 2007 working paper underlying the 2008 EDCC article
+source_url: https://www.vijayendrarao.org/papers/EDCC_Reservations_to_go.pdf
+local_origin: ../quota_spending/lit/papers/ban_rao_2007_wp.pdf
+sha256: afab2698044614e9b58970bd5efd14853a4dc72112fb5a6113b2c86436c548ac
+used_in: Theoretical framework
+checked_pages: PDF/printed pp. 12–15, Tables 9–11
+supported_claim: Reserved-seat presidents have less schooling and political experience
+  than unreserved presidents, but positive selection relative to eligible women on
+  wealth and knowledge. Political experience is associated with better relative performance.
+interpretation_limits: Page references are to this working paper, not the published
+  article. Experience and other individual characteristics are not randomly assigned.
+  Younger age does not establish lower effectiveness; the paper reports favorable
+  relative official-contact patterns for young and middle-aged women.
+manuscript_citation_key: ban2008tokenism

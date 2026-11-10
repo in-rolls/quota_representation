@@ -3311,6 +3311,12 @@
       "Maintainer": "Lionel Henry <lionel@posit.co>",
       "Repository": "CRAN"
     },
+    "mathjaxr": {
+      "Package": "mathjaxr",
+      "Version": "2.0.0",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
     "memoise": {
       "Package": "memoise",
       "Version": "2.0.1",
@@ -3339,6 +3345,18 @@
       "NeedsCompilation": "no",
       "Author": "Hadley Wickham [aut], Jim Hester [aut], Winston Chang [aut, cre], Kirill Müller [aut], Daniel Cook [aut], Mark Edmondson [ctb]",
       "Maintainer": "Winston Chang <winston@rstudio.com>",
+      "Repository": "CRAN"
+    },
+    "metadat": {
+      "Package": "metadat",
+      "Version": "1.6.0",
+      "Source": "Repository",
+      "Repository": "CRAN"
+    },
+    "metafor": {
+      "Package": "metafor",
+      "Version": "5.0.1",
+      "Source": "Repository",
       "Repository": "CRAN"
     },
     "mime": {
@@ -3540,6 +3558,12 @@
       "NeedsCompilation": "no",
       "Author": "Gábor Csárdi [aut, cre]",
       "Maintainer": "Gábor Csárdi <csardi.gabor@gmail.com>",
+      "Repository": "CRAN"
+    },
+    "pbapply": {
+      "Package": "pbapply",
+      "Version": "1.7.4",
+      "Source": "Repository",
       "Repository": "CRAN"
     },
     "pillar": {

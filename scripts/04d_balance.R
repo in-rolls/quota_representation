@@ -17,51 +17,12 @@ library(fixest)
 
 source(here("scripts/00_config.R"))
 source(here("scripts/00_utils.R"))
+source(here("scripts/00_census.R"))
 
 message("=== Descriptive Balance and Block-Adjusted Joint Tests ===")
 
-# Balance variables (from Census 2001 Village Directory)
-# All variables normalized: shares for demographics, per-1000 for infrastructure
-balance_vars <- list(
-  "pc01_vd_t_p" = "Population",
-  "female_share" = "Female Share",
-  "sc_share" = "SC Share",
-  "st_share" = "ST Share",
-  "medi_per1k" = "Medical fac./1k",
-  "m_home_per1k" = "Mat. homes/1k",
-  "mcw_per1k" = "FW Centres/1k",
-  "p_sch_per1k" = "Prim. sch./1k",
-  "m_sch_per1k" = "Mid. sch./1k",
-  "handpump_per1k" = "Handpumps/1k",
-  "tap_per1k" = "Tap water/1k",
-  "well_per1k" = "Wells/1k",
-  "bank_per1k" = "Banking/1k",
-  "power_per1k" = "Power/1k",
-  "road_per1k" = "Mud road/1k"
-)
-
-# =============================================================================
-# Helper: Normalize balance variables
-# =============================================================================
-
-normalize_balance_vars <- function(df) {
-  df %>% mutate(
-    female_share = pc01_vd_t_f / pc01_vd_t_p,
-    sc_share = pc01_vd_sc_f / pc01_vd_t_p,
-    st_share = pc01_vd_st_f / pc01_vd_t_p,
-    medi_per1k = pc01_vd_medi_fac / pc01_vd_t_p * 1000,
-    m_home_per1k = pc01_vd_m_home / pc01_vd_t_p * 1000,
-    mcw_per1k = pc01_vd_mcw_cntr / pc01_vd_t_p * 1000,
-    p_sch_per1k = pc01_vd_p_sch / pc01_vd_t_p * 1000,
-    m_sch_per1k = pc01_vd_m_sch / pc01_vd_t_p * 1000,
-    handpump_per1k = pc01_vd_handpump / pc01_vd_t_p * 1000,
-    tap_per1k = pc01_vd_tap / pc01_vd_t_p * 1000,
-    well_per1k = pc01_vd_well / pc01_vd_t_p * 1000,
-    bank_per1k = pc01_vd_bank_fac / pc01_vd_t_p * 1000,
-    power_per1k = pc01_vd_power_supl / pc01_vd_t_p * 1000,
-    road_per1k = pc01_vd_app_mr / pc01_vd_t_p * 1000
-  )
-}
+balance_vars <- as.list(CENSUS_BALANCE)
+normalize_balance_vars <- census_balance_covariates
 
 # =============================================================================
 # Helper: Descriptive pooled likelihood-ratio statistic
@@ -254,7 +215,7 @@ raj_stats_1520 <- compute_balance_stats(raj_15_20, "treat_2015", "treat_2020", "
 message("\n=== Creating Combined Balance Table ===")
 
 if (!is.null(raj_stats_0510) && !is.null(raj_stats_1015) && !is.null(raj_stats_1520)) {
-  fmt <- function(x, digits = 2) {
+  fmt <- function(x, digits = 1) {
     ifelse(is.na(x), "--", sprintf(paste0("%.", digits, "f"), x))
   }
 
@@ -279,9 +240,9 @@ if (!is.null(raj_stats_0510) && !is.null(raj_stats_1015) && !is.null(raj_stats_1
 
     line <- paste0(
       v0510$Variable, " & ",
-      fmt(v0510$Mean_Treat), " & ", fmt(v0510$Mean_Control), " & ", fmt(v0510$p_ttest, 2), " & ",
-      fmt(v1015$Mean_Treat), " & ", fmt(v1015$Mean_Control), " & ", fmt(v1015$p_ttest, 2), " & ",
-      fmt(v1520$Mean_Treat), " & ", fmt(v1520$Mean_Control), " & ", fmt(v1520$p_ttest, 2), " \\\\"
+      fmt(v0510$Mean_Treat * ifelse(v0510$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", fmt(v0510$Mean_Control * ifelse(v0510$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", format_p_value(v0510$p_ttest), " & ",
+      fmt(v1015$Mean_Treat * ifelse(v1015$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", fmt(v1015$Mean_Control * ifelse(v1015$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", format_p_value(v1015$p_ttest), " & ",
+      fmt(v1520$Mean_Treat * ifelse(v1520$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", fmt(v1520$Mean_Control * ifelse(v1520$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", format_p_value(v1520$p_ttest), " \\\\"
     )
     combined_tex <- c(combined_tex, line)
   }
@@ -295,21 +256,21 @@ if (!is.null(raj_stats_0510) && !is.null(raj_stats_1015) && !is.null(raj_stats_1
       "\\multicolumn{3}{c}{", raj_stats_1520$n_total, "} \\\\"
     ),
     paste0(
-      "Joint p (LR) & \\multicolumn{3}{c}{", fmt(raj_stats_0510$p_fstat, 2), "} & ",
-      "\\multicolumn{3}{c}{", fmt(raj_stats_1015$p_fstat, 2), "} & ",
-      "\\multicolumn{3}{c}{", fmt(raj_stats_1520$p_fstat, 2), "} \\\\"
+      "Joint p (LR) & \\multicolumn{3}{c}{", format_p_value(raj_stats_0510$p_fstat), "} & ",
+      "\\multicolumn{3}{c}{", format_p_value(raj_stats_1015$p_fstat), "} & ",
+      "\\multicolumn{3}{c}{", format_p_value(raj_stats_1520$p_fstat), "} \\\\"
     ),
     paste0(
-      "Joint p (block) & \\multicolumn{3}{c}{", fmt(raj_stats_0510$p_block, 2), "} & ",
-      "\\multicolumn{3}{c}{", fmt(raj_stats_1015$p_block, 2), "} & ",
-      "\\multicolumn{3}{c}{", fmt(raj_stats_1520$p_block, 2), "} \\\\"
+      "Joint p (block) & \\multicolumn{3}{c}{", format_p_value(raj_stats_0510$p_block), "} & ",
+      "\\multicolumn{3}{c}{", format_p_value(raj_stats_1015$p_block), "} & ",
+      "\\multicolumn{3}{c}{", format_p_value(raj_stats_1520$p_block), "} \\\\"
     ),
     "\\bottomrule",
     "\\end{tabular}",
     "\\par}",
     "",
     "\\vspace{0.5ex}",
-    "\\parbox{\\linewidth}{\\scriptsize \\emph{Notes:} Balance tests for quota assignment across all Rajasthan panels. ``Quota'' = GPs reserved for women in base year; ``Open'' = GPs not reserved. Covariates from 2001 Census Village Directory (SHRUG). p-values from t-tests. Joint p (LR) is a descriptive pooled logistic likelihood ratio test. Joint p (block) is a Wald test with district-samiti/block fixed effects and standard errors clustered at that level. These are balance diagnostics, not randomization inference.}",
+    "\\parbox{\\linewidth}{\\scriptsize \\emph{Notes:} Balance tests for quota assignment across all Rajasthan panels. ``Quota'' = GPs reserved for women in base year; ``Open'' = GPs not reserved. Covariates from the 2001 Census Village Directory (SHRUG). Availability is the percentage of GPs with an observed facility in at least one linked village; absence requires complete observed coverage. Counts per 1k use GP population. Maternity/child centers are maternity and child welfare centers. Water-source code sums are excluded because they do not identify facility counts or availability. p-values from t-tests. Joint p (LR) is a descriptive pooled logistic likelihood ratio test. Joint p (block) is a Wald test with district-samiti/block fixed effects and standard errors clustered at that level. These are balance diagnostics, not randomization inference.}",
     "\\end{table}"
   )
 
@@ -360,9 +321,9 @@ if (!is.null(up_stats_0510) && !is.null(up_stats_1015) && !is.null(up_stats_1521
 
     line <- paste0(
       v0510$Variable, " & ",
-      fmt(v0510$Mean_Treat), " & ", fmt(v0510$Mean_Control), " & ", fmt(v0510$p_ttest, 2), " & ",
-      fmt(v1015$Mean_Treat), " & ", fmt(v1015$Mean_Control), " & ", fmt(v1015$p_ttest, 2), " & ",
-      fmt(v1521$Mean_Treat), " & ", fmt(v1521$Mean_Control), " & ", fmt(v1521$p_ttest, 2), " \\\\"
+      fmt(v0510$Mean_Treat * ifelse(v0510$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", fmt(v0510$Mean_Control * ifelse(v0510$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", format_p_value(v0510$p_ttest), " & ",
+      fmt(v1015$Mean_Treat * ifelse(v1015$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", fmt(v1015$Mean_Control * ifelse(v1015$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", format_p_value(v1015$p_ttest), " & ",
+      fmt(v1521$Mean_Treat * ifelse(v1521$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", fmt(v1521$Mean_Control * ifelse(v1521$var_name %in% CENSUS_BALANCE_PERCENT, 100, 1)), " & ", format_p_value(v1521$p_ttest), " \\\\"
     )
     combined_up_tex <- c(combined_up_tex, line)
   }
@@ -376,21 +337,21 @@ if (!is.null(up_stats_0510) && !is.null(up_stats_1015) && !is.null(up_stats_1521
       "\\multicolumn{3}{c}{", up_stats_1521$n_total, "} \\\\"
     ),
     paste0(
-      "Joint p (LR) & \\multicolumn{3}{c}{", fmt(up_stats_0510$p_fstat, 2), "} & ",
-      "\\multicolumn{3}{c}{", fmt(up_stats_1015$p_fstat, 2), "} & ",
-      "\\multicolumn{3}{c}{", fmt(up_stats_1521$p_fstat, 2), "} \\\\"
+      "Joint p (LR) & \\multicolumn{3}{c}{", format_p_value(up_stats_0510$p_fstat), "} & ",
+      "\\multicolumn{3}{c}{", format_p_value(up_stats_1015$p_fstat), "} & ",
+      "\\multicolumn{3}{c}{", format_p_value(up_stats_1521$p_fstat), "} \\\\"
     ),
     paste0(
-      "Joint p (block) & \\multicolumn{3}{c}{", fmt(up_stats_0510$p_block, 2), "} & ",
-      "\\multicolumn{3}{c}{", fmt(up_stats_1015$p_block, 2), "} & ",
-      "\\multicolumn{3}{c}{", fmt(up_stats_1521$p_block, 2), "} \\\\"
+      "Joint p (block) & \\multicolumn{3}{c}{", format_p_value(up_stats_0510$p_block), "} & ",
+      "\\multicolumn{3}{c}{", format_p_value(up_stats_1015$p_block), "} & ",
+      "\\multicolumn{3}{c}{", format_p_value(up_stats_1521$p_block), "} \\\\"
     ),
     "\\bottomrule",
     "\\end{tabular}",
     "\\par}",
     "",
     "\\vspace{0.5ex}",
-    "\\parbox{\\linewidth}{\\scriptsize \\emph{Notes:} Balance tests for quota assignment across all Uttar Pradesh panels. ``Quota'' = GPs reserved for women in base year; ``Open'' = GPs not reserved. Covariates from 2001 Census Village Directory (SHRUG). p-values from t-tests. Joint p (LR) is a descriptive pooled logistic likelihood ratio test. Joint p (block) is a Wald test with district-samiti/block fixed effects and standard errors clustered at that level. These are balance diagnostics, not randomization inference.}",
+    "\\parbox{\\linewidth}{\\scriptsize \\emph{Notes:} Balance tests for quota assignment across all Uttar Pradesh panels. ``Quota'' = GPs reserved for women in base year; ``Open'' = GPs not reserved. Covariates from the 2001 Census Village Directory (SHRUG). Availability is the percentage of GPs with an observed facility in at least one linked village; absence requires complete observed coverage. Counts per 1k use GP population. Maternity/child centers are maternity and child welfare centers. Water-source code sums are excluded because they do not identify facility counts or availability. p-values from t-tests. Joint p (LR) is a descriptive pooled logistic likelihood ratio test. Joint p (block) is a Wald test with district-samiti/block fixed effects and standard errors clustered at that level. These are balance diagnostics, not randomization inference.}",
     "\\end{table}"
   )
 
@@ -556,3 +517,8 @@ cat("\n")
 cat(std_diff_log, sep = "\n")
 
 message("\n=== Balance Tables Complete ===")
+
+balance_results <- list(raj_05_10 = raj_stats_0510, raj_10_15 = raj_stats_1015, raj_15_20 = raj_stats_1520,
+  up_05_10 = up_stats_0510, up_10_15 = up_stats_1015, up_15_21 = up_stats_1521)
+write_csv(imap_dfr(balance_results, ~ mutate(.x$ttest_results, comparison = .y,
+  n = .x$n_total, joint_p = .x$p_block)), here("tabs/census_balance.csv"))

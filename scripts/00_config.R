@@ -15,6 +15,24 @@ MODEL_SSC <- fixest::ssc(
 )
 fixest::setFixest_nthreads(1)
 
+format_number <- function(x, digits = 1) {
+  rounded <- round(x, digits)
+  rounded[!is.na(rounded) & rounded == 0] <- 0
+  ifelse(is.na(rounded), "--", sprintf(paste0("%.", digits, "f"), rounded))
+}
+
+screen_characteristic_age <- function(age) {
+  # Panchayat eligibility starts at 21; 110 is a plausibility screen, not a legal maximum.
+  age <- as.numeric(age)
+  age[!is.finite(age) | age < 21 | age > 110] <- NA_real_
+  age
+}
+
+format_p_value <- function(x, latex = TRUE) {
+  small <- if (latex) "$<0.001$" else "<0.001"
+  ifelse(is.na(x), "--", ifelse(x < .001, small, sprintf("%.3f", x)))
+}
+
 # =============================================================================
 # VARIABLE DICTIONARIES (for aer_etable)
 # =============================================================================
@@ -83,16 +101,21 @@ NOTES_LONG_TERM <- paste0(
 # PUBLICATION-QUALITY FIGURE SETTINGS
 # =============================================================================
 
-# Publication-quality ggplot2 theme (Jackman-inspired)
-theme_pub <- function(base_size = 11, base_family = "") {
-  ggplot2::theme_bw(base_size = base_size, base_family = base_family) +
+FIG_STYLE <- list(
+  family = "sans", base_size = 10, label_size = 3.2,
+  point_size = 2, interval_width = .45, reference_width = .3, path_width = .35,
+  estimate = "#252525", interval = "#666666", reference = "#AAAAAA", path = "#888888"
+)
+
+theme_pub <- function(base_size = FIG_STYLE$base_size, base_family = FIG_STYLE$family) {
+  ggplot2::theme_minimal(base_size = base_size, base_family = base_family) +
     ggplot2::theme(
       panel.grid.major = ggplot2::element_blank(),
       panel.grid.minor = ggplot2::element_blank(),
-      panel.border = ggplot2::element_rect(color = "gray30", fill = NA, linewidth = 0.5),
-      axis.ticks = ggplot2::element_line(color = "gray30", linewidth = 0.3),
-      axis.text = ggplot2::element_text(color = "gray20"),
-      axis.title = ggplot2::element_text(color = "gray10", face = "plain"),
+      panel.border = ggplot2::element_blank(),
+      axis.ticks = ggplot2::element_line(color = FIG_STYLE$reference, linewidth = .25),
+      axis.text = ggplot2::element_text(color = FIG_STYLE$estimate),
+      axis.title = ggplot2::element_text(color = FIG_STYLE$estimate, face = "plain"),
       legend.background = ggplot2::element_blank(),
       legend.key = ggplot2::element_blank(),
       legend.title = ggplot2::element_text(face = "plain", size = ggplot2::rel(0.9)),
@@ -100,15 +123,15 @@ theme_pub <- function(base_size = 11, base_family = "") {
       strip.text = ggplot2::element_text(face = "bold", hjust = 0),
       plot.margin = ggplot2::margin(10, 10, 10, 10),
       plot.title = ggplot2::element_text(face = "bold", hjust = 0, size = ggplot2::rel(1.1)),
-      plot.subtitle = ggplot2::element_text(color = "gray40", hjust = 0)
+      plot.subtitle = ggplot2::element_text(color = "gray40", hjust = 0),
+      plot.background = ggplot2::element_rect(fill = "white", color = NA)
     )
 }
 
-# Academic color palette
 COLORS_PUB <- c(
-  primary = "#2C3E50",
-  secondary = "#7F8C8D",
-  accent = "#C0392B",
+  primary = FIG_STYLE$estimate,
+  secondary = FIG_STYLE$interval,
+  accent = "#315F70",
   highlight = "#27AE60",
   light = "#BDC3C7"
 )
@@ -140,6 +163,17 @@ FIG_HEIGHT <- 4.5
   path.expand(root)
 }
 
+local_source_path <- function(file) {
+  expected <- .manifest()$local_inputs[[file]]
+  if (is.null(expected)) stop("Unpinned local source: ", file, call. = FALSE)
+  path <- here::here(file)
+  if (!file.exists(path)) stop("Missing local source: ", path, call. = FALSE)
+  if (!identical(digest::digest(path, algo = "sha256", file = TRUE), expected)) {
+    stop("Local source hash mismatch: ", file, call. = FALSE)
+  }
+  path
+}
+
 sibling_path <- function(file, source = "local_elections_up") {
   man <- .manifest()
   spec <- man$upstream[[source]]
@@ -158,17 +192,24 @@ sibling_path <- function(file, source = "local_elections_up") {
   dest <- file.path(.cache_root(man), source, spec$ref, file)
 
   if (!file.exists(dest)) {
-    dir.create(dirname(dest), recursive = TRUE, showWarnings = FALSE)
+    sibling <- path.expand(spec$sibling)
+    if (!startsWith(sibling, "/")) sibling <- file.path(here::here(), sibling)
+    local <- file.path(sibling, file)
+    if (file.exists(local) && identical(digest::digest(local, algo = "sha256", file = TRUE), want)) {
+      return(normalizePath(local))
+    }
+    if (isTRUE(spec$local_only) || file %in% spec$local_only_files) {
+      stop("Unpublished upstream source missing or changed: ", local,
+        ". Restore the hash-pinned sibling file before rebuilding.", call. = FALSE)
+    }
+    if (!dir.exists(dirname(dest)) && !dir.create(dirname(dest), recursive = TRUE, showWarnings = FALSE)) {
+      stop("Cannot create source cache: ", dirname(dest), ". Set INDIA_DATA_HOME to a writable directory.", call. = FALSE)
+    }
     temporary <- tempfile("source-", tmpdir = dirname(dest))
     on.exit(unlink(temporary), add = TRUE)
-    local <- file.path(spec$sibling, file)
-    if (file.exists(local) && identical(digest::digest(local, algo = "sha256", file = TRUE), want)) {
-      if (!file.copy(local, temporary)) stop("Cannot copy source file: ", local, call. = FALSE)
-    } else {
-      url <- paste(spec$raw, spec$ref, file, sep = "/")
-      message("Fetching ", file, " from ", source, "@", spec$ref)
-      utils::download.file(url, temporary, mode = "wb", quiet = TRUE)
-    }
+    url <- paste(spec$raw, spec$ref, file, sep = "/")
+    message("Fetching ", file, " from ", source, "@", spec$ref)
+    utils::download.file(url, temporary, mode = "wb", quiet = TRUE)
     received <- digest::digest(temporary, algo = "sha256", file = TRUE)
     if (!identical(received, want)) {
       stop("Downloaded source hash mismatch for ", source, "@", spec$ref, "/", file,
@@ -192,7 +233,36 @@ sibling_path <- function(file, source = "local_elections_up") {
 
 ## Convenience wrappers so call sites read as what they are.
 up_path <- function(f) sibling_path(file.path("data/release", f))
-ref_path <- function(f) sibling_path(file.path("data/external/weaver", f))
+ref_path <- function(f) sibling_path(file.path("data/reference/weaver", f))
+
+## UP publishes NAMING.md names (reserved_raw_2015, reserved_woman_2015, ...);
+## the analysis keeps one vocabulary across states. Each rule maps an upstream
+## column back onto the name the panels carried before the rename; every
+## renamed column was checked to hold identical values under its old name.
+up_renames <- c(
+  "^reserved_raw_english_([0-9]{4})$" = "gp_reservation_status_eng_\\1",
+  "^reserved_raw_cleaned_english_([0-9]{4})$" = "gp_res_status_fin_eng_\\1",
+  "^reserved_raw_cleaned_([0-9]{4})$" = "gp_res_status_fin_\\1",
+  "^reserved_raw_([0-9]{4})$" = "gp_reservation_status_\\1",
+  "^candidate_caste_raw_cleaned_([0-9]{4})$" = "candidate_res_status_fin_\\1",
+  "^candidate_caste_raw_english_([0-9]{4})$" = "candidate_reservation_status_eng_\\1",
+  "^candidate_caste_raw_(2005|2010)$" = "candidate_res_status_\\1",
+  "^candidate_caste_raw_(2015|2021)$" = "candidate_reservation_status_\\1",
+  "^winner_woman_raw_cleaned_([0-9]{4})$" = "cand_sex_fin_\\1",
+  "^winner_woman_raw_([0-9]{4})$" = "sex_\\1",
+  "^candidate_woman_raw_2021$" = "sex_2021",
+  "^reserved_woman_([0-9]{4})$" = "women_reserved_\\1",
+  "^reserved_caste_([0-9]{4})$" = "reservation_class_\\1"
+)
+
+read_up <- function(path) {
+  rename_with(read_parquet(path), \(names) {
+    for (pattern in names(up_renames)) {
+      names <- sub(pattern, up_renames[[pattern]], names)
+    }
+    names
+  })
+}
 
 ## Reference datasets: public downloads shared by several repos, held once in the
 ## cache rather than copied into each. Unlike sibling_path() there is nothing to
@@ -234,8 +304,139 @@ shrug_path <- function(rel) reference_path(rel, "shrug")
 
 raj_path <- function(file) sibling_path(file, source = "local_elections_rajasthan")
 
-raj_product_path <- function(file) raj_path(file.path("data/fin/elections", file))
+raj_product_path <- function(file) {
+  products <- c(
+    "raj_05_10.parquet" = "linkage/sarpanch_2005_2010.parquet",
+    "raj_10_15.parquet" = "linkage/sarpanch_2010_2015.parquet",
+    "raj_15_20.parquet" = "linkage/sarpanch_2015_2020.parquet",
+    "raj_05_20.parquet" = "linkage/sarpanch_2005_2020.parquet",
+    "gp_lgd_crosswalk.parquet" = "linkage/gp_lgd_crosswalk.parquet",
+    "candidates_2020_events.parquet" = "2020/sarpanch_candidate_events.parquet",
+    "winners_2020_events.parquet" = "2020/sarpanch_winner_events.parquet"
+  )
+  if (!file %in% names(products)) stop("Unknown Rajasthan analysis product: ", file)
+  raj_path(file.path("data/release", products[[file]]))
+}
+
+## Rajasthan publishes NAMING.md names (reserved_woman_2015, winner_woman_2020,
+## ...); the analysis here speaks one vocabulary across states (female_reserved_,
+## caste_category_, winner_female_, female_winner_). This maps the one onto the
+## other at the read, so no analysis script depends on the upstream names.
+## female_winner_2020 is the results sheet's sex where it prints one, else the
+## sex on the winner's own candidate record, as the panels carried it before
+## the rename. The current release regenerates event source_id values from its
+## canonical paths; retain those provenance IDs. Joins use election/person keys.
+raj_renames <- c(
+  contesting_candidate_serial_no = "candidate_serial_no",
+  name_of_contesting_candidate = "candidate_name",
+  father_husband_of_contesting_candidate = "candidate_relation_name",
+  education_status = "candidate_education",
+  contesting_candidate_occupation = "candidate_occupation",
+  age = "candidate_age",
+  total_value_of_capital_assets = "candidate_assets_inr",
+  children_before27111995 = "candidate_children_before_1995_11_27",
+  children_on_or_after28111995 = "candidate_children_from_1995_11_28",
+  martial_status = "candidate_marital_status",
+  name_of_gram_panchayat = "gram_panchayat",
+  sr_no = "gp_no",
+  winner_candidate_name = "winner_name",
+  total_no_of_contesting_candidate = "contesting_candidates",
+  elected_unoppose = "unopposed",
+  total_electorate_votes = "electors",
+  total_polled_votes = "votes_polled",
+  rejected_votes = "votes_rejected",
+  total_valid_votes = "votes_valid",
+  poll_percent = "turnout_pct",
+  view_pledge = "winner_affidavit_url",
+  vote_secure_by_winner = "winner_votes",
+  runnerup_candidate_name = "runner_up_name",
+  vote_secure_by_runnerup = "runner_up_votes",
+  total_no_of_nota_count = "votes_nota",
+  tendered_votes = "votes_tendered",
+  winner_sex_from_cand = "winner_woman_from_candidates_2020",
+  candidate_reservation_raw = "reserved_raw_from_candidates",
+  candidate_reservation_unique = "reserved_from_candidates_unique",
+  candidate_reserved = "reserved_woman_from_candidates",
+  candidate_caste = "reserved_caste_from_candidates",
+  reservation_gender_conflict = "reserved_woman_conflict",
+  reservation_caste_conflict = "reserved_caste_conflict",
+  gender = "candidate_woman_raw",
+  category_of_candidate = "candidate_caste_raw",
+  primary_female_reserved = "primary_reserved_woman",
+  primary_caste_category = "primary_reserved_caste",
+  primary_reservation_raw = "primary_reserved_raw",
+  primary_reservation_available = "primary_reserved_available",
+  candidate_female = "candidate_woman",
+  female_runnerup_2020 = "runner_up_woman_2020"
+)
+
+read_raj <- function(path) {
+  file <- tools::file_path_sans_ext(basename(path))
+  d <- rename(read_parquet(path), any_of(raj_renames))
+  raw_name <- switch(file,
+    sarpanch_candidate_events = "category_of_gram_panchayat",
+    sarpanch_winner_events = "category_of_gram_panchyat",
+    "reservation_raw"
+  )
+  d <- rename(d, any_of(setNames("reserved_raw", raw_name)))
+  if (file == "sarpanch_winner_events") {
+    d <- rename(d, name_of_gram_panchyat = name_of_gram_panchayat)
+  }
+  d <- rename_with(
+    d,
+    \(x) sub("^reserved_woman", "female_reserved", sub("^reserved_caste", "caste_category", x)),
+    matches("^reserved_(woman|caste)(_[0-9]{4})?$")
+  )
+  winner_to <- if (file == "sarpanch_winner_events") "female_winner" else "winner_female"
+  d <- rename_with(d, \(x) sub("^winner_woman", winner_to, x), matches("^winner_woman(_[0-9]{4})?$"))
+  if (grepl("^sarpanch_[0-9]{4}_[0-9]{4}$", file)) {
+    for (y in c("2005", "2010", "2015", "2020")) {
+      from <- paste0("winner_female_", y)
+      if (!from %in% names(d)) next
+      d[[paste0("female_winner_", y)]] <- if (y == "2020") {
+        coalesce(d[[from]], d$winner_sex_from_cand)
+      } else {
+        d[[from]]
+      }
+    }
+  }
+  d
+}
+
+read_election_panel <- function(state, file) {
+  path <- election_panel_path(state, file)
+  if (state == "raj") read_raj(path) else read_parquet(path)
+}
+
+## The pooled corpus: state repositories' seats in one schema, with recorded and
+## name-inferred winner sex in separate columns and the states' seat links.
+pooled_path <- function(file) sibling_path(file, source = "local_elections")
 
 election_panel_path <- function(state, file) {
   if (state == "raj") raj_product_path(file) else here::here("data", state, file)
+}
+
+additional_source_path <- function(path) {
+  for (provider in c("local_elections", "local_elections_bihar", "local_elections_delhi")) {
+    prefix <- paste0("../", provider, "/")
+    if (startsWith(path, prefix)) {
+      return(sibling_path(substring(path, nchar(prefix) + 1L), source = provider))
+    }
+  }
+  here::here(path)
+}
+
+# State source adapters preserve this study's variable vocabulary; derived local
+# UP panels already use that vocabulary and must not be recoded a second time.
+read_analysis_parquet <- function(path) {
+  if (grepl("^sarpanch_", basename(path))) read_raj(path) else read_parquet(path)
+}
+
+read_up_election_records <- function() {
+  read_parquet(up_path("linkage/gp_head_election_records.parquet"))
+}
+
+raj_year_path <- function(year) {
+  file <- if (year == 2020L) "sarpanch_reservations.parquet" else "sarpanch_results.parquet"
+  raj_path(file.path("data/release", as.character(year), file))
 }

@@ -1,0 +1,11 @@
+key: beaman2012female
+label: Beaman et al. (2012)
+pdf: beaman_et_al_2012_author_manuscript.pdf
+pdf_version: NIH author manuscript; differs from published abstract
+source_url: https://pmc.ncbi.nlm.nih.gov/articles/PMC3394179/
+local_origin: ../quota_spending/lit/papers/beaman_duflo_pande_topalova_2012_science_pmc.pdf
+sha256: e01765d96583eb34a8645e3ad2518c25366be4f58fc638e63a1a860fa4c77970
+used_in: Introduction
+notes: 'Version warning: local manuscript says 25% parental aspiration-gap reduction;
+  published abstract says 20%. Retain published 20% and 32%; exposure is two reserved
+  cycles.'

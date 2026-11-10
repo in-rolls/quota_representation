@@ -5,8 +5,8 @@ library(here)
 source(here("scripts/00_config.R"))
 source(here("scripts/00_utils.R"))
 
-candidates <- read_parquet(raj_product_path("candidates_2020_events.parquet"))
-winners <- read_parquet(raj_product_path("winners_2020_events.parquet"))
+candidates <- read_raj(raj_product_path("candidates_2020_events.parquet"))
+winners <- read_raj(raj_product_path("winners_2020_events.parquet"))
 candidacy <- candidates |>
   filter(gp_event_unique) |>
   summarise(
@@ -39,7 +39,7 @@ votes <- winners |>
   ) |>
   select(match_key, fem_vote_share)
 
-panel <- read_parquet(raj_product_path("raj_05_20.parquet"))
+panel <- read_raj(raj_product_path("raj_05_20.parquet"))
 analysis <- panel |>
   left_join(candidacy,
     by = c("match_key_2020" = "match_key"),
@@ -64,9 +64,10 @@ for (outcome in c("prop_women", "num_women", "women_present", "fem_vote_share"))
   )
 }
 aer_etable(models,
+  outcome_scale = rep(c(100, 1, 100, 100), each = 2),
   file = here("tabs/raj_candidacy_combined.tex"),
   title = "Candidacy in Open Seats (2020, Rajasthan)", label = "tab:candidacy_combined",
-  headers = list(rep(c("Prop. women", "Num. women", "Any woman", "Vote share"), each = 2), rep(c("No FE", "FE"), 4)),
+  headers = list(rep(c("Women (\\%)", "Women (N)", "Any woman (\\%)", "Votes (\\%)"), each = 2), rep(c("No FE", "FE"), 4)),
   dict = DICT_RAJ,
   notes = paste(
     "The sample comprises GPs open in 2020 with observed treatment histories.",

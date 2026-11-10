@@ -6,31 +6,26 @@
    \begin{threeparttable}[b]
       \begin{tabular}{lcccccccccc}
          \toprule
-          & \multicolumn{6}{c}{Rajasthan} & \multicolumn{4}{c}{Uttar Pradesh} \\ 
-          & \multicolumn{2}{c}{2005--2010} & \multicolumn{2}{c}{2010--2015} & \multicolumn{2}{c}{2015--2020} & \multicolumn{2}{c}{2005--2010} & \multicolumn{2}{c}{2010--2015} \\ 
-                                & No FE   & FE            & No FE  & FE            & No FE  & FE            & No FE        & FE            & No FE  & FE \\   
-                                & [i]     & [ii]          & [iii]  & [iv]          & [v]    & [vi]          & [vii]        & [viii]        & [ix]   & [x]\\  
-         \midrule 
-         $\text{Quota}_{2005}$  & 0.01    & 0.01          &        &               &        &               & 0.02$^{***}$ & 0.02$^{***}$  &        &   \\   
-                                & (0.009) & (0.009)       &        &               &        &               & (0.005)      & (0.005)       &        &   \\   
-         $\text{Quota}_{2010}$  &         &               & 0.02   & 0.02          &        &               &              &               & 0.01   & 0.01\\   
-                                &         &               & (0.02) & (0.02)        &        &               &              &               & (0.01) & (0.01)\\   
-         $\text{Quota}_{2015}$  &         &               &        &               & 0.01   & 0.008         &              &               &        &   \\   
-                                &         &               &        &               & (0.02) & (0.02)        &              &               &        &   \\   
+          & \multicolumn{6}{c}{Rajasthan} & \multicolumn{4}{c}{Uttar Pradesh} \\
+          & \multicolumn{2}{c}{2005--2010} & \multicolumn{2}{c}{2010--2015} & \multicolumn{2}{c}{2015--2020} & \multicolumn{2}{c}{2005--2010} & \multicolumn{2}{c}{2010--2015} \\
+                                & No FE & FE    & No FE & FE    & No FE & FE    & No FE       & FE          & No FE & FE \\
+                                & [i]   & [ii]  & [iii] & [iv]  & [v]   & [vi]  & [vii]       & [viii]      & [ix]  & [x]\\
+         \midrule
+         $\text{Quota}_{2005}$  & 1.5   & 1.4   &       &       &       &       & 2.1$^{***}$ & 2.0$^{***}$ &       &   \\
+                                & (0.9) & (0.9) &       &       &       &       & (0.5)       & (0.5)       &       &   \\
+         $\text{Quota}_{2010}$  &       &       & 2.1   & 2.1   &       &       &             &             & 1.3   & 1.3\\
+                                &       &       & (1.6) & (1.6) &       &       &             &             & (1.0) & (1.0)\\
+         $\text{Quota}_{2015}$  &       &       &       &       & 1.4   & 0.8   &             &             &       &   \\
+                                &       &       &       &       & (1.7) & (1.7) &             &             &       &   \\
           \\
-         R$^2$                  & 0.0006  & 0.10          & 0.002  & 0.08          & 0.0005 & 0.15          & 0.0009       & 0.06          & 0.0003 & 0.04\\  
-         Observations           & 4,061   & 4,061         & 777    & 777           & 1,326  & 1,326         & 21,393       & 21,393        & 5,241  & 5,241\\  
-          \\
-         (District, Samiti) FE  &         & $\checkmark$  &        &               &        &               &              &               &        & \\  
-         (District, Samiti) FE  &         &               &        & $\checkmark$  &        &               &              &               &        & \\  
-         (District, Samiti) FE  &         &               &        &               &        & $\checkmark$  &              &               &        & \\  
-         (District, Block) FE   &         &               &        &               &        &               &              & $\checkmark$  &        & \\  
-         (District, Block) FE   &         &               &        &               &        &               &              &               &        & $\checkmark$\\   
+         R$^2$                  & 0.00  & 0.10  & 0.00  & 0.08  & 0.00  & 0.15  & 0.00        & 0.06        & 0.00  & 0.04\\
+         Observations           & 4,061 & 4,061 & 777   & 777   & 1,326 & 1,326 & 21,393      & 21,393      & 5,241 & 5,241\\
+         Block fixed effects    & No    & Yes   & No    & Yes   & No    & Yes   & No          & Yes         & No    & Yes\\
          \bottomrule
       \end{tabular}
-      
+
       \begin{tablenotes}
-         \item Outcome: woman elected in the next election, among seats open in that election. Districts are selected when the descriptive independence test for consecutive quota assignments has p > 0.05. Non-rejection does not establish random assignment. No UP districts qualify for 2015-2021. Standard errors are clustered by district-samiti or district-block; singleton groups are retained.
+         \item Outcome: woman elected in the next election, among seats open in that election. Districts are selected when the descriptive independence test for consecutive quota assignments has p > 0.05. Non-rejection does not establish random assignment. No UP districts qualify for 2015-2021. Standard errors are clustered by district-samiti or district-block; singleton groups are retained. Coefficients and standard errors are in percentage points; intercepts are percentages.
       \end{tablenotes}
    \end{threeparttable}
 \end{adjustbox}

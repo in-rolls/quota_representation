@@ -20,7 +20,7 @@ message("=== Transition Matrices and Chi-Squared Tests ===")
 
 message("\n--- Rajasthan ---")
 
-raj_panch <- read_parquet(raj_product_path("raj_05_20.parquet"))
+raj_panch <- read_raj(raj_product_path("raj_05_20.parquet"))
 
 raj_trans_matrices <- list(
   `2005-2010` = make_transition_matrix(raj_panch, treat_2005, treat_2010),
@@ -43,8 +43,8 @@ print(raj_chi_results)
 
 raj_chi_results %>%
   mutate(
-    statistic = round(statistic, 2),
-    p.value = round(p.value, 2)
+    statistic = format_number(statistic, 2),
+    p.value = format_p_value(p.value, latex = FALSE)
   ) %>%
   knitr::kable(
     format = "latex",
@@ -100,8 +100,8 @@ print(up_chi_results)
 
 up_chi_results %>%
   mutate(
-    statistic = round(statistic, 2),
-    p.value = round(p.value, 2)
+    statistic = format_number(statistic, 2),
+    p.value = format_p_value(p.value, latex = FALSE)
   ) %>%
   knitr::kable(
     format = "latex",

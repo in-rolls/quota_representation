@@ -1,0 +1,78 @@
+\clearpage
+\section{Persistence across Subsequent Open Elections}\label{sec:persistence_horizons}
+
+\subsection{Data and comparisons}
+
+The duration estimand in Section~\ref{sec:duration_design} compares women's electoral success across consecutive open elections following a fixed reservation history, without renewed reservation. It uses the four-election panels described in Appendix~\ref{sec:app_data}: 2005, 2010, 2015, and 2020 in Rajasthan, and 2005, 2010, 2015, and 2021 in Uttar Pradesh. The outcome is whether a woman wins the GP leadership election. This exploratory analysis estimates duration separately from next-election effects and cumulative exposure.
+
+We first compare GPs reserved for women in 2005 and open in all subsequent elections with GPs open in all four elections. We denote these histories 1000 and 0000, where 1 indicates a women's quota and 0 its absence. Caste reservations may remain in either group. This comparison follows \persistRajFirstN{} GPs in Rajasthan and \persistUpFirstN{} in UP through three consecutive open elections. Two further comparisons follow GPs reserved in 2010, either without reservation in 2005 (0100) or with it (1100), through the two subsequent open elections. Each uses 0000 as its comparison history. Reservation before 2005 is unobserved, so 0000 does not mean never exposed to a quota.
+
+Within each comparison, we require observed winner sex at every follow-up. The same GPs therefore contribute to all points on a trajectory. The samples differ across reservation histories, and the comparison groups overlap. We estimate a separate linear probability model at each follow-up, with 2005 district--samiti fixed effects in Rajasthan and district--block fixed effects in UP. Standard errors cluster at these baseline units. Only blocks containing both histories identify the within-block contrast; Table~\ref{tab:persistence_horizons} reports their number alongside sample sizes and unadjusted winner shares.
+
+For a history comparison $a$, let $S_a$ denote its fixed analysis sample, $n_{d,a}$ the number of GPs in block $d$, and $p_{d,a}$ the exposed share in that block. The coefficient in Equation~\ref{eq:duration} estimates
+\begin{equation}\label{eq:duration_estimand}
+\theta_{a,k} = \sum_d w_{d,a}\left\{
+ E[Y_{t(a,k)}\mid \text{Exposed}_a=1,d,S_a]
+ - E[Y_{t(a,k)}\mid \text{Exposed}_a=0,d,S_a]\right\},
+\end{equation}
+\noindent with $w_{d,a}$ proportional to $n_{d,a}p_{d,a}(1-p_{d,a})$ and normalized to sum to one over blocks containing both histories. These weights remain fixed across follow-ups because the GP sample and exposure indicator do not change. Thus $\theta_{a,k}-\theta_{a,1}$ compares the same weighted histories at different elections. It is not a comparison of different treatment intensities, and the fixed-effects coefficient is not generally an equally weighted average across GPs.
+
+Random initial assignment alone need not make every subsequent history comparison exchangeable. Conditioning on later open status can preserve randomization when future assignment depends only on past assignments and the controlled strata. A causal interpretation additionally requires that future eligibility, panel linkage, and missing outcomes do not select the compared histories on other predictors of women's electoral success. We therefore report conditional history contrasts. Within a trajectory, elapsed time also coincides with the calendar election; the analysis does not identify a general rate of decay separate from election-specific conditions.
+
+\subsection{Results and changes over time}
+
+Figure~\ref{fig:persistence_horizons} displays the estimates at each open election. For the 2005 reservation comparison, UP's estimates remain small at all three open elections: \persistUpFirst{}, \persistUpSecond{}, and \persistUpThird{} percentage points. Rajasthan's estimates are \persistRajFirst{}, \persistRajSecond{}, and \persistRajThird{} points. The negative Rajasthan estimate at the second open election is followed by an estimate close to zero at the third. Its wide intervals permit both positive and negative differences at the first and third elections.
+
+Rajasthan's other histories show larger changes. For 0100 versus 0000, the estimate rises from \persistRajLaterFirst{} points at the first open election to \persistRajLaterSecond{} at the second (95\% interval \persistRajLaterSecondInterval{}). For 1100 versus 0000, it rises from \persistRajDoubleFirst{} to \persistRajDoubleSecond{} points (\persistRajDoubleSecondInterval{}). The corresponding UP estimates are \persistUpLaterFirst{} and \persistUpLaterSecond{} points for 0100, and \persistUpDoubleFirst{} and \persistUpDoubleSecond{} for 1100. Thus the data do not support a uniform account in which positive effects appear immediately and then fade.
+
+We test changes directly by regressing each GP's later-minus-first outcome on the history indicator with the same fixed effects. This preserves the covariance between repeated observations. Pointwise intervals and two-sided tests use 9,999 null-imposed Rademacher wild cluster bootstrap draws. Table~\ref{tab:persistence_horizon_changes} reports both unadjusted and Holm-adjusted $p$-values for the eight temporal comparisons across the two states and three histories. The two Rajasthan increases following 2010 reservation remain distinguishable from zero after adjustment. The third-minus-first differences following 2005 reservation are \persistRajChange{} points in Rajasthan (95\% interval \persistRajChangeInterval{}; $p=\persistRajChangeP{}$) and \persistUpChange{} in UP (\persistUpChangeInterval{}; $p=\persistUpChangeP{}$). These intervals do not establish that persistence is constant. Comparing the significance of separate election estimates would not test whether they differ.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\textwidth]{../figs/persistence_horizons.pdf}
+\caption{Women's electoral success across consecutive open elections}
+\label{fig:persistence_horizons}
+\begin{minipage}{\textwidth}\small
+\emph{Notes:} Each group compares the indicated reservation history with offices open in all four observed elections. No women's reservation intervenes during follow-up. Within each state and reservation history, the same GPs contribute at every follow-up; samples differ across histories. Points are block fixed-effects contrasts in the probability that a woman wins, in percentage points. Horizontal lines are pointwise 95\% wild cluster bootstrap intervals. For the first history, follow-up elections are 2010, 2015, and 2020 (Rajasthan) or 2021 (UP); for the other histories, they are 2015 and 2020 or 2021. Sources: the linked Rajasthan and UP election panels described in Appendix~\ref{sec:app_data}.
+\end{minipage}
+\end{figure}
+\FloatBarrier
+
+\begin{table}[!htbp]
+\centering
+\caption{Reservation histories and later open-election outcomes}
+\label{tab:persistence_horizons}
+\input{../tabs/persistence_horizons.tex}
+\begin{minipage}{\textwidth}\small
+\emph{Notes:} Histories list women's reservation in chronological order across the four elections: 1 denotes reserved, 0 open. T denotes the indicated exposure history; C denotes 0000. Sample sizes and unadjusted female-winner shares refer to the same complete-case GPs at every follow-up within a history comparison. Mixed blocks contain both histories. Estimates include baseline block fixed effects; intervals are pointwise 95\% wild cluster bootstrap intervals. All estimates and intervals are in percentage points. Sources: linked state election panels.
+\end{minipage}
+\end{table}
+\FloatBarrier
+
+\begin{table}[!htbp]
+\centering
+\caption{Changes in history contrasts across open elections}
+\label{tab:persistence_horizon_changes}
+\input{../tabs/persistence_horizon_changes.tex}
+\begin{minipage}{\textwidth}\small
+\emph{Notes:} Each row tests the change in a history contrast using paired outcomes from the same GPs. A positive value means a larger difference at the later election. Models include baseline block fixed effects and cluster at that level. Intervals are pointwise 95\% wild cluster bootstrap intervals; Holm adjustment covers all eight temporal comparisons in this table. Adjustment concerns changes over time, not all level estimates in Figure~\ref{fig:persistence_horizons}.
+\end{minipage}
+\end{table}
+\FloatBarrier
+
+\subsection{Sensitivity}
+
+Table~\ref{tab:persistence_horizon_sensitivity} separates two sample choices for the 2005 comparison. First, allowing each election's available outcomes within the same histories gives similar estimates to the complete-case analysis. Second, requiring open status only through the election being studied retains more GPs at earlier follow-ups. These estimates also remain small in UP. In Rajasthan, the first-election estimate becomes slightly positive and the second-election estimate becomes less negative. These changing samples cannot by themselves establish how an effect changes over time. The table uses cluster-$t$ intervals for all specifications to keep their uncertainty estimates comparable.
+
+The larger changes in Rajasthan's 0100 and 1100 comparisons do not depend on any single block: removing each block in turn leaves the first-election estimates negative and the second-election estimates positive. This influence check does not resolve the selection assumptions for the histories. The trajectories also share comparison GPs and answer a different question from the next-election contrasts, so they do not enter Appendix~\ref{sec:additional_evidence}'s next-election meta-analysis as additional independent studies.
+
+\begin{table}[!htbp]
+\centering
+\caption{Sensitivity to follow-up and outcome requirements}
+\label{tab:persistence_horizon_sensitivity}
+\input{../tabs/persistence_horizon_sensitivity.tex}
+\begin{minipage}{\textwidth}\small
+\emph{Notes:} All rows compare reservation versus no reservation in 2005. ``Same GPs'' requires open status and observed outcomes at all three subsequent elections. ``Available outcomes'' retains the same reservation histories but requires an outcome only at the displayed election. ``Open through followup'' requires no reservation between 2005 and the displayed election, allowing the sample to vary over time. N (T/C) reports exposed/comparison counts. Estimates include baseline block fixed effects and block-clustered $t$ intervals, in percentage points. Sources: linked state election panels.
+\end{minipage}
+\end{table}
+\FloatBarrier

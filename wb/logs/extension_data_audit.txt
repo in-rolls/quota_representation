@@ -1,0 +1,132 @@
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l1dcachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l2cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.l3cachesize'. Detail: [errno 1] Operation not permitted
+/Users/runner/work/crossbow/crossbow/arrow/cpp/src/arrow/util/cpu_info.cc:239: IOError: sysctlbyname failed for 'hw.optional.neon'. Detail: [errno 1] Operation not permitted
+audit_data.py  ../quota_raj/wb/data/gp_2003_followup.parquet
+
+========================================================================
+1. SHAPE AND KEYS
+========================================================================
+rows 165   columns 37
+key ['gp_id']: 165 distinct, 0 duplicate rows
+
+========================================================================
+2. MISSINGNESS (level, and -- what matters -- differential)
+========================================================================
+columns with any missing:
+  current_other_year_888_raw                    99.39%  (164)
+  current_other_year_raw                        99.39%  (164)
+  previous_end_raw                              92.12%  (152)
+  previous_start_raw                            92.12%  (152)
+  water                                         11.52%  (19)
+  ssk_new                                        7.88%  (13)
+  metal_road_km                                  4.85%  (8)
+  female_a1                                      3.64%  (6)
+  female_followup                                3.64%  (6)
+  pradhan_spouse                                 3.64%  (6)
+  AA0_8_3                                        2.42%  (4)
+  female_a0                                      2.42%  (4)
+  female_a8                                      2.42%  (4)
+  id_consistent                                  2.42%  (4)
+  sex_conflict                                   2.42%  (4)
+  st98                                           1.82%  (3)
+  sc98                                           1.82%  (3)
+  q98                                            1.82%  (3)
+
+differential missingness by 'q98' (max-min fill rate > 2pp):
+  water                                spread   8.3pp   0.0=13.9%  1.0=5.6%
+  metal_road_km                        spread   4.6pp   0.0=6.5%  1.0=1.9%
+  female_followup                      spread   2.8pp   0.0=4.6%  1.0=1.9%
+  ^ differential missingness MANUFACTURES trends and gaps.
+    Constant missingness only attenuates. Check each of these.
+
+differential missingness by 'q03' (max-min fill rate > 2pp):
+  previous_start_raw                   spread   6.4pp   0=90.0%  1=96.4%
+  previous_end_raw                     spread   6.4pp   0=90.0%  1=96.4%
+  ssk_new                              spread   4.5pp   0=6.4%  1=10.9%
+  water                                spread   4.5pp   0=10.0%  1=14.5%
+  female_a1                            spread   2.7pp   0=2.7%  1=5.5%
+  sc98                                 spread   2.7pp   0=2.7%  1=0.0%
+  st98                                 spread   2.7pp   0=2.7%  1=0.0%
+  q98                                  spread   2.7pp   0=2.7%  1=0.0%
+  pradhan_spouse                       spread   2.7pp   0=2.7%  1=5.5%
+  ^ differential missingness MANUFACTURES trends and gaps.
+    Constant missingness only attenuates. Check each of these.
+
+========================================================================
+3. ZEROS VS MISSING
+========================================================================
+column                                           zeros       %   missing       %
+st03                                               153   92.7%         0    0.0%
+st98                                               145   87.9%         3    1.8%
+sc03                                               114   69.1%         0    0.0%
+sc98                                               110   66.7%         3    1.8%
+q03                                                110   66.7%         0    0.0%
+q98                                                108   65.5%         3    1.8%
+female_a1                                           91   55.2%         6    3.6%
+female_a8                                           90   54.5%         4    2.4%
+female_a0                                           89   53.9%         4    2.4%
+female_followup                                     89   53.9%         6    3.6%
+ssk_new                                             81   49.1%        13    7.9%
+metal_road_km                                       77   46.7%         8    4.8%
+water                                                6    3.6%        19   11.5%
+current_other_year_raw                               0    0.0%       164   99.4%
+current_other_year_888_raw                           0    0.0%       164   99.4%
+previous_start_raw                                   0    0.0%       152   92.1%
+previous_end_raw                                     0    0.0%       152   92.1%
+AA0_8_3                                              0    0.0%         4    2.4%
+pradhan_spouse                                       0    0.0%         6    3.6%
+
+For every column with BOTH: is the zero 'measured, none found' or
+'not measured'? If the data cannot tell them apart, neither can the model.
+
+========================================================================
+4. DTYPE TRAPS
+========================================================================
+  id_consistent                                boolean-valued but OBJECT dtype.
+    `~id_consistent` is integer bitwise NOT here (~True == -2), not
+    logical negation. Cast with .astype(bool) before masking.
+  sex_conflict                                 boolean-valued but OBJECT dtype.
+    `~sex_conflict` is integer bitwise NOT here (~True == -2), not
+    logical negation. Cast with .astype(bool) before masking.
+
+========================================================================
+5. VALUES OUTSIDE THEIR LOGICAL RANGE
+========================================================================
+none found
+
+========================================================================
+6. DISTRIBUTIONS, SKEW AND TAILS
+========================================================================
+            column    median       max  max/med   skew  n_top  top_n_mass
+  current_year_raw     1.000   998.000  998.000 12.845      1       0.858
+     metal_road_km     1.000    95.000   95.000  6.979      1       0.136
+             water   113.000   980.000    8.673  3.121      1       0.050
+           ssk_new     0.000     7.000      NaN  1.110      1       0.037
+previous_start_raw 2,000.000 2,003.000    1.002  0.237      1       0.077
+  previous_end_raw 2,003.000 2,005.000    1.001  0.000      1       0.077
+
+'top_n_mass' is the share of the total held by the n_top largest values
+(n_top = max(1, n/100), so it is a single value below n = 200). Both it
+and max/med are blank for columns with negative values, where neither is
+interpretable.
+
+3 column(s) are heavily skewed. Before choosing a method,
+decide whether the MEAN or the MEDIAN is the estimand -- see
+checks/tier2-statistical.md section F. Asymptotic SEs are optimistic here.
+
+========================================================================
+7. RATE COLUMNS AND THEIR RECONSTRUCTED DENOMINATORS
+========================================================================
+no columns whose name suggests a rate; skipping
+
+========================================================================
+8. LEVERAGE ON THE HEADLINE OUTCOME
+========================================================================
+statsmodels not installed; skipping
+
+========================================================================
+SUMMARY
+========================================================================
+no hard failures. The soft findings above still need judgement --
+this script narrows where to look, it does not decide.

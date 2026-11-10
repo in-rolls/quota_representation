@@ -18,7 +18,7 @@ message("=== Long-Term Treatment Rotation Analysis ===")
 # Load 4-way panels (contains GPs present in all 4 election years)
 # =============================================================================
 
-raj_05_20 <- read_parquet(raj_product_path("raj_05_20.parquet"))
+raj_05_20 <- read_raj(raj_product_path("raj_05_20.parquet"))
 up_05_21 <- read_parquet(here("data/up/up_05_21.parquet"))
 
 message("\nLoaded 4-way panels:")

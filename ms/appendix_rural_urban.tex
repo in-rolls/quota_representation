@@ -1,0 +1,51 @@
+\clearpage
+\section{Rural--Urban Differences and Development}\label{sec:additional_rural_urban}
+\suppressfloats[t]
+
+The rural point estimate is lower than the urban estimate, but the difference is imprecise and sensitive to which cities are included. Figure~\ref{fig:additional_persistence} also reports the descriptive urban UP comparison; the meta-analysis here retains Mumbai, Delhi, Chandigarh, and Bengaluru as its urban settings. Comparisons within rural Rajasthan and UP also do not establish a consistent relationship between development and subsequent electoral gains.
+
+\subsection{Rural--urban meta-analysis}
+
+We test whether the prior-reservation contrast is smaller in rural settings using a meta-regression of setting-average persistence estimates on an intercept and a rural indicator. Mumbai, Delhi, Chandigarh, and Bengaluru are urban; Rajasthan, Uttar Pradesh, and West Bengal are rural. The model jointly estimates the subgroup means and their difference, using the same within-setting averages and assumed sampling variances as Section~\ref{sec:additional_pool}. It estimates a common residual between-setting variance by REML and uses modified Knapp--Hartung inference with the number of settings minus two degrees of freedom. The coefficient tests equality of the persistence contrasts, rather than equality of the underlying female-officeholding rates or separate significance within each subgroup.
+
+The fitted rural and urban persistence contrasts are \appRuralMean{} and \appUrbanMean{} percentage points, respectively. Their difference, rural minus urban, is \appRuralGap{} points, with a 95\% interval of \appRuralGapInterval{} and a two-sided $p$-value of \appRuralGapP{}. The rural point estimate is lower, but the interval permits both a substantial rural disadvantage and an advantage. The test establishes neither a difference nor equivalence.
+
+\subsection{Sensitivity of the rural--urban difference}
+
+Table~\ref{tab:additional_rural_urban} applies the dependence and sample-composition changes defined above to the rural--urban coefficient. Adding Bihar supplies a fourth rural setting under a longer reservation regime. Omitting West Bengal restricts both groups to directly elected offices. Omitting each city in turn tests its influence, leaving three urban settings. The urban variance correction adds one rather than one-half to each binary-outcome cell when estimating sampling variances, retaining the raw differences. The earliest- and latest-election specifications assess temporal composition without counting repeated elections as independent settings.
+
+The confidence interval includes zero in every reported specification. Completing both unresolved urban outcomes in all four possible ways gives rural--urban point estimates from \appRuralGapMissingLow{} to \appRuralGapMissingHigh{} points; each interval also includes zero. The evidence is compatible with lower rural persistence, but the small number of settings leaves the contrast imprecise. Geography also coincides with differences in the office being contested, reservation rules, and election periods. Neither the primary subgroup analysis nor these sensitivity checks identify an effect of urbanization.
+
+\begin{table}[!htbp]
+\centering
+\caption{Direct tests of the rural--urban persistence difference}
+\label{tab:additional_rural_urban}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\input{../tabs/additional_rural_urban.tex}
+\begin{minipage}{0.96\textwidth}\small
+\emph{Notes:} Differences and 95\% intervals are in percentage points; negative estimates indicate lower persistence in rural settings. The primary model has three rural and four urban settings. Each row fits an intercept and rural indicator with a common residual heterogeneity variance, REML estimation, and modified Knapp--Hartung $t(k-2)$ inference. Reported $p$-values are two-sided tests of a zero rural--urban difference. The correlation and sample changes match Table~\ref{tab:additional_meta}; adding Bihar supplies a fourth rural setting. Omitting each city is an influence diagnostic with three urban settings remaining. These exploratory comparisons do not identify a causal effect of urbanization.
+\end{minipage}
+\end{table}
+\FloatBarrier
+
+\subsection{Development within rural settings}\label{sec:app_het}
+
+We interact prior quota assignment with three 2001 Census characteristics measured through SHRUG: proximity to towns, infrastructure availability, and female literacy. All three interactions enter the same model with outcome-year block fixed effects and clustering.
+
+Near Town indicates a GP at or below the median distance to the nearest town. High Infrastructure indicates an above-median sum of education, medical, electricity, and banking availability; presence requires at least one linked village with the facility, while absence requires observed absence in every constituent village. High Female Literacy indicates an above-median share of women aged seven or older who are literate. Cutoffs use matched GPs with observed covariates before restriction to the outcome sample; missing measures remain missing.
+
+Table~\ref{tab:het_effects} reports the interaction estimates using mean village-to-town distance, followed by sensitivity to using the minimum. Neither definition establishes a consistent relationship between development and the quota effect. The intervals permit meaningful differences.
+
+\begin{table}[!htbp]
+\centering
+\caption{Development and Quota Effects: Primary Estimates and Distance Sensitivity}
+\label{tab:het_effects}
+\small
+\setlength{\tabcolsep}{3pt}
+\input{../tabs/heterogeneity_distance_sensitivity.tex}
+\begin{minipage}{\textwidth}\footnotesize
+\emph{Notes:} Interaction coefficients and 95\% block-clustered intervals are in percentage points. Each coefficient is the difference in the quota effect between the indicated group and its comparison group. All models use outcome-year block fixed effects and include the three moderators and their interactions with prior quota assignment. The columns change only the GP distance measure used to define proximity to towns. Medians use observed covariates before restriction to the outcome sample.
+\end{minipage}
+\end{table}
+\FloatBarrier

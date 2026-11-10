@@ -1,0 +1,28 @@
+\begin{table}
+\centering
+\caption{\label{tab:power_additional_terms}Precision of Reservation-History Contrasts}
+\centering
+\resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
+\fontsize{8}{10}\selectfont
+\begin{threeparttable}
+\begin{tabular}[t]{lllllll}
+\toprule
+State & Contrast & N & Estimate (pp) & Cluster SE (pp) & 95\% CI (pp) & Approx. MDE (pp)\\
+\midrule
+Rajasthan & Three terms vs. none & 2,671 & 9.4 & 3.3 & {}[2.9, 15.9] & 9.2\\
+Rajasthan & Two extra terms & 2,671 & 5.3 & 3.2 & {}[-1.0, 11.7] & 9.0\\
+Rajasthan & Extra term in 2005 & 2,671 & 3.4 & 2.0 & {}[-0.6, 7.4] & 5.7\\
+Rajasthan & Extra term in 2010 & 2,671 & 1.9 & 2.5 & {}[-3.1, 6.8] & 7.1\\
+Uttar Pradesh & Three terms vs. none & 19,264 & 7.7 & 1.6 & {}[4.5, 10.8] & 4.6\\
+\addlinespace
+Uttar Pradesh & Two extra terms & 19,264 & 4.0 & 1.6 & {}[0.8, 7.2] & 4.5\\
+Uttar Pradesh & Extra term in 2005 & 19,264 & -0.3 & 1.1 & {}[-2.4, 1.8] & 3.0\\
+Uttar Pradesh & Extra term in 2010 & 19,264 & 1.2 & 1.3 & {}[-1.5, 3.8] & 3.7\\
+\bottomrule
+\end{tabular}
+\begin{tablenotes}
+\item \textit{Note: }
+\item Normal-approximation MDEs use 80\% power and two-sided 5\% size, computed from each fitted model or full-covariance linear contrast. They are precision summaries, not evidence of a zero effect or exact bootstrap power.
+\end{tablenotes}
+\end{threeparttable}}
+\end{table}

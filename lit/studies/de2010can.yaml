@@ -1,0 +1,24 @@
+key: de2010can
+pdf: de_paola_lombardo_scoppa_2009_working_paper.pdf
+pdf_version: 2009 working paper; numerical checks refer to this version
+source_url: http://www.ecostat.unical.it/RePEc/WorkingPapers/WP10_2009.pdf
+local_origin: University of Calabria Working Paper 10/2009
+sha256: c76edbf651adacd8434f35735f24ee574feddebdf87dcb69e00f3bd5f16a0a58
+label: De Paola, Scoppa, and Lombardo (2010)
+used_in: Introduction
+published_doi: 10.1016/j.jpubeco.2010.02.004
+design: Difference in differences comparing municipalities that held an election under
+  1993–1995 statutory candidate-list quotas with those that did not; records span
+  1985–2007.
+checks:
+- claim: Positive post-repeal effects on female representation
+  status: confirmed in 2009 working paper
+  source: Table 2, p.12
+  note: 'Female council share: 1.4 percentage points (SE 0.5) with province fixed
+    effects; 1.5 (SE 0.4) with municipality fixed effects. Published article cited
+    for qualitative finding; these numerical values have not been checked in the final
+    article.'
+interpretation: Italy is a higher-income setting; municipalities include rural areas.
+  Candidate-list quotas and council shares differ from Indian reserved leadership
+  offices and subsequent female winners. Do not pool these estimates in the same-office
+  Indian meta-analysis.

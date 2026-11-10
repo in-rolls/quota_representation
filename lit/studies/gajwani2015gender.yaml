@@ -1,0 +1,13 @@
+key: gajwani2015gender
+pdf: gajwani_zhang_2015_wber.pdf
+pdf_version: Published WBER article, 29(2):234–261
+source_url: https://doi.org/10.1093/wber/lhu001
+local_origin: ../quota_spending/lit/papers/gajwani_zhang_2015_wber.pdf
+sha256: b8a47777acda5fa63cba3190e381c700d897748dfa559fb5b78539db0a93393c
+used_in: Theoretical framework
+checked_pages: Printed pp. 246–249, Tables 5–6; pp. 250–255, Tables 7–8
+supported_claim: Female presidents have lower knowledge of panchayat rules and less
+  contact with higher officials; female-led councils built fewer schools and roads.
+interpretation_limits: The knowledge difference remains after adjustment for education.
+  It is not a causal estimate of schooling on effectiveness. Tamil Nadu assignment
+  uses female-population rankings; public-goods analysis uses difference-in-differences.

@@ -1,0 +1,67 @@
+specification,comparison,weight
+Equal states and transitions,raj_05_10,0.16666666666666666
+Equal states and transitions,raj_10_15,0.16666666666666666
+Equal states and transitions,raj_15_20,0.16666666666666666
+Equal states and transitions,up_05_10,0.16666666666666666
+Equal states and transitions,up_10_15,0.16666666666666666
+Equal states and transitions,up_15_21,0.16666666666666666
+Analysis-sample weights,raj_05_10,0.04191697116079354
+Analysis-sample weights,raj_10_15,0.03991453520777853
+Analysis-sample weights,raj_15_20,0.041431844924753825
+Analysis-sample weights,up_05_10,0.2890320183315786
+Analysis-sample weights,up_10_15,0.26798579715530235
+Analysis-sample weights,up_15_21,0.31971883321979316
+District clustering,raj_05_10,0.16666666666666666
+District clustering,raj_10_15,0.16666666666666666
+District clustering,raj_15_20,0.16666666666666666
+District clustering,up_05_10,0.16666666666666666
+District clustering,up_10_15,0.16666666666666666
+District clustering,up_15_21,0.16666666666666666
+Omit Rajasthan,raj_05_10,0
+Omit Rajasthan,raj_10_15,0
+Omit Rajasthan,raj_15_20,0
+Omit Rajasthan,up_05_10,0.3333333333333333
+Omit Rajasthan,up_10_15,0.3333333333333333
+Omit Rajasthan,up_15_21,0.3333333333333333
+Omit Uttar Pradesh,raj_05_10,0.3333333333333333
+Omit Uttar Pradesh,raj_10_15,0.3333333333333333
+Omit Uttar Pradesh,raj_15_20,0.3333333333333333
+Omit Uttar Pradesh,up_05_10,0
+Omit Uttar Pradesh,up_10_15,0
+Omit Uttar Pradesh,up_15_21,0
+Omit raj_05_10,raj_05_10,0
+Omit raj_05_10,raj_10_15,0.25
+Omit raj_05_10,raj_15_20,0.25
+Omit raj_05_10,up_05_10,0.16666666666666666
+Omit raj_05_10,up_10_15,0.16666666666666666
+Omit raj_05_10,up_15_21,0.16666666666666666
+Omit raj_10_15,raj_05_10,0.25
+Omit raj_10_15,raj_10_15,0
+Omit raj_10_15,raj_15_20,0.25
+Omit raj_10_15,up_05_10,0.16666666666666666
+Omit raj_10_15,up_10_15,0.16666666666666666
+Omit raj_10_15,up_15_21,0.16666666666666666
+Omit raj_15_20,raj_05_10,0.25
+Omit raj_15_20,raj_10_15,0.25
+Omit raj_15_20,raj_15_20,0
+Omit raj_15_20,up_05_10,0.16666666666666666
+Omit raj_15_20,up_10_15,0.16666666666666666
+Omit raj_15_20,up_15_21,0.16666666666666666
+Omit up_05_10,raj_05_10,0.16666666666666666
+Omit up_05_10,raj_10_15,0.16666666666666666
+Omit up_05_10,raj_15_20,0.16666666666666666
+Omit up_05_10,up_05_10,0
+Omit up_05_10,up_10_15,0.25
+Omit up_05_10,up_15_21,0.25
+Omit up_10_15,raj_05_10,0.16666666666666666
+Omit up_10_15,raj_10_15,0.16666666666666666
+Omit up_10_15,raj_15_20,0.16666666666666666
+Omit up_10_15,up_05_10,0.25
+Omit up_10_15,up_10_15,0
+Omit up_10_15,up_15_21,0.25
+Omit up_15_21,raj_05_10,0.16666666666666666
+Omit up_15_21,raj_10_15,0.16666666666666666
+Omit up_15_21,raj_15_20,0.16666666666666666
+Omit up_15_21,up_05_10,0.25
+Omit up_15_21,up_10_15,0.25
+Omit up_15_21,up_15_21,0

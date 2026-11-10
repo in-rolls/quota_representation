@@ -5,8 +5,9 @@ library(tidyverse)
 library(arrow)
 library(here)
 source(here("scripts/00_config.R"))
+source(here("scripts/00_census.R"))
 
-bridge <- read_parquet(up_path("panels/gp_lgd_bridge.parquet"))
+bridge <- read_up(up_path("linkage/gp_lgd_bridge.parquet"))
 stopifnot(!anyNA(bridge[c("panel", "anchor_key")]), !anyDuplicated(bridge[c("panel", "anchor_key")]))
 
 message("\n=== LOADING SHRUG COVARIATES ===")
@@ -17,7 +18,7 @@ shrug_vd <- read_csv(shrug_path("shrug-vd01-csv/pc01_vd_clean_shrid.csv.zip"), s
 message("SHRUG PCA rows: ", nrow(shrug_pca))
 message("SHRUG VD rows: ", nrow(shrug_vd))
 
-shrug_lgd_full <- read_csv(here("data/shrug_gp_xwalk/data/shrug_LGD_matched.csv"), show_col_types = FALSE) %>%
+shrug_lgd_full <- read_csv(local_source_path("data/shrug_gp_xwalk/data/shrug_LGD_matched.csv"), show_col_types = FALSE) %>%
   filter(tolower(state_name) == "uttar pradesh")
 
 sum_or_na <- function(x) {
@@ -26,19 +27,7 @@ sum_or_na <- function(x) {
   }
   sum(x, na.rm = TRUE)
 }
-availability <- function(x) {
-  if (any(x > 0, na.rm = TRUE)) {
-    return(1L)
-  }
-  if (anyNA(x)) {
-    return(NA_integer_)
-  }
-  0L
-}
-facility_fields <- c(
-  "pc01_vd_edu_fac", "pc01_vd_medi_fac",
-  "pc01_vd_power_supl", "pc01_vd_bank_fac"
-)
+facility_fields <- CENSUS_AVAILABILITY
 stopifnot(
   !anyDuplicated(shrug_lgd_full$shrid2),
   !anyDuplicated(shrug_pca$shrid2), !anyDuplicated(shrug_vd$shrid2)
@@ -54,7 +43,7 @@ shrug_covars <- shrug_lgd_full %>%
     across(starts_with("pc01_pca_"), sum_or_na),
     across(starts_with("pc01_vd_") & !all_of(c(facility_fields, "pc01_vd_dist_town")), sum_or_na),
     across(all_of(facility_fields), ~ sum(!is.na(.x)), .names = "{.col}_n_observed"),
-    across(all_of(facility_fields), availability),
+    across(all_of(facility_fields), census_availability),
     n_distance_observed = sum(!is.na(pc01_vd_dist_town)),
     pc01_vd_dist_town_sum = sum_or_na(pc01_vd_dist_town),
     pc01_vd_dist_town_min = if (all(is.na(pc01_vd_dist_town))) NA_real_ else min(pc01_vd_dist_town, na.rm = TRUE),

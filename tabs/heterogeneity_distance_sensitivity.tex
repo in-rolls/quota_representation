@@ -1,50 +1,28 @@
 
-\begingroup
-\centering
-\scriptsize
-\begin{adjustbox}{max width=\linewidth}
-   \begin{threeparttable}[b]
-      \begin{tabular}{lcccccccccccc}
-         \toprule
-          & \multicolumn{2}{c}{\textit{female\_winner\_2010}} & \multicolumn{2}{c}{\textit{female\_winner\_2015}} & \multicolumn{2}{c}{\textit{female\_winner\_2020}} & \multicolumn{2}{c}{\textit{female\_winner\_2010}} & \multicolumn{2}{c}{\textit{female\_winner\_2015}} & \multicolumn{2}{c}{\textit{female\_winner\_2021}}\\
-                                                    & [i]           & [ii]          & [iii]         & [iv]          & [v]           & [vi]          & [vii]         & [viii]        & [ix]          & [x]           & [xi]          & [xii]\\  
-         \midrule 
-         treat\_2005 $\times$ near\_town            & -0.02         & -0.0002       &               &               &               &               & 0.01          & 0.01          &               &               &               &   \\   
-                                                    & (0.03)        & (0.02)        &               &               &               &               & (0.01)        & (0.01)        &               &               &               &   \\   
-         treat\_2005 $\times$ high\_infra           & -0.007        & -0.009        &               &               &               &               & 0.02$^{*}$    & 0.02$^{*}$    &               &               &               &   \\   
-                                                    & (0.03)        & (0.03)        &               &               &               &               & (0.01)        & (0.01)        &               &               &               &   \\   
-         treat\_2005 $\times$ high\_f\_literacy     & 0.04          & 0.03          &               &               &               &               & 0.003         & 0.003         &               &               &               &   \\   
-                                                    & (0.02)        & (0.02)        &               &               &               &               & (0.01)        & (0.01)        &               &               &               &   \\   
-         treat\_2010 $\times$ near\_town            &               &               & -0.005        & -0.0009       &               &               &               &               & 0.010         & 0.01          &               &   \\   
-                                                    &               &               & (0.03)        & (0.02)        &               &               &               &               & (0.02)        & (0.02)        &               &   \\   
-         treat\_2010 $\times$ high\_infra           &               &               & 0.02          & 0.02          &               &               &               &               & 0.001         & 0.001         &               &   \\   
-                                                    &               &               & (0.02)        & (0.02)        &               &               &               &               & (0.02)        & (0.02)        &               &   \\   
-         treat\_2010 $\times$ high\_f\_literacy     &               &               & 0.005         & 0.005         &               &               &               &               & -0.01         & -0.01         &               &   \\   
-                                                    &               &               & (0.03)        & (0.03)        &               &               &               &               & (0.02)        & (0.02)        &               &   \\   
-         treat\_2015 $\times$ near\_town            &               &               &               &               & 0.04          & 0.02          &               &               &               &               & -0.01         & -0.02\\   
-                                                    &               &               &               &               & (0.03)        & (0.03)        &               &               &               &               & (0.02)        & (0.02)\\   
-         treat\_2015 $\times$ high\_infra           &               &               &               &               & -0.05         & -0.05         &               &               &               &               & -0.02         & -0.02\\   
-                                                    &               &               &               &               & (0.03)        & (0.03)        &               &               &               &               & (0.02)        & (0.02)\\   
-         treat\_2015 $\times$ high\_f\_literacy     &               &               &               &               & 0.05$^{*}$    & 0.06$^{*}$    &               &               &               &               & -0.01         & -0.01\\   
-                                                    &               &               &               &               & (0.03)        & (0.03)        &               &               &               &               & (0.02)        & (0.02)\\   
-          \\
-         R$^2$                                      & 0.14          & 0.14          & 0.20          & 0.20          & 0.16          & 0.16          & 0.06          & 0.06          & 0.06          & 0.06          & 0.07          & 0.07\\  
-         Observations                               & 2,684         & 2,684         & 2,343         & 2,343         & 2,279         & 2,279         & 11,607        & 11,607        & 9,904         & 9,904         & 6,517         & 6,517\\  
-          \\
-         dist\_samiti\_2010 FE                      & $\checkmark$  & $\checkmark$  &               &               &               &               &               &               &               &               &               & \\  
-         dist\_samiti\_2015 FE                      &               &               & $\checkmark$  & $\checkmark$  &               &               &               &               &               &               &               & \\  
-         dist\_samiti\_2020 FE                      &               &               &               &               & $\checkmark$  & $\checkmark$  &               &               &               &               &               & \\  
-         dist\_block\_2010 FE                       &               &               &               &               &               &               & $\checkmark$  & $\checkmark$  &               &               &               & \\  
-         dist\_block\_2015 FE                       &               &               &               &               &               &               &               &               & $\checkmark$  & $\checkmark$  &               & \\  
-         dist\_block\_2021 FE                       &               &               &               &               &               &               &               &               &               &               & $\checkmark$  & $\checkmark$\\   
-         \bottomrule
-      \end{tabular}
-      
-      \begin{tablenotes}
-         \item All models include district-samiti/block fixed effects and clustered standard errors. Mean distance is the primary GP definition; minimum observed village distance is the sensitivity definition. Unknown facility availability is excluded from the infrastructure index. Medians use observed values.
-      \end{tablenotes}
-   \end{threeparttable}
-\end{adjustbox}
-\par\endgroup
-
-
+\begin{tabular}{lllrr}
+\toprule
+State & Elections & Characteristic & Mean distance & Minimum distance\\
+\midrule
+Rajasthan & 2005--2010 & Near town & -2.3 [-7.2, 2.6] & 0.0 [-4.7, 4.6]\\
+Rajasthan & 2005--2010 & High infrastructure & -0.7 [-6.5, 5.0] & -0.9 [-6.6, 4.9]\\
+Rajasthan & 2005--2010 & High female literacy & 3.5 [-1.3, 8.3] & 3.2 [-1.6, 8.0]\\
+Rajasthan & 2010--2015 & Near town & -0.5 [-5.4, 4.4] & -0.1 [-4.9, 4.7]\\
+Rajasthan & 2010--2015 & High infrastructure & 1.6 [-3.2, 6.4] & 1.7 [-3.1, 6.5]\\
+\addlinespace
+Rajasthan & 2010--2015 & High female literacy & 0.5 [-4.4, 5.4] & 0.5 [-4.4, 5.4]\\
+Rajasthan & 2015--2020 & Near town & 4.2 [-1.5, 9.9] & 1.6 [-3.9, 7.1]\\
+Rajasthan & 2015--2020 & High infrastructure & -4.8 [-11.3, 1.8] & -4.7 [-11.2, 1.8]\\
+Rajasthan & 2015--2020 & High female literacy & 5.3 [-0.4, 11.0] & 5.8 [0.0, 11.5]\\
+Uttar Pradesh & 2005--2010 & Near town & 1.1 [-1.4, 3.7] & 1.2 [-1.4, 3.8]\\
+\addlinespace
+Uttar Pradesh & 2005--2010 & High infrastructure & 2.3 [-0.4, 4.9] & 2.3 [-0.4, 4.9]\\
+Uttar Pradesh & 2005--2010 & High female literacy & 0.3 [-2.2, 2.8] & 0.3 [-2.2, 2.8]\\
+Uttar Pradesh & 2010--2015 & Near town & 1.0 [-2.2, 4.2] & 1.3 [-1.9, 4.6]\\
+Uttar Pradesh & 2010--2015 & High infrastructure & 0.1 [-3.0, 3.2] & 0.1 [-3.0, 3.2]\\
+Uttar Pradesh & 2010--2015 & High female literacy & -1.3 [-4.5, 2.0] & -1.3 [-4.6, 2.0]\\
+\addlinespace
+Uttar Pradesh & 2015--2021 & Near town & -1.0 [-4.8, 2.7] & -1.8 [-5.7, 2.2]\\
+Uttar Pradesh & 2015--2021 & High infrastructure & -1.7 [-5.8, 2.3] & -1.7 [-5.8, 2.3]\\
+Uttar Pradesh & 2015--2021 & High female literacy & -1.1 [-4.8, 2.6] & -1.1 [-4.7, 2.6]\\
+\bottomrule
+\end{tabular}

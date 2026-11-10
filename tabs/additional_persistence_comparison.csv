@@ -1,0 +1,13 @@
+setting,period,estimate,standard_error,conf_low,conf_high,n,evidence,inference
+Rajasthan,2005--2010,0.0143705042905542,0.00926426777107108,-0.00368891004736463,0.0324882118759899,4061,Main paper: election winners,"Wild cluster bootstrap, 9999 draws"
+Rajasthan,2010--2015,-0.0281400965476745,0.0113968401349687,-0.0506257111779484,-0.0057629011175212,3867,Main paper: election winners,"Wild cluster bootstrap, 9999 draws"
+Rajasthan,2015--2020,0.0041160236248387,0.011375054399958,-0.0180336015165973,0.0263086846688162,4014,Main paper: election winners,"Wild cluster bootstrap, 9999 draws"
+Uttar Pradesh,2005--2010,0.0205073114435645,0.00437310341685992,0.0118859688725155,0.0291439249277125,28002,Main paper: election winners,"Wild cluster bootstrap, 9999 draws"
+Uttar Pradesh,2010--2015,0.0164656531881598,0.00469378836843037,0.00719563965967177,0.0256545452543862,25963,Main paper: election winners,"Wild cluster bootstrap, 9999 draws"
+Uttar Pradesh,2015--2021,0.0357876932226092,0.00479148973273769,0.0263522034066203,0.0452680876129423,30975,Main paper: election winners,"Wild cluster bootstrap, 9999 draws"
+Mumbai,1997--2002,0.17917917917917917,0.07209500656103253,0.05723824763481229,0.3368084178749383,118,Urban election winners,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Delhi,2007--2012,0.04570990806945868,0.043973070635578516,-0.025803938158662304,0.16093548837197214,133,Urban election winners,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Chandigarh,2006--2011,0.1111111111111111,0.1439628724427771,-0.22587760876579194,0.43499970557665585,17,Urban election winners,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Chandigarh,2011--2016,0,0.12117950434689023,-0.2588329669680316,0.3903342879021652,17,Urban election winners,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Bengaluru,2010--2015,-0.03947368421052631,0.037250061183053386,-0.10974787746545528,0.10092327190860831,100,Urban election winners,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Bihar,2011--2016 (two-term regime),0.030044275774827007,0.020732073605602912,-0.010815642763120675,0.07090419431277468,1295,Two-term quota regime,"Block-cluster HC1, t(G-1) interval"

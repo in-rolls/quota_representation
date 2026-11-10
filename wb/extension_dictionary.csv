@@ -1,0 +1,14 @@
+table,variable,type_or_unit,definition,rule
+selection_frame,gp_id,string,Research GP identifier; unique in 165-row roster,No new cross-source join
+selection_frame,q98; q03,binary or missing,Women-reserved head office in 1998; 2003,Inherited source-coded category; unknown remains missing
+selection_frame,sc98; st98; sc03; st03,binary or missing,SC/ST reservation axes by election year,Separate from women reservation
+selection_frame,history_eligible,boolean,Explicit 1998/2003 history with no detected 1998 category conflict,Does not condition on observed outcome
+selection_frame,measurement_valid,boolean,"Observed interview with consistent ID, valid visit year and nonmissing audited sex",Unknown conditions are false
+selection_frame,audited_outcome,binary or missing,Female current Pradhan at 2006 visit,female_followup masked unless measurement_valid; not 2003 winner
+selection_frame,exclusion_reason,string,First failed history/measurement criterion,History then interview then ID then year then sex
+selection_missing_outcome_bounds,lower_difference; upper_difference,proportion difference,"Sharp finite-frame binary bounds, prior women quota minus no prior women quota",Unresolved outcomes take 0/1; no sampling or causal claim
+selection_adjustment_comparison,estimate; conf.low; conf.high,proportion difference,OLS q98 coefficient and model-based 95% interval,Same 94 GPs for all specifications; explicit HC2/HC3
+official_source_availability,records,integer,Physical rows in grouped source export,Row unit recorded explicitly; not necessarily unique GPs
+official_nadia_2013_pairs,source_gp_key,string,Source PDF hash and printed GP serial,One-to-one head/deputy join within same document
+official_nadia_2013_pairs,woman_reserved_head; woman_reserved_deputy,binary or missing,Women reservation axis for each office,Full category from complete synopsis; blank head123 stays missing
+official_south24_2018_positive_comparison,comparison,string,Same positive mention or draft/final-only mention,Case/whitespace normalized tier/block/name/category; no UR inference

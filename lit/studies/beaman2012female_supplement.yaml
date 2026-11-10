@@ -1,0 +1,10 @@
+key: beaman2012female_supplement
+label: Beaman et al. (2012), supplement
+pdf: beaman_et_al_2012_supplement.pdf
+pdf_version: Supporting online material
+source_url: https://doi.org/10.1126/science.1212382
+local_origin: ../quota_spending/lit/papers/beaman_duflo_pande_topalova_2012_science_som.pdf
+sha256: 8d66cbbffa4678c4d4983a3e308c871f74711b141a3baa752af263c8af5f4a7c
+used_in: Introduction
+notes: Supplement retained separately from article; not independently audited in this
+  pass.

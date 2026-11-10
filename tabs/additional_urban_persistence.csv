@@ -1,0 +1,13 @@
+setting,specification,estimate,standard_error,conf_low,conf_high,n,df,inference
+Mumbai 1997--2002,Unadjusted,0.17917917917917917,0.07209500656103253,0.05723824763481229,0.3368084178749383,118,NA,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Delhi 2007--2012,Unadjusted,0.04570990806945868,0.043973070635578516,-0.025803938158662304,0.16093548837197214,133,NA,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Chandigarh 2006--2011,Unadjusted,0.1111111111111111,0.1439628724427771,-0.22587760876579194,0.43499970557665585,17,NA,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Chandigarh 2011--2016,Unadjusted,0,0.12117950434689023,-0.2588329669680316,0.3903342879021652,17,NA,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Bengaluru 2010--2015,Unadjusted,-0.03947368421052631,0.037250061183053386,-0.10974787746545528,0.10092327190860831,100,NA,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Chandigarh 2006--2011,Prior and current caste,0.13432835820895517,0.1354539479768993,-0.15830210539447964,0.42695882181239,17,13,"HC2, residual-df t interval"
+Chandigarh 2011--2016,Exclude 2006 quota exposure,0,0.1393734461186678,-0.35433043506668727,0.3903342879021652,13,NA,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Bengaluru 2010--2015,Prior and current caste,-0.03303679084102679,0.02106840653191852,-0.07489285771118628,0.00881927602913269,100,90,"HC2, residual-df t interval"
+Bengaluru 2010--2015,Unchanged caste category,0,0.1942710170616694,-0.16817922405261618,0.5614970317550453,22,NA,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Bengaluru 2010--2015,Exclude conflicting quota codes,-0.04054054054054052,0.03765458627933479,-0.11254709579091643,0.09998734939221407,98,NA,Newcombe-Wilson interval; half-cell regularized variance for synthesis
+Delhi 2007--2012,Prior SC and corporation,0.04460090228259435,0.04187045413719722,-0.03824694478814923,0.12744874935333794,133,128,"HC2, residual-df t interval"
+Delhi 2007--2012,Unchanged SC category,0.05090361445783137,0.04544913189239862,-0.03907492990006649,0.14088215881572924,123,121,"HC2, residual-df t interval"

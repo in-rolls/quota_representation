@@ -1,0 +1,96 @@
+district_raw,district,division,mapping_basis
+अमरोहा,अमरोहा,Moradabad,same district label
+अमेठी,अमेठी,Ayodhya,same district label
+अम्बेडकर नगर,अम्बेडकर नगर,Ayodhya,same district label
+अम्बेडकरनगर,अम्बेडकर नगर,Ayodhya,reviewed district alias
+अयोध्या,अयोध्या,Ayodhya,same district label
+अलीगढ,अलीगढ़,Aligarh,reviewed district alias
+अलीगढ़,अलीगढ़,Aligarh,same district label
+आगरा,आगरा,Agra,same district label
+आजमगढ,आजमगढ़,Azamgarh,reviewed district alias
+आजमगढ़,आजमगढ़,Azamgarh,same district label
+इटावा,इटावा,Kanpur,same district label
+इलाहाबाद,प्रयागराज,Prayagraj,reviewed district alias
+उन्नाव,उन्नाव,Lucknow,same district label
+एटा,एटा,Aligarh,same district label
+औरैया,औरैया,Kanpur,same district label
+कन्नौज,कन्नौज,Kanpur,same district label
+कानपुर देहात,कानपुर देहात,Kanpur,same district label
+कानपुर नगर,कानपुर नगर,Kanpur,same district label
+कासगंज,कासगंज,Aligarh,same district label
+कुशीनगर,कुशीनगर,Gorakhpur,same district label
+कौशाम्बी,कौशाम्बी,Prayagraj,same district label
+गाज़ीपुर,गाज़ीपुर,Varanasi,same district label
+गाजियाबाद,गाजियाबाद,Meerut,same district label
+गाजीपुर,गाज़ीपुर,Varanasi,reviewed district alias
+गोंडा,गोंडा,Devipatan,same district label
+गोण्डा,गोंडा,Devipatan,reviewed district alias
+गोरखपुर,गोरखपुर,Gorakhpur,same district label
+गौतम बुद्ध नगर,गौतमबुद्ध नगर,Meerut,reviewed district alias
+गौतमबुद्ध नगर,गौतमबुद्ध नगर,Meerut,same district label
+चन्दौली,चन्दौली,Varanasi,same district label
+चित्रकूट,चित्रकूट,Chitrakoot,same district label
+जालौन,जालौन,Jhansi,same district label
+जौनपुर,जौनपुर,Varanasi,same district label
+झांसी,झांसी,Jhansi,same district label
+देवरिया,देवरिया,Gorakhpur,same district label
+पीलीभीत,पीलीभीत,Bareilly,same district label
+प्रतापगढ,प्रतापगढ़,Prayagraj,reviewed district alias
+प्रतापगढ़,प्रतापगढ़,Prayagraj,same district label
+प्रयागराज,प्रयागराज,Prayagraj,same district label
+फतेहपुर,फतेहपुर,Prayagraj,same district label
+फर्रूखाबाद,फ़र्रुखाबाद,Kanpur,reviewed district alias
+फ़र्रुखाबाद,फ़र्रुखाबाद,Kanpur,same district label
+फिरोज़ाबाद,फिरोज़ाबाद,Agra,same district label
+फिरोजाबाद,फिरोज़ाबाद,Agra,reviewed district alias
+फैजाबाद,अयोध्या,Ayodhya,reviewed district alias
+बदायूं,बदायूं,Bareilly,same district label
+बरेली,बरेली,Bareilly,same district label
+बलरामपुर,बलरामपुर,Devipatan,same district label
+बलिया,बलिया,Azamgarh,same district label
+बस्ती,बस्ती,Basti,same district label
+बहराइच,बहराइच,Devipatan,same district label
+बांदा,बांदा,Chitrakoot,same district label
+बागपत,बागपत,Meerut,same district label
+बाराबंकी,बाराबंकी,Ayodhya,same district label
+बिजनौर,बिजनौर,Moradabad,same district label
+बुलंदशहर,बुलंदशहर,Meerut,same district label
+भदोही,भदोही,Vindhyachal,same district label
+मऊ,मऊ,Azamgarh,same district label
+मथुरा,मथुरा,Agra,same district label
+महराजगंज,महराजगंज,Gorakhpur,same district label
+महाराजगंज,महराजगंज,Gorakhpur,reviewed district alias
+महोबा,महोबा,Chitrakoot,same district label
+मिर्जापुर,मीरजापुर,Vindhyachal,reviewed district alias
+मीरजापुर,मीरजापुर,Vindhyachal,same district label
+मुजफ्फरनगर,मुज़फ्फरनगर,Saharanpur,reviewed district alias
+मुज़फ्फरनगर,मुज़फ्फरनगर,Saharanpur,same district label
+मुरादाबाद,मुरादाबाद,Moradabad,same district label
+मेरठ,मेरठ,Meerut,same district label
+मैंनपुरी,मैनपुरी,Agra,reviewed district alias
+मैनपुरी,मैनपुरी,Agra,same district label
+रामपुर,रामपुर,Moradabad,same district label
+रायबरेली,रायबरेली,Lucknow,same district label
+लखनऊ,लखनऊ,Lucknow,same district label
+लखीमपुर खीरी,लखीमपुर खीरी,Lucknow,same district label
+ललितपुर,ललितपुर,Jhansi,same district label
+वाराणसी,वाराणसी,Varanasi,same district label
+शामली,शामली,Saharanpur,same district label
+शाहजहांपुर,शाहजहांपुर,Bareilly,same district label
+श्रावस्ती,श्रावस्ती,Devipatan,same district label
+संत कबीर नगर,सन्त कबीर नगर,Basti,reviewed district alias
+संत रविदास नगर,भदोही,Vindhyachal,reviewed district alias
+सन्त कबीर नगर,सन्त कबीर नगर,Basti,same district label
+सम्भल,सम्भल,Moradabad,same district label
+सहारनपुर,सहारनपुर,Saharanpur,same district label
+सिद्धार्थ नगर,सिद्धार्थ नगर,Basti,same district label
+सिद्धार्थनगर,सिद्धार्थ नगर,Basti,reviewed district alias
+सीतापुर,सीतापुर,Lucknow,same district label
+सुलतानपुर,सुलतानपुर,Ayodhya,same district label
+सुल्तानपुर,सुलतानपुर,Ayodhya,reviewed district alias
+सोनभद्र,सोनभद्र,Vindhyachal,same district label
+हमीरपुर,हमीरपुर,Chitrakoot,same district label
+हरदोई,हरदोई,Lucknow,same district label
+हाथरस,हाथरस,Aligarh,same district label
+हापुड,हापुड़,Meerut,reviewed district alias
+हापुड़,हापुड़,Meerut,same district label

@@ -1,0 +1,28 @@
+\section{Data, Measurement, and Sample Construction}\label{sec:app_data}
+\suppressfloats[t]
+
+\subsection{Election coverage and measurement}
+
+Table~\ref{tab:gp_summary_combined} reports the GPs, blocks, and districts identified in each election file. GP counts use distinct, complete district--block--GP names after cleaning; reservation percentages exclude unknown or conflicting status. These are counts in the collected records, not a complete census of administrative units in every state-year. The main next-election samples additionally require known reservation status in both elections, no women's reservation at follow-up, a measured follow-up outcome, and a block identifier (Table~\ref{tab:next_election_samples}). Winner sex in the treatment election is not an eligibility condition for these models. Table~\ref{tab:next_election_samples} therefore reports the number of non-quota offices with known contemporaneous winner sex separately from the full control-group count.
+
+For Rajasthan's 2005 and 2010 elections, winner sex is recorded in the source files. The 2015 variable was manually coded from winner names. For 2020, winner and candidate records are joined within the same GP and general-election phase. Unresolved candidate identities or sex remain missing where required to construct an outcome. UP winner sex is carried through from the source election records. These measures describe recorded or inferred sex, and the Rajasthan 2015 results depend on the name coding.
+
+\subsection{Linking election records}
+
+Constructing the panels requires matching administrative units whose names vary because of spelling differences, transliteration, digitization errors, and administrative renaming. We standardize district and block names using geographic crosswalks, including historical names and changes in district membership. Rajasthan GP links use the historical district--samiti--GP crosswalks. In UP, matching preserves Hindi vowel marks, replaces punctuation with spaces, and excludes numerically conflicting names. It first establishes mutually unique block correspondences within harmonized districts, then accepts GP links that are uniquely nearest in both directions with Jaro distance below 0.1 in Hindi or English. Ties and competing close identities across scripts remain unmatched.
+
+Each adjacent-election pair is linked separately. Four-election histories join adjacent pairs through the same intermediate source-record identities rather than matching the first and last elections independently. Unknown reservation status is excluded from the analysis panels, and model-specific exclusions for missing outcomes follow linkage. A matched GP name does not establish unchanged territorial boundaries; coverage and linkage losses limit the population represented by the estimates.
+
+\subsection{Census covariates}
+
+The geographic crosswalks attach election GPs to Local Government Directory codes and then to SHRUG village identifiers \citep{asher2019socioeconomic}. We aggregate the 2001 Primary Census Abstract and Village Directory to GPs. Population counts are summed across linked villages, and demographic shares are calculated from the corresponding GP totals. Facility availability records whether a linked village has the facility; an all-zero classification requires complete observed coverage. The infrastructure index used in adjusted models sums availability indicators for education, medical care, electricity, and banking. Entirely missing counts remain missing. A missing geographic or Census match does not remove an election row from the main panel; models requiring those covariates use complete cases.
+
+\subsection{Election coverage}
+
+
+\input{../tabs/gp_summary}\FloatBarrier
+
+
+\subsection{Independent Uttar Pradesh data}\label{sec:weaver}
+
+The independent UP data assembled by \citet{weaver_data} for \citet{narasimhan2024polity} cover 61,338 Gram Panchayats across the 2010, 2015, and 2021 elections. The last wave is coded 2020 in the source. The records include reservation status, winner sex, age, education, assets, turnout, and candidate-pool composition. Electoral comparisons use 2011 Census district--block identifiers for fixed effects and clustering. The absence of 2005 records prevents replication of the three-prior-term comparison. Appendices~\ref{sec:app_next_election}, \ref{sec:app_additional_terms}, and~\ref{sec:app_characteristics} report the relevant estimates.

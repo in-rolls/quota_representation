@@ -1,0 +1,64 @@
+"head","deputy","Freq"
+"<source blank>","OBC",0
+"OBC","OBC",0
+"OBCW","OBC",0
+"SC","OBC",0
+"SCW","OBC",0
+"ST","OBC",0
+"STW","OBC",0
+"UR","OBC",2
+"W","OBC",0
+"<source blank>","OBCW",0
+"OBC","OBCW",0
+"OBCW","OBCW",0
+"SC","OBCW",0
+"SCW","OBCW",0
+"ST","OBCW",0
+"STW","OBCW",0
+"UR","OBCW",5
+"W","OBCW",0
+"<source blank>","SC",1
+"OBC","SC",0
+"OBCW","SC",0
+"SC","SC",0
+"SCW","SC",0
+"ST","SC",0
+"STW","SC",0
+"UR","SC",20
+"W","SC",0
+"<source blank>","SCW",0
+"OBC","SCW",0
+"OBCW","SCW",0
+"SC","SCW",0
+"SCW","SCW",0
+"ST","SCW",0
+"STW","SCW",0
+"UR","SCW",14
+"W","SCW",0
+"<source blank>","ST",0
+"OBC","ST",0
+"OBCW","ST",0
+"SC","ST",0
+"SCW","ST",0
+"ST","ST",0
+"STW","ST",0
+"UR","ST",3
+"W","ST",0
+"<source blank>","STW",0
+"OBC","STW",0
+"OBCW","STW",0
+"SC","STW",0
+"SCW","STW",0
+"ST","STW",0
+"STW","STW",0
+"UR","STW",2
+"W","STW",0
+"<source blank>","UR",0
+"OBC","UR",15
+"OBCW","UR",13
+"SC","UR",30
+"SCW","UR",30
+"ST","UR",2
+"STW","UR",3
+"UR","UR",0
+"W","UR",47

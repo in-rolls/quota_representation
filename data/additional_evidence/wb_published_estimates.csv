@@ -1,0 +1,5 @@
+outcome_year,exposure,estimate,se,n,baseline,normal_low,normal_high,source,inference
+2003,1998 only,0.027,0.023,870,0.092,-0.01807917164442124,0.07207917164442124,"Beaman et al. 2009 Table III cols 1-2, p1511",Published heteroskedasticity-robust SE; reconstructed normal 95% interval
+2008,2003 only,0.003,0.026,875,0.109,-0.0479590635980414,0.0539590635980414,"Beaman et al. 2009 Table III cols 1-2, p1511",Published heteroskedasticity-robust SE; reconstructed normal 95% interval
+2008,1998 only,0.056,0.031,875,0.109,-0.0047588835207416705,0.11675888352074168,"Beaman et al. 2009 Table III cols 1-2, p1511",Published heteroskedasticity-robust SE; reconstructed normal 95% interval
+2008,1998 and 2003,0.076,0.041,875,0.109,-0.004358523366142217,0.1563585233661422,"Beaman et al. 2009 Table III cols 1-2, p1511",Published heteroskedasticity-robust SE; reconstructed normal 95% interval

@@ -28,7 +28,7 @@ shrug_lgd <- read_csv(here("data/shrug_gp_xwalk/data/shrug_LGD_matched.csv"),
 up_shrug <- shrug_lgd %>%
   filter(tolower(state_name) == "uttar pradesh")
 
-lgd_up_gp <- read_csv(sibling_path("data/external/lgd/lgd_up_block_gp.csv"),
+lgd_up_gp <- read_csv(sibling_path("data/reference/lgd/lgd_up_block_gp.csv"),
   show_col_types = FALSE
 )
 
@@ -157,7 +157,7 @@ message("\n=== Comparison with Rajasthan ===")
 raj_shrug <- shrug_lgd %>%
   filter(tolower(state_name) == "rajasthan")
 
-lgd_raj <- read_csv(raj_path("data/source/geography/lgd_raj_block_gp.csv"),
+lgd_raj <- read_csv(raj_path("data/reference/geography/lgd_raj_block_gp.csv"),
   show_col_types = FALSE
 )
 

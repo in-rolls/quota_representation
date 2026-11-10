@@ -15,35 +15,20 @@ library(kableExtra)
 library(here)
 
 source(here("scripts/00_config.R"))
+source(here("scripts/00_census.R"))
 
 message("=== Balance Tests with District-Samiti/Block Fixed Effects ===")
 
-balance_vars <- c(
-  "pc01_vd_t_p" = "Population",
-  "pc01_vd_t_f" = "Female Pop.",
-  "pc01_vd_sc_f" = "SC (Female)",
-  "pc01_vd_st_f" = "ST (Female)",
-  "pc01_vd_medi_fac" = "Medical fac.",
-  "pc01_vd_m_home" = "Maternity homes",
-  "pc01_vd_mcw_cntr" = "FW Centres",
-  "pc01_vd_p_sch" = "Primary sch.",
-  "pc01_vd_m_sch" = "Middle sch.",
-  "pc01_vd_handpump" = "Handpumps",
-  "pc01_vd_tap" = "Tap water",
-  "pc01_vd_well" = "Wells",
-  "pc01_vd_bank_fac" = "Banking",
-  "pc01_vd_power_supl" = "Power supply",
-  "pc01_vd_app_mr" = "Mud road"
-)
+balance_vars <- CENSUS_BALANCE
 
 # =============================================================================
 # Helper: Run FE balance test for one panel
 # =============================================================================
 
 run_fe_balance <- function(data, treat_var, fe_var) {
-  avail_vars <- intersect(names(balance_vars), names(data))
+  avail_vars <- names(balance_vars)
 
-  data_clean <- data %>%
+  data_clean <- census_balance_covariates(data) %>%
     filter(!is.na(.data[[treat_var]]), !is.na(.data[[fe_var]])) %>%
     drop_na(all_of(avail_vars))
 
@@ -53,7 +38,9 @@ run_fe_balance <- function(data, treat_var, fe_var) {
     mod <- feols(fml, data = data_clean, vcov = as.formula(paste("~", fe_var)), ssc = MODEL_SSC, fixef.rm = "none", warn = FALSE, notes = FALSE)
     tidy(mod) %>%
       filter(term == treat_var) %>%
-      mutate(variable = v)
+      mutate(variable = v,
+        estimate = estimate * ifelse(v %in% CENSUS_BALANCE_PERCENT, 100, 1),
+        std.error = std.error * ifelse(v %in% CENSUS_BALANCE_PERCENT, 100, 1))
   })
 
   # Joint Wald test with clustered standard errors
@@ -138,7 +125,7 @@ kable(raj_out,
     "2010→2015" = 3,
     "2015→2020" = 3
   )) %>%
-  footnote(general = "Each row: coefficient on treatment from regression of covariate on treatment with district-samiti/block FE and standard errors clustered at that level.") %>%
+  footnote(general = "Each row regresses the covariate on quota assignment with block fixed effects and clustering. Percentage outcomes use percentage-point differences. Facility counts are per 1,000 residents; availability indicates any linked village with the facility, with complete coverage required for absence. Water-source code sums are excluded because their aggregation does not preserve availability.") %>%
   save_kable(here("tabs/balance_fe_raj.tex"))
 
 message("Created: tabs/balance_fe_raj.tex")
@@ -204,7 +191,7 @@ kable(up_out,
     "2010→2015" = 3,
     "2015→2021" = 3
   )) %>%
-  footnote(general = "Each row: coefficient on treatment from regression of covariate on treatment with district-samiti/block FE and standard errors clustered at that level.") %>%
+  footnote(general = "Each row regresses the covariate on quota assignment with block fixed effects and clustering. Percentage outcomes use percentage-point differences. Facility counts are per 1,000 residents; availability indicates any linked village with the facility, with complete coverage required for absence. Water-source code sums are excluded because their aggregation does not preserve availability.") %>%
   save_kable(here("tabs/balance_fe_up.tex"))
 
 message("Created: tabs/balance_fe_up.tex")

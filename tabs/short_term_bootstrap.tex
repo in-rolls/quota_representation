@@ -1,26 +1,32 @@
 \begin{table}
 \centering
-\caption{\label{tab:short_term_bootstrap}Short-run estimates: cell counts refer to prior quota/open seats; shared clusters contain both groups}
+\caption{\label{tab:short_term_bootstrap}Next-Election Estimates: Support, Inference, and Precision}
 \centering
 \resizebox{\ifdim\width>\linewidth\linewidth\else\width\fi}{!}{
 \fontsize{8}{10}\selectfont
-\begin{tabular}[t]{lllllrrlll}
+\begin{threeparttable}
+\begin{tabular}[t]{llllrllll}
 \toprule
-State & Period & Sample & Contrast & Cell N (L/R) & Shared clusters & Estimate (pp) & Cluster CI & Bootstrap p & Bootstrap CI\\
+State & Elections & Sample & N (L/R) & Mixed blocks & Estimate & Cluster CI & Bootstrap CI & MDE\\
 \midrule
-Rajasthan & 2005--2010 & full & treat\_2005 & 1341/2720 & 231 & 1.437 & {}[-0.39, 3.26] & 0.1213 & {}[-0.37, 3.25]\\
-Rajasthan & 2005--2010 & restricted & treat\_2005 & 1341/2720 & 231 & 1.437 & {}[-0.39, 3.26] & 0.1215 & {}[-0.38, 3.25]\\
-Rajasthan & 2010--2015 & full & treat\_2010 & 2584/1283 & 233 & -2.814 & {}[-5.06, -0.57] & 0.0129 & {}[-5.06, -0.58]\\
-Rajasthan & 2010--2015 & restricted & treat\_2010 & 356/421 & 47 & 2.064 & {}[-1.12, 5.25] & 0.1967 & {}[-1.11, 5.26]\\
-Rajasthan & 2015--2020 & full & treat\_2015 & 2504/1510 & 275 & 0.412 & {}[-1.83, 2.65] & 0.7150 & {}[-1.80, 2.63]\\
+Rajasthan & 2005--2010 & full & 1341/2720 & 231 & 1.4 & {}[-0.4, 3.3] & {}[-0.4, 3.2] & 2.6\\
+Rajasthan & 2005--2010 & restricted & 1341/2720 & 231 & 1.4 & {}[-0.4, 3.3] & {}[-0.4, 3.3] & 2.6\\
+Rajasthan & 2010--2015 & full & 2584/1283 & 233 & -2.8 & {}[-5.1, -0.6] & {}[-5.1, -0.6] & 3.2\\
+Rajasthan & 2010--2015 & restricted & 356/421 & 47 & 2.1 & {}[-1.1, 5.2] & {}[-1.1, 5.3] & 4.4\\
+Rajasthan & 2015--2020 & full & 2504/1510 & 275 & 0.4 & {}[-1.8, 2.7] & {}[-1.8, 2.6] & 3.2\\
 \addlinespace
-Rajasthan & 2015--2020 & restricted & treat\_2015 & 657/669 & 99 & 0.782 & {}[-2.57, 4.13] & 0.6354 & {}[-2.45, 4.03]\\
-Uttar Pradesh & 2005--2010 & full & treat\_2005 & 13343/14659 & 716 & 2.051 & {}[1.19, 2.91] & <1e-04 & {}[1.19, 2.91]\\
-Uttar Pradesh & 2005--2010 & restricted & treat\_2005 & 10082/11311 & 547 & 2.003 & {}[1.02, 2.99] & 0.0001 & {}[1.01, 3.00]\\
-Uttar Pradesh & 2010--2015 & full & treat\_2010 & 9474/16489 & 673 & 1.647 & {}[0.72, 2.57] & 0.0005 & {}[0.72, 2.57]\\
-Uttar Pradesh & 2010--2015 & restricted & treat\_2010 & 1803/3438 & 134 & 1.327 & {}[-0.74, 3.40] & 0.2052 & {}[-0.72, 3.40]\\
+Rajasthan & 2015--2020 & restricted & 657/669 & 99 & 0.8 & {}[-2.6, 4.1] & {}[-2.4, 4.0] & 4.7\\
+UP & 2005--2010 & full & 13343/14659 & 716 & 2.1 & {}[1.2, 2.9] & {}[1.2, 2.9] & 1.2\\
+UP & 2005--2010 & restricted & 10082/11311 & 547 & 2.0 & {}[1.0, 3.0] & {}[1.0, 3.0] & 1.4\\
+UP & 2010--2015 & full & 9474/16489 & 673 & 1.6 & {}[0.7, 2.6] & {}[0.7, 2.6] & 1.3\\
+UP & 2010--2015 & restricted & 1803/3438 & 134 & 1.3 & {}[-0.7, 3.4] & {}[-0.7, 3.4] & 2.9\\
 \addlinespace
-Uttar Pradesh & 2015--2021 & full & treat\_2015 & 13310/17665 & 693 & 3.579 & {}[2.64, 4.52] & <1e-04 & {}[2.64, 4.53]\\
+UP & 2015--2021 & full & 13310/17665 & 693 & 3.6 & {}[2.6, 4.5] & {}[2.6, 4.5] & 1.3\\
 \bottomrule
-\end{tabular}}
+\end{tabular}
+\begin{tablenotes}
+\item \textit{Note: }
+\item Estimates, 95\% intervals, and approximate minimum detectable effects (MDEs) are in percentage points. All models include block fixed effects and cluster by block. Mixed blocks contain both compared groups; L/R counts refer to the left/right groups in each contrast. L/R counts denote prior quota/non-quota offices. The model sample is their sum. Bootstrap intervals use 9,999 null-imposed wild cluster draws. MDEs use a normal approximation at 80\% power and two-sided 5\% size.
+\end{tablenotes}
+\end{threeparttable}}
 \end{table}

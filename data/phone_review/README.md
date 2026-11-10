@@ -1,0 +1,11 @@
+# Phone-contact classification
+
+One observation is one sampled officeholder. An answered contact is any answered attempt, including a callback, transfer, refusal, or answered wrong number. Officeholder contact means the call record identifies the officeholder as having spoken on at least one attempt; it does not require answering the initial call or completing the questionnaire.
+
+`contact_corrections.csv` reconciles explicit attempt notes and questionnaire records with the workbook summary fields. Row numbers are Excel rows including the header. Raw workbooks are unchanged. Summary identity and respondent sex remain separate from the any-officeholder-contact outcome: a later officeholder contact does not change the recorded sex of the first respondent.
+
+`identity_uncertainty.csv` identifies unresolved contradictions. The main tabulation retains recorded identities. Sensitivity bounds treat these cases, other unavailable identities, and recorded-member sex conflicts with uniquely linked election records as unknown. No sex is inferred from names. A mismatch does not establish that a proxy answered. The bounds concern respondent classification among answered records; they do not impute contact in unanswered records.
+
+`jaipur_2020_roster.csv` transcribes the State Election Commission Rajasthan's *Municipal General Elections, 2020: Details of Elected Ward Members*, printed pages 43–53. `jaipur_2020_roster.pdf` is the corresponding excerpt (original PDF pages 49–59) of `../local_elections_rajasthan/data/raw/municipal/2020_6-Municipal General Election Book.pdf`. The original file SHA-256 is b027ad149d4a1abd6a0e4e4a8e54d9efd15367188d77a444d48b636b0ece83b5. The upstream fetch log does not record its download URL. Ward category, not winner sex, defines reservation status. The excerpt preserves the printed source for verification.
+
+`scripts/08a_phone_survey_tables.R` verifies source hashes, applies corrections, joins Jaipur wards to this official roster, and produces contact counts and classification bounds. Rural calls occurred in 2024; workbook dates mix text and Excel date encodings, and open-seat calls include October–November. We do not impose the quota sample's July–August dates on both groups.

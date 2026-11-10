@@ -6,30 +6,24 @@
    \begin{threeparttable}[b]
       \begin{tabular}{lcccccccccccc}
          \toprule
-          & \multicolumn{6}{c}{Rajasthan} & \multicolumn{6}{c}{Uttar Pradesh} \\ 
-          & \multicolumn{2}{c}{05$\rightarrow$10} & \multicolumn{2}{c}{10$\rightarrow$15} & \multicolumn{2}{c}{15$\rightarrow$20} & \multicolumn{2}{c}{05$\rightarrow$10} & \multicolumn{2}{c}{10$\rightarrow$15} & \multicolumn{2}{c}{15$\rightarrow$21} \\ 
-                               & No FE        & FE            & No FE         & FE            & No FE         & FE            & No FE         & FE            & No FE         & FE            & No FE         & FE \\   
-                               & [i]          & [ii]          & [iii]         & [iv]          & [v]           & [vi]          & [vii]         & [viii]        & [ix]          & [x]           & [xi]          & [xii]\\  
-         \midrule 
-         Intercept             & 0.46$^{***}$ &               & 0.68$^{***}$  &               & 0.64$^{***}$  &               & 0.34$^{***}$  &               & 0.38$^{***}$  &               & 0.44$^{***}$  &   \\   
-                               & (0.007)      &               & (0.01)        &               & (0.01)        &               & (0.004)       &               & (0.003)       &               & (0.002)       &   \\   
-         $\text{Quota}_{t-1}$  & 0.02         & 0.02          & -0.42$^{***}$ & -0.43$^{***}$ & -0.32$^{***}$ & -0.32$^{***}$ & -0.02$^{***}$ & -0.02$^{***}$ & -0.11$^{***}$ & -0.11$^{***}$ & -0.28$^{***}$ & -0.28$^{***}$\\   
-                               & (0.01)       & (0.01)        & (0.03)        & (0.03)        & (0.03)        & (0.03)        & (0.006)       & (0.007)       & (0.006)       & (0.006)       & (0.005)       & (0.005)\\   
+          & \multicolumn{6}{c}{Rajasthan} & \multicolumn{6}{c}{Uttar Pradesh} \\
+          & \multicolumn{2}{c}{05$\rightarrow$10} & \multicolumn{2}{c}{10$\rightarrow$15} & \multicolumn{2}{c}{15$\rightarrow$20} & \multicolumn{2}{c}{05$\rightarrow$10} & \multicolumn{2}{c}{10$\rightarrow$15} & \multicolumn{2}{c}{15$\rightarrow$21} \\
+                               & No FE        & FE    & No FE         & FE            & No FE         & FE            & No FE        & FE           & No FE         & FE            & No FE         & FE \\
+                               & [i]          & [ii]  & [iii]         & [iv]          & [v]           & [vi]          & [vii]        & [viii]       & [ix]          & [x]           & [xi]          & [xii]\\
+         \midrule
+         Intercept             & 46.1$^{***}$ &       & 68.1$^{***}$  &               & 64.3$^{***}$  &               & 34.1$^{***}$ &              & 37.7$^{***}$  &               & 43.8$^{***}$  &   \\
+                               & (0.7)        &       & (1.4)         &               & (1.5)         &               & (0.4)        &              & (0.3)         &               & (0.2)         &   \\
+         $\text{Quota}_{t-1}$  & 2.0          & 2.0   & -42.2$^{***}$ & -42.8$^{***}$ & -31.7$^{***}$ & -32.0$^{***}$ & -2.1$^{***}$ & -2.2$^{***}$ & -10.5$^{***}$ & -10.6$^{***}$ & -28.1$^{***}$ & -28.2$^{***}$\\
+                               & (1.4)        & (1.4) & (2.7)         & (2.8)         & (2.9)         & (2.9)         & (0.7)        & (0.7)        & (0.6)         & (0.6)         & (0.5)         & (0.5)\\
           \\
-         R$^2$                 & 0.0003       & 0.03          & 0.18          & 0.19          & 0.10          & 0.12          & 0.0005        & 0.01          & 0.01          & 0.02          & 0.08          & 0.09\\  
-         Observations          & 5,334        & 5,334         & 5,334         & 5,334         & 5,334         & 5,334         & 29,253        & 29,253        & 29,253        & 29,253        & 29,253        & 29,253\\  
-          \\
-         (District, Samiti) FE &              & $\checkmark$  &               &               &               &               &               &               &               &               &               & \\  
-         (District, Samiti) FE &              &               &               & $\checkmark$  &               &               &               &               &               &               &               & \\  
-         (District, Samiti) FE &              &               &               &               &               & $\checkmark$  &               &               &               &               &               & \\  
-         (District, Block) FE  &              &               &               &               &               &               &               & $\checkmark$  &               &               &               & \\  
-         (District, Block) FE  &              &               &               &               &               &               &               &               &               & $\checkmark$  &               & \\  
-         (District, Block) FE  &              &               &               &               &               &               &               &               &               &               &               & $\checkmark$\\   
+         R$^2$                 & 0.00         & 0.03  & 0.18          & 0.19          & 0.10          & 0.12          & 0.00         & 0.01         & 0.01          & 0.02          & 0.08          & 0.09\\
+         Observations          & 5,334        & 5,334 & 5,334         & 5,334         & 5,334         & 5,334         & 29,253       & 29,253       & 29,253        & 29,253        & 29,253        & 29,253\\
+         Block fixed effects   & No           & Yes   & No            & Yes           & No            & Yes           & No           & Yes          & No            & Yes           & No            & Yes\\
          \bottomrule
       \end{tabular}
-      
+
       \begin{tablenotes}
-         \item $^{***}$p$<$0.01; $^{**}$p$<$0.05; $^{*}$p$<$0.1. Outcome: quota status in election $t$. Treatment: quota status in election $t-1$. Sample includes GPs present in all four election years (4-way panel). A negative coefficient indicates rotation away from previously reserved GPs, consistent with the rotation mandate. Standard errors clustered by district-samiti (Rajasthan) or district-block (UP).
+         \item $^{***}$p$<$0.01; $^{**}$p$<$0.05; $^{*}$p$<$0.1. Outcome: quota status in election $t$. Treatment: quota status in election $t-1$. Sample includes GPs present in all four election years (4-way panel). A negative coefficient indicates rotation away from previously reserved GPs, consistent with the rotation mandate. Standard errors clustered by district-samiti (Rajasthan) or district-block (UP). Coefficients and standard errors are in percentage points; intercepts are percentages.
       \end{tablenotes}
    \end{threeparttable}
 \end{adjustbox}

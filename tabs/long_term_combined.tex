@@ -6,37 +6,35 @@
    \begin{threeparttable}[b]
       \begin{tabular}{lcccc}
          \toprule
-          & \multicolumn{2}{c}{Rajasthan} & \multicolumn{2}{c}{Uttar Pradesh} \\ 
-                                                                                                  & No FE        & FE            & No FE        & FE \\   
-                                                                                                  & [i]          & [ii]          & [iii]        & [iv]\\  
-         \midrule 
-         Intercept                                                                                & 0.08$^{***}$ &               & 0.17$^{***}$ &   \\   
-                                                                                                  & (0.02)       &               & (0.007)      &   \\   
-         $\text{Quota}_{2005}$                                                                    & -0.02        & 0.00003       & 0.009        & 0.01\\   
-                                                                                                  & (0.03)       & (0.03)        & (0.009)      & (0.009)\\   
-         $\text{Quota}_{2010}$                                                                    & 0.05$^{**}$  & 0.07$^{***}$  & -0.003       & -0.002\\   
-                                                                                                  & (0.02)       & (0.02)        & (0.01)       & (0.01)\\   
-         $\text{Quota}_{2015}$                                                                    & 0.02         & 0.04$^{*}$    & 0.04$^{***}$ & 0.04$^{***}$\\   
-                                                                                                  & (0.02)       & (0.02)        & (0.010)      & (0.010)\\   
-         $\text{Quota}_{2005}$ $\times$ $\text{Quota}_{2010}$                                     & 0.04         & 0.02          & 0.009        & 0.006\\   
-                                                                                                  & (0.04)       & (0.04)        & (0.01)       & (0.02)\\   
-         $\text{Quota}_{2005}$ $\times$ $\text{Quota}_{2015}$                                     & 0.06         & 0.03          & -0.007       & -0.01\\   
-                                                                                                  & (0.04)       & (0.04)        & (0.01)       & (0.01)\\   
-         $\text{Quota}_{2010}$ $\times$ $\text{Quota}_{2015}$                                     & -0.02        & -0.05         & 0.02         & 0.01\\   
-                                                                                                  & (0.03)       & (0.03)        & (0.02)       & (0.02)\\   
-         $\text{Quota}_{2005}$ $\times$ $\text{Quota}_{2010}$ $\times$ $\text{Quota}_{2015}$      & -0.04        & -0.02         & 0.02         & 0.03\\   
-                                                                                                  & (0.05)       & (0.05)        & (0.03)       & (0.03)\\   
+          & \multicolumn{2}{c}{Rajasthan} & \multicolumn{2}{c}{Uttar Pradesh} \\
+                                                                                                  & No FE       & FE          & No FE        & FE \\
+                                                                                                  & [i]         & [ii]        & [iii]        & [iv]\\
+         \midrule
+         Intercept                                                                                & 8.4$^{***}$ &             & 17.0$^{***}$ &   \\
+                                                                                                  & (1.9)       &             & (0.7)        &   \\
+         $\text{Quota}_{2005}$                                                                    & -1.7        & 0.0         & 0.9          & 1.2\\
+                                                                                                  & (3.0)       & (3.0)       & (0.9)        & (0.9)\\
+         $\text{Quota}_{2010}$                                                                    & 4.7$^{**}$  & 7.1$^{***}$ & -0.3         & -0.2\\
+                                                                                                  & (2.3)       & (2.4)       & (1.1)        & (1.1)\\
+         $\text{Quota}_{2015}$                                                                    & 1.8         & 4.1$^{*}$   & 3.6$^{***}$  & 3.7$^{***}$\\
+                                                                                                  & (2.1)       & (2.3)       & (1.0)        & (1.0)\\
+         $\text{Quota}_{2005}$ $\times$ $\text{Quota}_{2010}$                                     & 3.6         & 2.3         & 0.9          & 0.6\\
+                                                                                                  & (4.1)       & (4.3)       & (1.5)        & (1.6)\\
+         $\text{Quota}_{2005}$ $\times$ $\text{Quota}_{2015}$                                     & 5.9         & 3.4         & -0.7         & -1.5\\
+                                                                                                  & (3.7)       & (3.7)       & (1.4)        & (1.4)\\
+         $\text{Quota}_{2010}$ $\times$ $\text{Quota}_{2015}$                                     & -1.8        & -5.2        & 1.8          & 1.4\\
+                                                                                                  & (3.1)       & (3.4)       & (1.7)        & (1.7)\\
+         $\text{Quota}_{2005}$ $\times$ $\text{Quota}_{2010}$ $\times$ $\text{Quota}_{2015}$      & -4.2        & -2.2        & 1.9          & 2.5\\
+                                                                                                  & (5.1)       & (5.2)       & (2.7)        & (2.7)\\
           \\
-         R$^2$                                                                                    & 0.006        & 0.14          & 0.003        & 0.06\\  
-         Observations                                                                             & 2,671        & 2,671         & 19,264       & 19,264\\  
-          \\
-         (District, Samiti) FE                                                                    &              & $\checkmark$  &              & \\  
-         (District, Block) FE                                                                     &              &               &              & $\checkmark$\\   
+         R$^2$                                                                                    & 0.01        & 0.14        & 0.00         & 0.05\\
+         Observations                                                                             & 2,671       & 2,671       & 19,264       & 19,264\\
+         Block fixed effects                                                                      & No          & Yes         & No           & Yes\\
          \bottomrule
       \end{tabular}
-      
+
       \begin{tablenotes}
-         \item $^{***}$p$<$0.01; $^{**}$p$<$0.05; $^{*}$p$<$0.1. The dependent variable is whether a woman was elected in an open seat (2020 for Rajasthan, 2021 for UP). Sample restricted to GPs where seat was not reserved for women in outcome year. Treatment variables indicate quota status in each prior election year. Standard errors clustered by district-samiti (Rajasthan) or district-block (UP).
+         \item $^{***}$p$<$0.01; $^{**}$p$<$0.05; $^{*}$p$<$0.1. The dependent variable is whether a woman was elected in an open seat (2020 for Rajasthan, 2021 for UP). Sample restricted to GPs where seat was not reserved for women in outcome year. Treatment variables indicate quota status in each prior election year. Standard errors clustered by district-samiti (Rajasthan) or district-block (UP). Coefficients and standard errors are in percentage points; intercepts are percentages.
       \end{tablenotes}
    \end{threeparttable}
 \end{adjustbox}

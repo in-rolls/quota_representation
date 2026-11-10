@@ -1,0 +1,3 @@
+"observed_estimate","assumed_effect","se","normal_model_power","type_s","type_m","mde80","assumption"
+0.0119047619047619,0.05,0.0870027630812177,0.0886128756289174,0.0635105414901447,4.18949277722005,0.243745654983324,"Normal estimator with fixed observed SE; not randomization inference"
+0.0119047619047619,0.1,0.0870027630812177,0.209742319960972,0.00446971565519405,2.19569708860055,0.243745654983324,"Normal estimator with fixed observed SE; not randomization inference"

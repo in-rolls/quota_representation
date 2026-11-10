@@ -6,42 +6,36 @@
    \begin{threeparttable}[b]
       \begin{tabular}{lcccccccccccc}
          \toprule
-          & \multicolumn{6}{c}{Rajasthan} & \multicolumn{6}{c}{Uttar Pradesh} \\ 
-          & \multicolumn{2}{c}{05$\rightarrow$10} & \multicolumn{2}{c}{10$\rightarrow$15} & \multicolumn{2}{c}{15$\rightarrow$20} & \multicolumn{2}{c}{05$\rightarrow$10} & \multicolumn{2}{c}{10$\rightarrow$15} & \multicolumn{2}{c}{15$\rightarrow$21} \\ 
-                                                        & No FE        & FE            & No FE        & FE            & No FE        & FE            & No FE         & FE            & No FE         & FE            & No FE        & FE \\   
-                                                        & [i]          & [ii]          & [iii]        & [iv]          & [v]          & [vi]          & [vii]         & [viii]        & [ix]          & [x]           & [xi]         & [xii]\\  
-         \midrule 
-         Intercept                                      & 0.10$^{***}$ &               & 0.09$^{***}$ &               & 0.16$^{***}$ &               & 0.17$^{***}$  &               & 0.18$^{***}$  &               & 0.19$^{***}$ &   \\   
-                                                        & (0.01)       &               & (0.02)       &               & (0.02)       &               & (0.010)       &               & (0.01)        &               & (0.01)       &   \\   
-         $\text{Quota}_{t-1}$                           & 0.03         & 0.01          & -0.02        & -0.04         & -0.03        & -0.04         & -0.005        & -0.002        & 0.02          & 0.02          & 0.06$^{***}$ & 0.06$^{***}$\\   
-                                                        & (0.02)       & (0.02)        & (0.02)       & (0.02)        & (0.03)       & (0.03)        & (0.01)        & (0.01)        & (0.01)        & (0.01)        & (0.02)       & (0.02)\\   
-         Near Town                                      & -0.01        & -0.01         & 0.02         & 0.02          & -0.04        & -0.04$^{*}$   & -0.02$^{*}$   & -0.01         & -0.009        & -0.002        & 0.004        & 0.003\\   
-                                                        & (0.02)       & (0.02)        & (0.02)       & (0.02)        & (0.02)       & (0.03)        & (0.010)       & (0.010)       & (0.009)       & (0.009)       & (0.01)       & (0.01)\\   
-         High Infrastructure                            & -0.005       & -0.001        & -0.02        & -0.006        & -0.008       & 0.009         & -0.01$^{*}$   & -0.010        & 0.002         & 0.005         & -0.02        & -0.01\\   
-                                                        & (0.02)       & (0.02)        & (0.02)       & (0.02)        & (0.03)       & (0.03)        & (0.009)       & (0.009)       & (0.01)        & (0.01)        & (0.01)       & (0.01)\\   
-         High Female Literacy                           & -0.01        & -0.008        & -0.02        & -0.02         & -0.04$^{*}$  & -0.06$^{**}$  & -0.04$^{***}$ & -0.02$^{*}$   & -0.04$^{***}$ & -0.002        & -0.03$^{**}$ & -0.00008\\   
-                                                        & (0.02)       & (0.02)        & (0.02)       & (0.02)        & (0.02)       & (0.03)        & (0.010)       & (0.009)       & (0.01)        & (0.01)        & (0.01)       & (0.01)\\   
-         $\text{Quota}_{t-1} \times$ Near Town          & -0.04        & -0.02         & -0.010       & -0.005        & 0.03         & 0.04          & 0.007         & 0.01          & 0.01          & 0.010         & -0.006       & -0.01\\   
-                                                        & (0.03)       & (0.03)        & (0.03)       & (0.03)        & (0.03)       & (0.03)        & (0.01)        & (0.01)        & (0.02)        & (0.02)        & (0.02)       & (0.02)\\   
-         $\text{Quota}_{t-1} \times$ High Infra         & -0.003       & -0.007        & 0.03         & 0.02          & -0.04        & -0.05         & 0.02          & 0.02$^{*}$    & -0.0009       & 0.001         & -0.009       & -0.02\\   
-                                                        & (0.03)       & (0.03)        & (0.03)       & (0.02)        & (0.03)       & (0.03)        & (0.01)        & (0.01)        & (0.02)        & (0.02)        & (0.02)       & (0.02)\\   
-         $\text{Quota}_{t-1} \times$ High F. Literacy   & 0.02         & 0.04          & -0.0002      & 0.005         & 0.03         & 0.05$^{*}$    & 0.01          & 0.003         & -0.02         & -0.01         & -0.02        & -0.01\\   
-                                                        & (0.03)       & (0.02)        & (0.03)       & (0.03)        & (0.03)       & (0.03)        & (0.01)        & (0.01)        & (0.02)        & (0.02)        & (0.02)       & (0.02)\\   
+          & \multicolumn{6}{c}{Rajasthan} & \multicolumn{6}{c}{Uttar Pradesh} \\
+          & \multicolumn{2}{c}{05$\rightarrow$10} & \multicolumn{2}{c}{10$\rightarrow$15} & \multicolumn{2}{c}{15$\rightarrow$20} & \multicolumn{2}{c}{05$\rightarrow$10} & \multicolumn{2}{c}{10$\rightarrow$15} & \multicolumn{2}{c}{15$\rightarrow$21} \\
+                                                        & No FE        & FE    & No FE       & FE    & No FE        & FE          & No FE        & FE         & No FE        & FE    & No FE        & FE \\
+                                                        & [i]          & [ii]  & [iii]       & [iv]  & [v]          & [vi]        & [vii]        & [viii]     & [ix]         & [x]   & [xi]         & [xii]\\
+         \midrule
+         Intercept                                      & 10.5$^{***}$ &       & 8.7$^{***}$ &       & 16.3$^{***}$ &             & 17.1$^{***}$ &            & 18.4$^{***}$ &       & 19.0$^{***}$ &   \\
+                                                        & (1.4)        &       & (1.8)       &       & (2.4)        &             & (1.0)        &            & (1.0)        &       & (1.2)        &   \\
+         $\text{Quota}_{t-1}$                           & 2.8          & 1.4   & -1.9        & -3.5  & -2.8         & -4.1        & -0.5         & -0.2       & 1.9          & 1.6   & 5.7$^{***}$  & 5.5$^{***}$\\
+                                                        & (2.1)        & (2.2) & (2.2)       & (2.2) & (2.6)        & (2.7)       & (1.2)        & (1.2)      & (1.5)        & (1.5) & (1.7)        & (1.7)\\
+         Near Town                                      & -1.1         & -1.0  & 2.0         & 2.1   & -3.6         & -4.3$^{*}$  & -1.8$^{*}$   & -1.5       & -0.9         & -0.2  & 0.4          & 0.3\\
+                                                        & (1.6)        & (1.7) & (2.2)       & (2.4) & (2.4)        & (2.5)       & (1.0)        & (1.0)      & (0.9)        & (0.9) & (1.3)        & (1.4)\\
+         High Infrastructure                            & -0.5         & -0.1  & -2.1        & -0.6  & -0.8         & 0.9         & -1.5$^{*}$   & -1.0       & 0.2          & 0.5   & -2.0         & -1.2\\
+                                                        & (1.6)        & (1.7) & (2.0)       & (1.9) & (2.5)        & (2.7)       & (0.9)        & (0.9)      & (1.0)        & (1.0) & (1.3)        & (1.3)\\
+         High Female Literacy                           & -1.5         & -0.8  & -2.0        & -1.6  & -4.4$^{*}$   & -6.4$^{**}$ & -4.0$^{***}$ & -1.7$^{*}$ & -4.4$^{***}$ & -0.2  & -2.5$^{**}$  & 0.0\\
+                                                        & (1.6)        & (1.9) & (2.3)       & (2.3) & (2.4)        & (2.7)       & (1.0)        & (0.9)      & (1.0)        & (1.1) & (1.2)        & (1.4)\\
+         $\text{Quota}_{t-1} \times$ Near Town          & -3.6         & -2.3  & -1.0        & -0.5  & 3.3          & 4.2         & 0.7          & 1.1        & 1.0          & 1.0   & -0.6         & -1.0\\
+                                                        & (2.6)        & (2.5) & (2.7)       & (2.5) & (2.9)        & (2.9)       & (1.3)        & (1.3)      & (1.6)        & (1.6) & (1.9)        & (1.9)\\
+         $\text{Quota}_{t-1} \times$ High Infra         & -0.3         & -0.7  & 2.9         & 1.6   & -3.5         & -4.8        & 2.0          & 2.3$^{*}$  & -0.1         & 0.1   & -0.9         & -1.7\\
+                                                        & (3.1)        & (2.9) & (2.8)       & (2.4) & (3.3)        & (3.3)       & (1.3)        & (1.3)      & (1.6)        & (1.6) & (2.0)        & (2.1)\\
+         $\text{Quota}_{t-1} \times$ High F. Literacy   & 2.2          & 3.5   & 0.0         & 0.5   & 3.2          & 5.3$^{*}$   & 1.4          & 0.3        & -1.6         & -1.3  & -1.7         & -1.1\\
+                                                        & (2.5)        & (2.4) & (2.5)       & (2.5) & (2.7)        & (2.9)       & (1.3)        & (1.3)      & (1.7)        & (1.7) & (1.9)        & (1.9)\\
           \\
-         R$^2$                                          & 0.004        & 0.14          & 0.003        & 0.20          & 0.006        & 0.16          & 0.004         & 0.06          & 0.005         & 0.06          & 0.006        & 0.07\\  
-         Observations                                   & 2,684        & 2,684         & 2,343        & 2,343         & 2,279        & 2,279         & 11,607        & 11,607        & 9,904         & 9,904         & 6,517        & 6,517\\  
-          \\
-         (District, Samiti) FE                          &              & $\checkmark$  &              &               &              &               &               &               &               &               &              & \\  
-         (District, Samiti) FE                          &              &               &              & $\checkmark$  &              &               &               &               &               &               &              & \\  
-         (District, Samiti) FE                          &              &               &              &               &              & $\checkmark$  &               &               &               &               &              & \\  
-         (District, Block) FE                           &              &               &              &               &              &               &               & $\checkmark$  &               &               &              & \\  
-         (District, Block) FE                           &              &               &              &               &              &               &               &               &               & $\checkmark$  &              & \\  
-         (District, Block) FE                           &              &               &              &               &              &               &               &               &               &               &              & $\checkmark$\\   
+         R$^2$                                          & 0.00         & 0.14  & 0.00        & 0.20  & 0.01         & 0.16        & 0.00         & 0.06       & 0.01         & 0.06  & 0.01         & 0.07\\
+         Observations                                   & 2,684        & 2,684 & 2,343       & 2,343 & 2,279        & 2,279       & 11,607       & 11,607     & 9,904        & 9,904 & 6,517        & 6,517\\
+         Block fixed effects                            & No           & Yes   & No          & Yes   & No           & Yes         & No           & Yes        & No           & Yes   & No           & Yes\\
          \bottomrule
       \end{tabular}
-      
+
       \begin{tablenotes}
-         \item $^{***}$p$<$0.01; $^{**}$p$<$0.05; $^{*}$p$<$0.1. Outcome: woman elected in open seat. Near Town = 1 if distance to nearest town $\leq$ median. High Infrastructure = 1 if sum of (education facility, medical facility, power supply, bank facility) $>$ median. High Female Literacy = 1 if female literacy rate $>$ median (females aged 7+ who are literate / total females aged 7+). All variables from Census 2001 Village Directory via SHRUG (LGD Block Panchayat matching). Standard errors clustered by district-samiti (Rajasthan) or district-block (UP).
+         \item $^{***}$p$<$0.01; $^{**}$p$<$0.05; $^{*}$p$<$0.1. Outcome: woman elected in open seat. Near Town = 1 if distance to nearest town $\leq$ median. High Infrastructure = 1 if sum of (education facility, medical facility, power supply, bank facility) $>$ median. High Female Literacy = 1 if female literacy rate $>$ median (females aged 7+ who are literate / total females aged 7+). All variables from Census 2001 Village Directory via SHRUG (LGD Block Panchayat matching). Standard errors clustered by district-samiti (Rajasthan) or district-block (UP). Coefficients and standard errors are in percentage points; intercepts are percentages.
       \end{tablenotes}
    \end{threeparttable}
 \end{adjustbox}

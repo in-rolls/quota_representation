@@ -12,7 +12,7 @@ source(here("scripts/00_config.R"))
 message("=== Creating Combined Summary Statistics Table ===")
 
 # Load Rajasthan data
-raj_panch <- read_parquet(raj_product_path("raj_05_20.parquet"))
+raj_panch <- read_raj(raj_product_path("raj_05_20.parquet"))
 
 # Load UP data
 up_data <- read_parquet(here("data/up/up_05_21.parquet"))

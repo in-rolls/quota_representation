@@ -17,9 +17,9 @@ message("=== Short-Term Effects Analysis ===")
 # Load all panels
 # =============================================================================
 
-raj_05_10 <- read_parquet(raj_product_path("raj_05_10.parquet"))
-raj_10_15 <- read_parquet(raj_product_path("raj_10_15.parquet"))
-raj_15_20 <- read_parquet(raj_product_path("raj_15_20.parquet"))
+raj_05_10 <- read_raj(raj_product_path("raj_05_10.parquet"))
+raj_10_15 <- read_raj(raj_product_path("raj_10_15.parquet"))
+raj_15_20 <- read_raj(raj_product_path("raj_15_20.parquet"))
 
 up_05_10 <- read_parquet(here("data/up/up_05_10.parquet"))
 up_10_15 <- read_parquet(here("data/up/up_10_15.parquet"))
@@ -203,9 +203,15 @@ aer_etable(all_models,
     )
   ),
   keep = c("(Intercept)", "%treat_"),
-  notes = "$^{***}$p$<$0.01; $^{**}$p$<$0.05; $^{*}$p$<$0.1. Outcome: woman elected in open seat. Sample restricted to GPs where seat was not reserved for women in outcome year. Standard errors clustered by district-samiti (Rajasthan) or district-block (UP).",
+  digits.stats = "r2",
+  drop.section = "fixef",
+  extralines = list("_Block fixed effects" = vapply(all_models,
+    function(model) if (length(model$fixef_vars) > 0) "Yes" else "No", character(1))),
+  notes = "$^{***}$p$<$0.01; $^{**}$p$<$0.05; $^{*}$p$<$0.1. Outcome: woman elected in open seat. Sample restricted to GPs where seat was not reserved for women in outcome year. Block fixed effects and standard-error clustering use outcome-year district-samiti groups in Rajasthan and district-block groups in UP.",
   dict = dict_combined
 )
+table_path <- here("tabs", "short_term_combined.tex")
+writeLines(trimws(readLines(table_path), which = "right"), table_path)
 
 message("Created: tabs/short_term_combined.tex")
 
@@ -237,15 +243,15 @@ coef_raj$model <- factor(coef_raj$model, levels = rev(c(
   "2005 → 2010", "2010 → 2015", "2015 → 2020"
 )))
 
-p_short_raj <- ggplot(coef_raj, aes(x = estimate, y = model)) +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
-  geom_errorbar(
+p_short_raj <- ggplot(coef_raj, aes(x = 100 * estimate, y = model)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = FIG_STYLE$reference, linewidth = FIG_STYLE$reference_width) +
+  geom_linerange(
     orientation = "y",
-    aes(xmin = conf.low, xmax = conf.high),
-    width = 0, color = COLORS_PUB["secondary"], linewidth = 0.6
+    aes(xmin = 100 * conf.low, xmax = 100 * conf.high),
+    color = FIG_STYLE$interval, linewidth = FIG_STYLE$interval_width
   ) +
-  geom_point(size = 2.5, color = COLORS_PUB["primary"]) +
-  labs(x = "Effect on Pr(Woman Elected)", y = NULL) +
+  geom_point(size = FIG_STYLE$point_size, color = FIG_STYLE$estimate) +
+  labs(x = "Effect on women elected (percentage points)", y = NULL) +
   theme_pub() +
   theme(axis.text.y = element_text(hjust = 0))
 
@@ -264,15 +270,15 @@ coef_up$model <- factor(coef_up$model, levels = rev(c(
   "2005 → 2010", "2010 → 2015", "2015 → 2021"
 )))
 
-p_short_up <- ggplot(coef_up, aes(x = estimate, y = model)) +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
-  geom_errorbar(
+p_short_up <- ggplot(coef_up, aes(x = 100 * estimate, y = model)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = FIG_STYLE$reference, linewidth = FIG_STYLE$reference_width) +
+  geom_linerange(
     orientation = "y",
-    aes(xmin = conf.low, xmax = conf.high),
-    width = 0, color = COLORS_PUB["secondary"], linewidth = 0.6
+    aes(xmin = 100 * conf.low, xmax = 100 * conf.high),
+    color = FIG_STYLE$interval, linewidth = FIG_STYLE$interval_width
   ) +
-  geom_point(size = 2.5, color = COLORS_PUB["primary"]) +
-  labs(x = "Effect on Pr(Woman Elected)", y = NULL) +
+  geom_point(size = FIG_STYLE$point_size, color = FIG_STYLE$estimate) +
+  labs(x = "Effect on women elected (percentage points)", y = NULL) +
   theme_pub() +
   theme(axis.text.y = element_text(hjust = 0))
 
@@ -290,16 +296,16 @@ coef_combined$model <- factor(coef_combined$model, levels = rev(c(
 )))
 coef_combined$state <- factor(coef_combined$state, levels = c("Rajasthan", "Uttar Pradesh"))
 
-p_short_combined <- ggplot(coef_combined, aes(x = estimate, y = model)) +
-  geom_vline(xintercept = 0, linetype = "dashed", color = "gray50") +
-  geom_errorbar(
+p_short_combined <- ggplot(coef_combined, aes(x = 100 * estimate, y = model)) +
+  geom_vline(xintercept = 0, linetype = "dashed", color = FIG_STYLE$reference, linewidth = FIG_STYLE$reference_width) +
+  geom_linerange(
     orientation = "y",
-    aes(xmin = conf.low, xmax = conf.high),
-    width = 0, color = COLORS_PUB["secondary"], linewidth = 0.6
+    aes(xmin = 100 * conf.low, xmax = 100 * conf.high),
+    color = FIG_STYLE$interval, linewidth = FIG_STYLE$interval_width
   ) +
-  geom_point(size = 2.5, color = COLORS_PUB["primary"]) +
+  geom_point(size = FIG_STYLE$point_size, color = FIG_STYLE$estimate) +
   facet_wrap(~state, ncol = 2) +
-  labs(x = "Effect on Pr(Woman Elected)", y = NULL) +
+  labs(x = "Effect on women elected (percentage points)", y = NULL) +
   theme_pub() +
   theme(
     axis.text.y = element_text(hjust = 0),

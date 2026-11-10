@@ -1,0 +1,2 @@
+"term","estimate","std.error","statistic","p.value","conf.low","conf.high","df","outcome","model","n","units","treated_units","se_type","published_difference","archive_control_women","archive_controls"
+"q98",0.925233644859813,0.025546174856603,36.2180894029489,1.03946154443075e-78,0.874780046267327,0.9756872434523,159,"female98","1998 first stage",161,161,54,"HC2",0.935,8,107
