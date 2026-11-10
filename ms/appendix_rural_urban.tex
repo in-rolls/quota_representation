@@ -10,7 +10,23 @@ We test whether the prior-reservation contrast is smaller in rural settings usin
 
 The fitted rural and urban persistence contrasts are \appRuralMean{} and \appUrbanMean{} percentage points, respectively. Their difference, rural minus urban, is \appRuralGap{} points, with a 95\% interval of \appRuralGapInterval{} and a two-sided $p$-value of \appRuralGapP{}. The rural point estimate is lower, but the interval permits both a substantial rural disadvantage and an advantage. The test establishes neither a difference nor equivalence.
 
-\subsection{Sensitivity of the rural--urban difference}
+\subsection{Sensitivity of the rural--urban difference}\label{sec:rural_urban_pooling_sensitivity}
+
+Table~\ref{tab:additional_pooling_methods} compares election weights and dependence assumptions, retaining all thirteen contrasts in seven settings. Except for the reference row, it uses the estimated cross-election covariance in Rajasthan and UP and varies the assumed correlation only in West Bengal and Chandigarh. Equal weights retain the average across observed elections. Generalized least-squares (GLS) weights instead minimize sampling variance under a common within-setting effect: for covariance matrix $V$, the weights are $a=V^{-1}\mathbf{1}/(\mathbf{1}'V^{-1}\mathbf{1})$ and the variance is $a'Va$. When effects differ across elections, GLS changes the target to a precision-weighted contrast. Both approaches retain the same random-effects pooling and modified Knapp--Hartung inference across geographic settings.
+
+Changing the weights and the remaining correlation assumptions has little effect on either the pooled estimate or the rural--urban difference. The rural--urban intervals remain wide and include zero throughout.
+
+\begin{table}[!htbp]
+\centering
+\caption{Alternative pooling methods for persistence and the rural--urban difference}
+\label{tab:additional_pooling_methods}
+\footnotesize
+\setlength{\tabcolsep}{3pt}
+\input{../tabs/additional_pooling_methods.tex}
+\begin{minipage}{0.96\textwidth}\small
+\emph{Notes:} Estimates and 95\% intervals are in percentage points. All rows use the same thirteen election contrasts in seven geographic settings. The reference row assumes correlation one within every setting. Other rows use estimated block-cluster covariance in Rajasthan and UP; the assumed correlation applies only to West Bengal and Chandigarh. GLS denotes generalized least squares; equal and GLS election weights are defined above. Across settings, all rows use inverse sampling-plus-heterogeneity variance weights, REML, and modified Knapp--Hartung inference, with six degrees of freedom for the pooled estimate and five for the rural--urban difference. The $p$-value tests a zero rural--urban difference. Neither method treats repeated elections as independent settings.
+\end{minipage}
+\end{table}
 
 Table~\ref{tab:additional_rural_urban} applies the dependence and sample-composition changes defined above to the rural--urban coefficient. Adding Bihar supplies a fourth rural setting under a longer reservation regime. Omitting West Bengal restricts both groups to directly elected offices. Omitting each city in turn tests its influence, leaving three urban settings. The urban variance correction adds one rather than one-half to each binary-outcome cell when estimating sampling variances, retaining the raw differences. The earliest- and latest-election specifications assess temporal composition without counting repeated elections as independent settings.
 

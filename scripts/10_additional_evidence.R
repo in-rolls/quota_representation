@@ -31,37 +31,47 @@ appendix_binary <- function(data, setting, specification = "Unadjusted", add = .
     inference = "Newcombe-Wilson interval; half-cell regularized variance for synthesis")
 }
 
-appendix_meta <- function(inputs, correlation = 1) {
-  settings <- inputs |>
-    group_by(setting) |>
-    summarise(
-      comparisons = n(), estimate = mean(estimate),
-      sum_variance = sum(standard_error^2), sum_se = sum(standard_error),
-      .groups = "drop"
-    ) |>
-    mutate(
-      rho = if (identical(correlation, "lower")) {
-        if_else(comparisons > 1, -1 / pmax(comparisons - 1, 1), 0)
-      } else if (identical(correlation, "empirical")) {
-        1
-      } else {
-        correlation
-      },
-      variance = ((1 - rho) * sum_variance + rho * sum_se^2) / comparisons^2
-    )
-  if (identical(correlation, "empirical")) {
-    joint <- read_csv("tabs/short_term_joint_covariance.csv", show_col_types = FALSE)
-    for (state in c("raj", "up")) {
-      setting <- if (state == "raj") "Rajasthan" else "Uttar Pradesh"
-      index <- which(settings$setting == setting)
-      if (length(index) == 0) next
-      stopifnot(settings$comparisons[index] == 3L)
-      within <- joint |> filter(startsWith(first, paste0(state, "_")), startsWith(second, paste0(state, "_")))
-      stopifnot(nrow(within) == 9L)
-      settings$variance[index] <- sum(within$covariance) / 9
-      settings$rho[index] <- NA_real_
+appendix_meta <- function(inputs, correlation = 1, election_weights = "equal", unknown_correlation = 1) {
+  stopifnot(election_weights %in% c("equal", "gls"),
+    !anyDuplicated(inputs[c("setting", "period")]))
+  joint <- if (identical(correlation, "empirical")) {
+    read_csv("tabs/short_term_joint_covariance.csv", show_col_types = FALSE)
+  } else NULL
+  elections <- bind_rows(lapply(split(inputs, inputs$setting), function(d) {
+    m <- nrow(d)
+    rho <- if (identical(correlation, "lower")) {
+      if (m > 1) -1 / (m - 1) else 0
+    } else if (identical(correlation, "empirical")) unknown_correlation else correlation
+    covariance <- rho * outer(d$standard_error, d$standard_error)
+    diag(covariance) <- d$standard_error^2
+    if (identical(correlation, "empirical") && d$setting[1] %in% c("Rajasthan", "Uttar Pradesh")) {
+      state <- if (d$setting[1] == "Rajasthan") "raj" else "up"
+      periods <- strsplit(d$period, "--", fixed = TRUE)
+      ids <- vapply(periods, function(years) {
+        paste(c(state, substr(years, 3, 4)), collapse = "_")
+      }, character(1))
+      pairs <- expand.grid(first = ids, second = ids, stringsAsFactors = FALSE)
+      index <- match(paste(pairs$first, pairs$second), paste(joint$first, joint$second))
+      stopifnot(!anyNA(index))
+      covariance <- matrix(joint$covariance[index], m, m)
+      stopifnot(isTRUE(all.equal(diag(covariance), d$standard_error^2, tolerance = 1e-10)))
+      rho <- NA_real_
     }
-  }
+    stopifnot(isSymmetric(covariance), min(eigen(covariance, symmetric = TRUE)$values) > -1e-12)
+    a <- if (election_weights == "gls") {
+      stopifnot(min(eigen(covariance, symmetric = TRUE)$values) > 0)
+      precision <- solve(covariance, rep(1, m))
+      drop(precision / sum(precision))
+    } else rep(1 / m, m)
+    d |> mutate(election_weight = a, rho = rho,
+      setting_estimate = sum(a * estimate),
+      setting_variance = drop(crossprod(a, covariance %*% a)))
+  }))
+  settings <- elections |>
+    group_by(setting) |>
+    summarise(comparisons = n(), estimate = first(setting_estimate),
+      sum_variance = sum(standard_error^2), sum_se = sum(standard_error),
+      rho = first(rho), variance = first(setting_variance), .groups = "drop")
   stopifnot(all(settings$variance > 0), nrow(settings) >= 3)
   fit <- metafor::rma.uni(
     yi = settings$estimate, vi = unname(settings$variance), method = "REML", test = "adhoc",
@@ -70,6 +80,7 @@ appendix_meta <- function(inputs, correlation = 1) {
   settings$weight <- as.numeric(weights(fit)) / 100
   list(
     settings = settings,
+    elections = elections,
     summary = tibble(
       estimate = as.numeric(coef(fit)), standard_error = fit$se,
       conf_low = fit$ci.lb, conf_high = fit$ci.ub, settings = fit$k,
@@ -442,6 +453,41 @@ build_additional_evidence <- function(root = getwd()) {
   add_meta(meta_inputs |> group_by(setting) |> slice_tail(n = 1) |> ungroup(), "Latest comparison per setting")
   write_csv(meta_results, "tabs/additional_meta_sensitivity.csv")
   write_csv(gap_results, "tabs/additional_rural_urban.csv")
+  pooling_methods <- tibble(
+    specification = c("Reference: equal weights, all correlations = 1",
+      "Equal weights; unknown correlation = 1", "Equal weights; unknown correlation = 0.5",
+      "Equal weights; unknown correlation = 0", "GLS weights; unknown correlation = 0.5",
+      "GLS weights; unknown correlation = 0"),
+    election_weights = c(rep("equal", 4), "gls", "gls"),
+    unknown_correlation = c(1, 1, .5, 0, .5, 0)
+  )
+  pooling_fits <- lapply(seq_len(nrow(pooling_methods)), function(i) {
+    appendix_meta(meta_inputs, correlation = if (i == 1) 1 else "empirical",
+      election_weights = pooling_methods$election_weights[i],
+      unknown_correlation = pooling_methods$unknown_correlation[i])
+  })
+  pooling_results <- bind_rows(lapply(seq_along(pooling_fits), function(i) {
+    synthesis <- pooling_fits[[i]]
+    gap <- appendix_rural_gap(synthesis$settings)
+    bind_cols(pooling_methods[i, ], synthesis$summary |> select(-method),
+      gap |> transmute(gap_estimate = estimate, gap_standard_error = standard_error,
+        gap_low = conf_low, gap_high = conf_high, gap_p = p_value,
+        gap_tau_squared = tau_squared, gap_df = df))
+  }))
+  write_csv(pooling_results, "tabs/additional_pooling_methods.csv")
+  write_csv(bind_rows(lapply(seq_along(pooling_fits), function(i) {
+    pooling_fits[[i]]$elections |> mutate(specification = pooling_methods$specification[i])
+  })), "tabs/additional_pooling_election_weights.csv")
+  table(
+    pooling_results |> transmute(
+      Weights = c("Equal (reference)", "Equal", "Equal", "Equal", "GLS", "GLS"),
+      Correlation = c("1 everywhere", "1", "0.5", "0", "0.5", "0"),
+      Pooled = paste(fmt(100 * estimate), interval(100 * conf_low, 100 * conf_high)),
+      Gap = paste(fmt(100 * gap_estimate), interval(100 * gap_low, 100 * gap_high)),
+      P = format_p_value(gap_p)),
+    c("Election weights", "Assumed correlation", "Pooled [95\\% interval]", "Rural $-$ urban [95\\% interval]", "$p$"),
+    "tabs/additional_pooling_methods.tex", "lcrrr"
+  )
   previous_inputs <- meta_inputs |> filter(setting != "Bengaluru", !(setting == "Chandigarh" & period == "2011--2016"))
   previous_hc2 <- bind_rows(lapply(names(urban_observed)[1:3], function(city) {
     appendix_hc2(urban_observed[[city]], female ~ prior_quota, city, "Unadjusted")
@@ -576,6 +622,8 @@ build_additional_evidence <- function(root = getwd()) {
   macro("appRuralGapP", format_p_value(gap$p_value, latex = FALSE))
   macro("appRuralMean", fmt(100 * gap$rural_mean))
   macro("appUrbanMean", fmt(100 * gap$urban_mean))
+  macro("appRuralGapPoolingLow", fmt(100 * min(pooling_results$gap_estimate)))
+  macro("appRuralGapPoolingHigh", fmt(100 * max(pooling_results$gap_estimate)))
   macro("appRuralGapMissingLow", fmt(100 * min(joint_bounds$estimate)))
   macro("appRuralGapMissingHigh", fmt(100 * max(joint_bounds$estimate)))
   macro("appMetaEstimate", fmt(100 * primary_meta$summary$estimate))

@@ -79,3 +79,27 @@ The source search added Chandigarh's 2006–2011 and 2011–2016 comparisons and
 The newly validated Chandigarh 2016 sample has no woman winner in either group. Its ordinary plug-in variance collapses to zero. After observing that boundary case, we changed every unadjusted urban ward interval to Newcombe–Wilson and every urban variance used in synthesis to the same half-cell regularization, preserving raw risk differences. This is a retrospective inference amendment, not a precommitted method. The main rural and published West Bengal estimates and standard errors remain as specified above. A one-cell correction and omission of each city check sensitivity. The existing within-setting dependence assumptions still apply.
 
 The expansion table separates changes in data from this variance change by reproducing the old six-setting HC2 synthesis, applying the variance amendment to those same data, and then adding each new comparison separately and together. The source inventory determines inclusion, without choosing settings by direction or significance. Both unresolved urban outcomes are evaluated separately and jointly over all binary completions. The complete overview now retains 26 contrasts, including the separate UP urban comparison and the longer-history results.
+
+
+## Election-weight and covariance comparison (November 9, 2026)
+
+Added after inspecting the expanded results, at the author's request. Keep the
+existing correlation-one calculation as a reference and report five alternatives
+in one table for both the overall contrast and the rural-minus-urban difference.
+All alternatives use the estimated joint block-cluster covariance for Rajasthan
+and UP. Equal election weights use assumed correlations of zero, .5, and one
+only for West Bengal and Chandigarh. GLS election weights use zero and .5 for
+those two settings; a correlation-one covariance matrix is singular and is not
+inverted. No unknown correlation is claimed to have been estimated.
+
+For a within-setting covariance matrix V, GLS weights are
+V^{-1}1 / (1'V^{-1}1), with sampling variance a'Va. They minimize sampling
+variance for a common within-setting effect. With heterogeneous election effects,
+they define a different weighted contrast from the equal-election average.
+This is a two-stage sensitivity analysis, not a fitted multilevel model of
+within-setting effect heterogeneity. Both stages retain exactly the same source
+contrasts, urban variance regularization, and seven geographic settings. The
+second stage retains REML and modified Knapp–Hartung inference (six degrees of
+freedom overall, five for the rural–urban coefficient). Export every election's
+weight and the setting estimate and variance for each specification. The compact
+comparison does not replace or select among results according to significance.

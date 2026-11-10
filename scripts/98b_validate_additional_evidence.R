@@ -340,6 +340,12 @@ test_that("REML and modified Knapp-Hartung rederive without the meta-analysis pa
   results <- read_csv("tabs/additional_meta_sensitivity.csv", show_col_types = FALSE)
   gaps <- read_csv("tabs/additional_rural_urban.csv", show_col_types = FALSE)
   expect_identical(gaps$specification, results$specification)
+  methods <- read_csv("tabs/additional_pooling_methods.csv", show_col_types = FALSE)
+  results <- bind_rows(results, methods)
+  gaps <- bind_rows(gaps, methods |> transmute(specification, estimate = gap_estimate,
+    standard_error = gap_standard_error, conf_low = gap_low, conf_high = gap_high,
+    p_value = gap_p, tau_squared = gap_tau_squared, df = gap_df,
+    urban_settings = 4L, rural_settings = 3L))
   bihar <- read_csv("tabs/additional_bihar_persistence.csv", show_col_types = FALSE) |>
     filter(specification == "Unadjusted") |>
     transmute(setting = "Bihar", period = "2011--2016", estimate, standard_error)
@@ -369,19 +375,39 @@ test_that("REML and modified Knapp-Hartung rederive without the meta-analysis pa
         slice_tail(n = 1) |>
         ungroup()
     }
-    means <- vapply(split(d, d$setting), function(x) mean(x$estimate), numeric(1))
-    variances <- vapply(split(d, d$setting), function(x) {
-      if (label == "Estimated covariance in Rajasthan and UP" && x$setting[1] %in% c("Rajasthan", "Uttar Pradesh")) {
+    method_row <- match(label, methods$specification)
+    covariance_blocks <- lapply(split(d, d$setting), function(x) {
+      empirical <- label == "Estimated covariance in Rajasthan and UP" ||
+        (!is.na(method_row) && method_row > 1)
+      if (empirical && x$setting[1] %in% c("Rajasthan", "Uttar Pradesh")) {
         joint <- read_csv("tabs/short_term_joint_covariance.csv", show_col_types = FALSE)
         state <- if (x$setting[1] == "Rajasthan") "raj" else "up"
-        selected <- startsWith(joint$first, paste0(state, "_")) & startsWith(joint$second, paste0(state, "_"))
-        return(sum(joint$covariance[selected]) / nrow(x)^2)
+        ids <- paste0(state, "_", c("05_10", "10_15", if (state == "raj") "15_20" else "15_21"))
+        covariance <- matrix(NA_real_, 3, 3)
+        for (j in 1:3) for (k in 1:3) {
+          covariance[j, k] <- joint$covariance[joint$first == ids[j] & joint$second == ids[k]]
+        }
+        return(covariance)
       }
       rho <- if (label == "Within-setting correlation = 0") 0 else if (label == "Within-setting correlation = 0.5") .5 else 1
+      if (!is.na(method_row)) rho <- methods$unknown_correlation[method_row]
       if (startsWith(label, "Minimum feasible")) rho <- if (nrow(x) > 1) -1 / (nrow(x) - 1) else 0
       covariance <- outer(x$standard_error, x$standard_error) * rho
       diag(covariance) <- x$standard_error^2
-      sum(covariance) / nrow(x)^2
+      covariance
+    })
+    cycle_weights <- lapply(covariance_blocks, function(v) {
+      if (!is.na(method_row) && methods$election_weights[method_row] == "gls") {
+        information <- solve(v)
+        rowSums(information) / sum(information)
+      } else rep(1 / nrow(v), nrow(v))
+    })
+    means <- vapply(names(covariance_blocks), function(setting) {
+      sum(d$estimate[d$setting == setting] * cycle_weights[[setting]])
+    }, numeric(1))
+    variances <- vapply(names(covariance_blocks), function(setting) {
+      a <- cycle_weights[[setting]]
+      sum(covariance_blocks[[setting]] * outer(a, a))
     }, numeric(1))
     loss <- function(tau2) {
       weights <- 1 / (variances + tau2)
@@ -424,8 +450,10 @@ test_that("REML and modified Knapp-Hartung rederive without the meta-analysis pa
     expect_equal(gaps$rural_settings[i], sum(rural == 1))
     expect_equal(gaps$df[i], df)
     expect_equal(gaps$estimate[i], unname(beta[2]), tolerance = 1e-7, scale = 1)
-    expect_equal(gaps$urban_mean[i], unname(beta[1]), tolerance = 1e-7, scale = 1)
-    expect_equal(gaps$rural_mean[i], sum(beta), tolerance = 1e-7, scale = 1)
+    if (is.na(method_row)) {
+      expect_equal(gaps$urban_mean[i], unname(beta[1]), tolerance = 1e-7, scale = 1)
+      expect_equal(gaps$rural_mean[i], sum(beta), tolerance = 1e-7, scale = 1)
+    }
     expect_equal(gaps$tau_squared[i], tau2, tolerance = 1e-7, scale = 1)
     expect_equal(gaps$standard_error[i], se, tolerance = 1e-7, scale = 1)
     expect_equal(c(gaps$conf_low[i], gaps$conf_high[i]),
@@ -434,6 +462,32 @@ test_that("REML and modified Knapp-Hartung rederive without the meta-analysis pa
     )
     expect_equal(gaps$p_value[i], unname(2 * pt(-abs(beta[2] / se), df)), tolerance = 1e-7, scale = 1)
   }
+})
+
+test_that("alternative pooling preserves samples and accounts for estimated dependence", {
+  inputs <- read_csv("tabs/additional_meta_inputs.csv", show_col_types = FALSE)
+  methods <- read_csv("tabs/additional_pooling_methods.csv", show_col_types = FALSE)
+  elections <- read_csv("tabs/additional_pooling_election_weights.csv", show_col_types = FALSE)
+  expect_equal(nrow(methods), 6L)
+  expect_equal(nrow(elections), 6L * nrow(inputs))
+  expect_true(all(methods$settings == 7 & methods$df == 6 & methods$gap_df == 5))
+  for (label in methods$specification) {
+    d <- elections |> filter(specification == label)
+    expect_setequal(paste(d$setting, d$period), paste(inputs$setting, inputs$period))
+    sums <- d |> group_by(setting) |> summarise(weight = sum(election_weight))
+    expect_equal(sums$weight, rep(1, nrow(sums)))
+  }
+  for (rho in c(0, .5)) {
+    equal <- appendix_meta(inputs, "empirical", "equal", rho)
+    gls <- appendix_meta(inputs, "empirical", "gls", rho)
+    expect_true(all(gls$settings$variance <= equal$settings$variance + 1e-12))
+    reversed <- appendix_meta(inputs[nrow(inputs):1, ], "empirical", "gls", rho)
+    expect_equal(gls$settings, reversed$settings, tolerance = 1e-10)
+    expect_equal(gls$summary, reversed$summary, tolerance = 1e-10)
+  }
+  empirical <- appendix_meta(inputs, "empirical")
+  expect_equal(methods$estimate[2], empirical$summary$estimate)
+  expect_equal(methods$gap_estimate[2], appendix_rural_gap(empirical$settings)$estimate)
 })
 
 test_that("harmonized sample counts preserve missing outcomes", {
