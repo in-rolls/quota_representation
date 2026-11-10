@@ -189,7 +189,8 @@ sibling_path <- function(file, source = "local_elections_up") {
     )
   }
 
-  dest <- file.path(.cache_root(man), source, spec$ref, file)
+  cache_namespace <- if (is.null(spec$cache_namespace)) source else spec$cache_namespace
+  dest <- file.path(.cache_root(man), cache_namespace, spec$ref, file)
 
   if (!file.exists(dest)) {
     sibling <- path.expand(spec$sibling)
@@ -410,7 +411,7 @@ read_election_panel <- function(state, file) {
 
 ## The pooled corpus: state repositories' seats in one schema, with recorded and
 ## name-inferred winner sex in separate columns and the states' seat links.
-pooled_path <- function(file) sibling_path(file, source = "local_elections")
+pooled_path <- function(file) sibling_path(file, source = "local_elections_exploratory")
 
 election_panel_path <- function(state, file) {
   if (state == "raj") raj_product_path(file) else here::here("data", state, file)

@@ -137,6 +137,28 @@ upstream:
       data/collections/sec_historical_results/ulb2012/parsed/20260911T113301294231Z/winner_reservations.parquet: 6ad6787d389fa3afdce4b0b5a0fa1a4a4bf2ef40e15618c513955126f39e9edd
       data/collections/sec_historical_results/ulb2017/combined/20260911/winner_reservations.parquet: 02d9b090096b803c5435a1f702ec45d69bf6188eb32142a8a5b997525be1411f
 
+  local_elections_exploratory:
+    repo: in-rolls/local_elections
+    ref: 300139de3ee3c76d56a621a4227eff159a9a1f0c
+    raw: https://raw.githubusercontent.com/in-rolls/local_elections
+    sibling: ../local_elections
+    files:
+      data/master/master_bihar.parquet: 6d012f13a7bffc7ddfb88b2048a14ae04c0a6aa133048f772bc46df765c49564
+      data/master/master_haryana.parquet: f0432ad58cac811836d2fde821502a71574d16f7e1d05e96dd5eb68b180e2223
+      data/master/master_extras.parquet: f7cbcc9f6f9f3d9331d215c22d5cc64cf5ddb8f04080f2df749dde16659cc2c8
+      data/master/supplemental_seat_links.parquet: 3f0f3c9d5718796d4e5344d8f503db7f91fbca40e32b6c3bea2c5b5d3e372b16
+      data/delhi/interim/qualification_audit/sources/goyal_mapping.tab: 1e2056da3318c7a052c12caf46dd304e9f4900fcbfbd4d075d66651d18a9fd40
+      data/maharashtra/raw/mumbai/dataverse_IO9SLQ/mumbai_full.tab: 84e22d9a14809a17a8ce0af5c4e65d0c27250bebc9b6261a813607ead9e17dbb
+      data/maharashtra/release/ulb_ward_2012.csv: 2a3efe26109358564cc0697d972749b8261add3f39bf8c5f70e4b2db518b4816
+      data/opencity/kolkata_kmc_2010_candidates.csv: f5d7560894a548f190181e5f3f8a06c990f73a0276ed6ee66b5eb40c688a68ad
+      data/opencity/kolkata_kmc_2015_candidates.csv: aeccd83343c50a7d615dba6ee24795d74a19647ac2933f84ea2997b67f796491
+      data/opencity/kolkata_winner_sex.csv: f7c499caf25860d73792220b0258896d349bda52d42b465ceab99966f265d483
+      data/master/master_uttarakhand.parquet: 2a80d229bc1e2e9cb30401657c10dd19847e64a5d37c583000fc9704b23c9324
+      data/master/master_tamil_nadu.parquet: 9ef05efb9f1ecebf4a4917ccf7422f85b03dc5573c3e95c7352841041c2c07ae
+      data/master/master_jharkhand.parquet: 147627d9d4fdd667554a3787c7c65e01e439ac8ef91f55990c1d6978035fd9a9
+      data/master/master_telangana.parquet: 7d7a6b52a47cdc5416b94197575ed50fa6b7f42260873eb3d019568327ed02aa
+    cache_namespace: local_elections
+
 reference:
   shrug:
     version: "2.0"
