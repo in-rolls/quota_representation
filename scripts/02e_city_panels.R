@@ -29,7 +29,7 @@
 # Kolkata (KMC, 2010-2015, wards 1-141). Lok Dhaba's candidate files, as
 # republished by OpenCity, give every candidate's votes and each ward's category
 # but no sex. Ward electorates correlate at 0.96 across the two elections by ward
-# number (0.55 with the neighbouring number), so the map held; wards 142-144 were
+# number (0.55 with the neighboring number), so the map held; wards 142-144 were
 # added in 2015. Winner sex: a women's-seat winner is a woman by law; any other
 # winner takes local_elections' kolkata_winner_sex probability, coded from the
 # name alone (1 or 0, blank for names used for either sex: NA here, bounded in

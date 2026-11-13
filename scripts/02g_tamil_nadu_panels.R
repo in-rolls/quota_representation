@@ -8,7 +8,7 @@
 # inference.
 #
 # Quota size. Women's reservation was one third of seats in 2011 and one half from
-# 2019 (2016 amendment; the 2016 election was cancelled). The later round is
+# 2019 (2016 amendment; the 2016 election was canceled). The later round is
 # therefore not the same rule repeated, and seats open in the later round are a
 # smaller share than in states with a constant one-third rule.
 #

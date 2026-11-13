@@ -24,7 +24,7 @@ the outcome is measured at the 2006 follow-up, not the 2003 election itself.
    The latter is a post-exposure sensitivity, not the preferred adjustment.
    Use identical complete cases for direct specification comparisons, and
    explicit HC 2 plus HC 3 sensitivity. No p-value-based sample selection,
-   propensity modelling, unrestricted permutations or claims of randomization.
+   propensity modeling, unrestricted permutations or claims of randomization.
 4. Tabulate all four 1998/2003 reservation-history outcome means. These are
    descriptions of different groups, not a factorial experiment or estimates
    of repeated-treatment effects. Do not use reserved-office compliance as a
