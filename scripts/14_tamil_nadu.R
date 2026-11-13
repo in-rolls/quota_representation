@@ -9,7 +9,7 @@
 # Two things differ from the other states. The quota grew from one third (2011)
 # to one half (2019 on), so far fewer later seats are open and the rotation is
 # not a one-third rule repeated. And eight years separate the two elections,
-# with the 2016 election cancelled.
+# with the 2016 election canceled.
 #
 # Caste-transition fixed effects compare seats within the same pair of earlier
 # and later caste categories, as in 13_uttarakhand.R.
